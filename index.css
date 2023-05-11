@@ -1,0 +1,20 @@
+body {
+    background-color: black;
+}
+
+#playButton {
+    color: cyan;
+    background-color: blueviolet;
+    scale: 6;
+    margin-right: 25%;
+    margin-bottom: 50%;
+}
+
+#creditsButton{
+    color:cyan;
+    background-color: blueviolet ;
+    scale: 3;
+    margin-right:60%;
+    margin-bottom:5%;
+}
+ 
