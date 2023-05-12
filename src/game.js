@@ -2,11 +2,11 @@ let isMovingLeft = false;
 let isMovingRight = false;
 let isJumping = false;
 let animationId = null;
+let animationIdLeft = null;
 let gameRunning = false;
 let body = document.getElementById("playground")
 let theGame = document.getElementById("theGame")
 let Character = document.getElementById("thePlayer")
-
 
 
 //Refresh playground every frame
@@ -21,44 +21,48 @@ export const main = () => {
 
 
 document.addEventListener("keydown", (event) => {
-    let currentPos = Character.getBoundingClientRect()
     let bodyPos = body.getBoundingClientRect()
-    console.log(currentPos.x - 10, bodyPos.x)
-    if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= body.offsetWidth + bodyPos.x - 30) moveRight();
-    if ((event.code === 'ArrowLeft' || event.code === 'KeyA') && currentPos.x - 10 >= bodyPos.x) moveLeft();
+    let currentPos = Character.getBoundingClientRect()
+    if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= body.offsetWidth + bodyPos.x - 30) {
+        moveRight();
+    }
+    if ((event.code === 'ArrowLeft' || event.code === 'KeyA') && currentPos.x - 10 >= bodyPos.x) {
+        moveLeft();
+    }
     if (event.code === 'Space') charJump();
 });
 
 document.addEventListener("keyup", (event) => {
     if (event.code === 'ArrowRight' || event.code === 'KeyD') stopAnimation();
-    if (event.code === 'ArrowLeft' || event.code === 'KeyA') stopAnimation();
+    if (event.code === 'ArrowLeft' || event.code === 'KeyA') stopAnimationLeft();
 });
 
-function stopAnimation() {
+
+function stopAnimationLeft() {
     isMovingLeft = false;
-    isMovingRight = false;
-    cancelAnimationFrame(animationId);
-    animationId = null;
+    cancelAnimationFrame(animationIdLeft);
+    animationIdLeft = null;
 }
 
 function moveLeft() {
-    console.log("SIIIN")
-    if (isMovingLeft || animationId) return;
-
-    isMovingLeft = true;
+    if (isMovingLeft || animationIdLeft) return;
 
     function moveAnimationLeft() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || body.getBoundingClientRect().x;
         const newLeft = currentLeft - 10;
         thePlayer.style.left = newLeft + 'px';
-
-        if (newLeft % 10 === 0) {
-            stopAnimation();
+        if (newLeft < body.getBoundingClientRect().x + 10) {
+            stopAnimationLeft();
         } else {
-            animationId = requestAnimationFrame(moveAnimationLeft);
+            animationIdLeft = requestAnimationFrame(moveAnimationLeft);
         }
     }
-    animationId = requestAnimationFrame(moveAnimationLeft);
+    animationIdLeft = requestAnimationFrame(moveAnimationLeft);
+}
+function stopAnimation() {
+    isMovingRight = false;
+    cancelAnimationFrame(animationId);
+    animationId = null;
 }
 function moveRight() {
     if (isMovingRight || animationId) return;
@@ -69,8 +73,7 @@ function moveRight() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || body.getBoundingClientRect().x;
         const newLeft = currentLeft + 10;
         thePlayer.style.left = newLeft + 'px';
-
-        if (newLeft % 10 === 0) {
+        if (newLeft > body.getBoundingClientRect().x + body.offsetWidth - 30) {
             stopAnimation();
         } else {
             animationId = requestAnimationFrame(moveAnimation);
