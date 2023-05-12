@@ -43,7 +43,7 @@ function stopAnimation() {
 
 function moveLeft() {
     console.log("SIIIN")
-    if (isMovingLeft) return;
+    if (isMovingLeft || animationId) return;
 
     isMovingLeft = true;
 
@@ -61,7 +61,7 @@ function moveLeft() {
     animationId = requestAnimationFrame(moveAnimationLeft);
 }
 function moveRight() {
-    if (isMovingRight) return;
+    if (isMovingRight || animationId) return;
 
     isMovingRight = true;
 
