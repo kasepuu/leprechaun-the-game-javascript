@@ -53,13 +53,13 @@ function moveLeft() {
     if (isMovingLeft || animationIdLeft) return;
     Character.style.backgroundImage = "url(/images/leprechaun_walking_LEFT.png)"
 
-
+    isMovingLeft = true;
 
     function moveAnimationLeft() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || body.getBoundingClientRect().x;
         const newLeft = currentLeft - 10;
         thePlayer.style.left = newLeft + 'px';
-        if (newLeft < body.getBoundingClientRect().x + 10) {
+        if (newLeft <= 0) {
             stopAnimationLeft();
         } else {
             animationIdLeft = requestAnimationFrame(moveAnimationLeft);
@@ -67,6 +67,8 @@ function moveLeft() {
     }
     animationIdLeft = requestAnimationFrame(moveAnimationLeft);
 }
+
+
 function stopAnimation() {
     Character.style.backgroundImage = "url(/images/leprechaun.png)"
 
@@ -84,7 +86,7 @@ function moveRight() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || body.getBoundingClientRect().x;
         const newLeft = currentLeft + 10;
         thePlayer.style.left = newLeft + 'px';
-        if (newLeft > body.getBoundingClientRect().x + body.offsetWidth - 30) {
+        if (newLeft >=body.offsetWidth - 30) {
             stopAnimation();
         } else {
             animationId = requestAnimationFrame(moveAnimation);
