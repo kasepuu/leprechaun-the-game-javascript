@@ -9,6 +9,7 @@ let theGame = document.getElementById("theGame")
 let Character = document.getElementById("thePlayer")
 
 
+
 //Refresh playground every frame
 export const main = () => {
     if (!gameRunning) {
@@ -56,7 +57,7 @@ function moveLeft() {
     isMovingLeft = true;
 
     function moveAnimationLeft() {
-        const currentLeft = parseInt(thePlayer.style.left, 10) || body.getBoundingClientRect().x;
+        const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
         const newLeft = currentLeft - 10;
         thePlayer.style.left = newLeft + 'px';
         if (newLeft <= 0) {
@@ -83,7 +84,7 @@ function moveRight() {
     isMovingRight = true;
 
     function moveAnimation() {
-        const currentLeft = parseInt(thePlayer.style.left, 10) || body.getBoundingClientRect().x;
+        const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
         const newLeft = currentLeft + 10;
         thePlayer.style.left = newLeft + 'px';
         if (newLeft >=body.offsetWidth - 30) {
@@ -134,6 +135,7 @@ export function stopGame() {
 }
 export function startGame() {
     gameRunning = true;
+    Character.style.bottom = 0;
     main()
 }
 
