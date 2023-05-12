@@ -25,9 +25,11 @@ document.addEventListener("keydown", (event) => {
     let currentPos = Character.getBoundingClientRect()
     if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= body.offsetWidth + bodyPos.x - 30) {
         moveRight();
+        Character.style.backgroundImage = "url(/images/leprechaun_walking_RIGHT.png)"
     }
     if ((event.code === 'ArrowLeft' || event.code === 'KeyA') && currentPos.x - 10 >= bodyPos.x) {
         moveLeft();
+        Character.style.backgroundImage = "url(/images/leprechaun_walking_LEFT.png)"
     }
     if (event.code === 'Space' || event.code === "ArrowUp") charJump();
 });
@@ -39,13 +41,19 @@ document.addEventListener("keyup", (event) => {
 
 
 function stopAnimationLeft() {
+    Character.style.backgroundImage = "url(/images/leprechaun.png)"
+
     isMovingLeft = false;
     cancelAnimationFrame(animationIdLeft);
     animationIdLeft = null;
+
 }
 
 function moveLeft() {
     if (isMovingLeft || animationIdLeft) return;
+    Character.style.backgroundImage = "url(/images/leprechaun_walking_LEFT.png)"
+
+
 
     function moveAnimationLeft() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || body.getBoundingClientRect().x;
@@ -60,12 +68,15 @@ function moveLeft() {
     animationIdLeft = requestAnimationFrame(moveAnimationLeft);
 }
 function stopAnimation() {
+    Character.style.backgroundImage = "url(/images/leprechaun.png)"
+
     isMovingRight = false;
     cancelAnimationFrame(animationId);
     animationId = null;
 }
 function moveRight() {
     if (isMovingRight || animationId) return;
+    Character.style.backgroundImage = "url(/images/leprechaun_walking_RIGHT.png)"
 
     isMovingRight = true;
 
@@ -85,6 +96,7 @@ function moveRight() {
 
 function charJump() {
     if (isJumping) return;
+    Character.style.backgroundImage = "url(/images/leprechaun_jumping.png)"
 
     isJumping = true;
     let currentJumpHeight = 0;
@@ -106,6 +118,7 @@ function charJump() {
 
         if (currentJumpHeight <= 0) {
             isJumping = false;
+            Character.style.backgroundImage = "url(/images/leprechaun.png)"
         } else {
             requestAnimationFrame(fallAnimation);
         }

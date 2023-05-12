@@ -8,7 +8,7 @@ var creditsInfo = document.querySelector("h3")
 
 
 // START THE GAME!
-document.getElementById("startButton").addEventListener("click", () => {
+document.getElementById("startButton").addEventListener("click", (e) => {
     console.log("game started")
     // hiding buttons
     for (let b = 0; b < buttons.length; b++) {
