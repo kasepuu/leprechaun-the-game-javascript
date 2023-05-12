@@ -29,7 +29,7 @@ document.addEventListener("keydown", (event) => {
     if ((event.code === 'ArrowLeft' || event.code === 'KeyA') && currentPos.x - 10 >= bodyPos.x) {
         moveLeft();
     }
-    if (event.code === 'Space') charJump();
+    if (event.code === 'Space' || event.code === "ArrowUp") charJump();
 });
 
 document.addEventListener("keyup", (event) => {

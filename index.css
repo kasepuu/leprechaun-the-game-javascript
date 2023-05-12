@@ -71,10 +71,9 @@ h3{
 
 #thePlayer{
     position: absolute;
-    background-image: url("/images/monkey_standing_1.png");
+    background-image: url("/images/leprechaun.png");
     width: 20px;
     height: 40px;
-    background-color: red;
 
 
 /* 
