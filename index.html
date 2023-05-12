@@ -12,11 +12,12 @@
 
 <body>
     <div id="playground" class="playground"> 
-        <div class="centered", id="screen">
+        <div class="centered", id="screen">    </div>
+        <div id = "character"></div>
         <button class="startButton", id="startButton">START</button>
     <script type="module">
         import { main } from './src/game.js'
-        main()
+        requestAnimationFrame(main)
     </script>
     </div>
 </body>

@@ -12,7 +12,12 @@ body {
     color: white;
     overflow: hidden;
 }
-
+#character {
+    position: absolute;
+    width: 20px;
+    height: 40px;
+    background-color: red;
+}
 .playground {
     background-image: url("/images/main_menu_noname.png");
     background-size: cover;
