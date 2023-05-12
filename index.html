@@ -7,18 +7,31 @@
     <link rel="stylesheet" type="text/css" href="./index.css">
 </head>
 
-
-
+<script type="module" src="/src/main.js"></script><!--main script-->
 
 <body>
-    <div id="playground" class="playground"> 
-        <div class="centered", id="screen">    </div>
-        <div id = "character"></div>
-        <button class="startButton", id="startButton">START</button>
-    <script type="module">
-            import { main } from './src/game.js'
-            requestAnimationFrame(main)
-    </script>
+
+
+    <div id="playground" class="playground">
+
+        <button id="backToMenu" hidden="hidden">EXIT</button>
+        <!--div id="gameTitle"><p>PÄRDIKU HULLUS</p></div-->
+
+        <div class="centered" , id="screen">
+            <button id="startButton">START GAME</button>
+            <button id="creditsButton">CREDITS</button>
+        </div>
+
+        <div id="theGame" class="theGame" hidden="hidden">
+            <div id="score">SCORE: 0</div>
+            <div id="level">Level: 1</div>
+            <div id="time">00:00</div>
+            <div id="fps">FPS: 0</div>
+            <div id="thePlayer"></div> <!--PLAYER CHARACTER-->
+            <div id="levelTarget"></div> <!--LEVEL GOAL-->
+        </div>
+
+        <h3 hidden="hidden">Juss Märtson & Joel Meeks</h3>
     </div>
 </body>
 

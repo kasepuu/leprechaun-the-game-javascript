@@ -2,11 +2,16 @@ let isMovingLeft = false;
 let isMovingRight = false;
 let isJumping = false;
 let animationId = null;
+let gameRunning = false;
 // main menu
 export const main = () => {
+    if (!gameRunning){
+        return
+    }
     let body = document.getElementById("playground")
-    let Character = document.getElementById("character")
-  
+    let theGame = document.getElementById("theGame")
+    let Character = document.getElementById("thePlayer")
+
     document.addEventListener("keydown", (event) => {
         let currentPos = Character.getBoundingClientRect()
         let bodyPos = body.getBoundingClientRect()
@@ -16,10 +21,11 @@ export const main = () => {
         if (event.code === 'Space') charJump();
     });
     document.addEventListener("keyup", (event) => {
-        if (event.code === 'ArrowRight' || event.code === 'KeyD' || event.code === 'ArrowLeft' || event.code === 'KeyA')  stopAnimation();
+        if (event.code === 'ArrowRight' || event.code === 'KeyD' || event.code === 'ArrowLeft' || event.code === 'KeyA') stopAnimation();
     });
 
-    body.appendChild(Character)
+    theGame.appendChild(Character)
+    body.appendChild(theGame)
     requestAnimationFrame(main)
 }
 
@@ -28,50 +34,50 @@ function moveLeft() {
     if (isMovingLeft) return;
 
     isMovingLeft = true;
-  
+
     function moveAnimation() {
-      const currentLeft = parseInt(character.style.left, 10) || 0;
-      const newLeft = currentLeft - 10;
-      character.style.left = newLeft + 'px';
-  
-      if (newLeft % 10 === 0) {
-        stopAnimation();
-      } else {
-        animationId = requestAnimationFrame(moveAnimation);
-      }
+        const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
+        const newLeft = currentLeft - 10;
+        thePlayer.style.left = newLeft + 'px';
+
+        if (newLeft % 10 === 0) {
+            stopAnimation();
+        } else {
+            animationId = requestAnimationFrame(moveAnimation);
+        }
     }
-  
+
     animationId = requestAnimationFrame(moveAnimation);
-  }
-  
-  function stopAnimation() {
+}
+
+function stopAnimation() {
     isMovingLeft = false;
     isMovingRight = false;
     cancelAnimationFrame(animationId);
     animationId = null;
-  }
+}
 
-  function moveRight() {
+function moveRight() {
     if (isMovingRight) return;
 
     isMovingRight = true;
-  
-    function moveAnimation() {
-      const currentLeft = parseInt(character.style.left, 10) || 0;
-      const newLeft = currentLeft + 10;
-      character.style.left = newLeft + 'px';
-  
-      if (newLeft % 10 === 0) {
-        stopAnimation();
-      } else {
-        animationId = requestAnimationFrame(moveAnimation);
-      }
-    }
-  
-    animationId = requestAnimationFrame(moveAnimation);
-  }
 
-  function charJump() {
+    function moveAnimation() {
+        const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
+        const newLeft = currentLeft + 10;
+        thePlayer.style.left = newLeft + 'px';
+
+        if (newLeft % 10 === 0) {
+            stopAnimation();
+        } else {
+            animationId = requestAnimationFrame(moveAnimation);
+        }
+    }
+
+    animationId = requestAnimationFrame(moveAnimation);
+}
+
+function charJump() {
     if (isJumping) return;
 
     isJumping = true;
@@ -79,7 +85,7 @@ function moveLeft() {
 
     function jumpAnimation() {
         currentJumpHeight += 10;
-        character.style.bottom = currentJumpHeight + 'px';
+        thePlayer.style.bottom = currentJumpHeight + 'px';
 
         if (currentJumpHeight >= 100) {
             fallAnimation();
@@ -90,7 +96,7 @@ function moveLeft() {
 
     function fallAnimation() {
         currentJumpHeight -= 10;
-        character.style.bottom = currentJumpHeight + 'px';
+        thePlayer.style.bottom = currentJumpHeight + 'px';
 
         if (currentJumpHeight <= 0) {
             isJumping = false;
@@ -99,4 +105,23 @@ function moveLeft() {
         }
     }
     requestAnimationFrame(jumpAnimation);
+}
+
+
+export function stopGame() {
+    gameRunning = false;
+}
+export function startGame() {
+    gameRunning = true;
+    main()
+}
+
+export function resetGame() {
+    let thePlayer = document.getElementById("thePlayer")
+    if (thePlayer) {
+        thePlayer.removeAttribute("style")
+        console.log(thePlayer)
+    } else {
+        console.log("The player does not exist!", thePlayer)
+    }
 }

@@ -12,27 +12,14 @@ body {
     color: white;
     overflow: hidden;
 }
-#character {
-    position: absolute;
-    background-image: url("/images/monkey_standing_1.png");
-    width: 20px;
-    height: 40px;
-    background-color: red;
-}
+
 .playground {
-    background-image: url("/images/main_menu_noname.png");
+    background-image: url("/images/main_menu_gamename.png");
     background-size: cover;
-    width: 1024px; 
+    width: 1024px;
     height: 576px;
 }
 
-#playButton {
-    color: cyan;
-    background-color: blueviolet;
-    scale: 6;
-    margin-right: 25%;
-    margin-bottom: 50%;
-}
 
 .centered {
     z-index: 9999;
@@ -43,13 +30,57 @@ body {
     margin-right: auto;
     width: fit-content;
     overflow: hidden;
- }
- 
+}
+
+#gameTitle {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    overflow: hidden;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 100px;
+}
+
+#startButton {
+    margin-top: 500px;
+
+    background-color: red;
+}
 
 #creditsButton {
-    color: cyan;
-    background-color: blueviolet;
-    scale: 3;
-    margin-right: 60%;
-    margin-bottom: 5%;
+    background-color: aqua;
+}
+
+h3{
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#levelTarget{
+    width: auto;
+    height: 100px;
+    background-image: url("images/leprecoin.png");
+    background-repeat: no-repeat;
+}
+
+#thePlayer{
+    position: absolute;
+    background-image: url("/images/monkey_standing_1.png");
+    width: 20px;
+    height: 40px;
+    background-color: red;
+
+
+/* 
+    width: 500;
+    height: 500px;
+
+    background-image: url("images/monkey_standing_1.png");
+    background-repeat: no-repeat; */
 }
