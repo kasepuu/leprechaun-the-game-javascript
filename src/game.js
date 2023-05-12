@@ -76,5 +76,5 @@ export const main = () => {
     });
 
     body.appendChild(Character)
-    return body
+    requestAnimationFrame(main)
 }
