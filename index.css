@@ -1,5 +1,23 @@
 body {
     background-color: black;
+    min-width: 1024px;
+    min-height: 576px;
+
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    font-family: sans-serif;
+    color: white;
+    overflow: hidden;
+}
+
+.playground {
+    background-image: url("/images/main_menu_noname.png");
+    background-size: cover;
+    width: 1024px; 
+    height: 576px;
 }
 
 #playButton {
@@ -10,11 +28,22 @@ body {
     margin-bottom: 50%;
 }
 
-#creditsButton{
-    color:cyan;
-    background-color: blueviolet ;
-    scale: 3;
-    margin-right:60%;
-    margin-bottom:5%;
-}
+.centered {
+    z-index: 9999;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    overflow: hidden;
+ }
  
+
+#creditsButton {
+    color: cyan;
+    background-color: blueviolet;
+    scale: 3;
+    margin-right: 60%;
+    margin-bottom: 5%;
+}
