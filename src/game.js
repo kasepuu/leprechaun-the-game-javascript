@@ -33,7 +33,6 @@ function main() {
 document.addEventListener("keydown", (event) => {
     let bodyPos = body.getBoundingClientRect()
     let currentPos = Character.getBoundingClientRect()
-
     if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= body.offsetWidth + bodyPos.x - 30) {
         moveRight();
         Character.style.backgroundImage = "url(/images/leprechaun_walking_RIGHT_gif.gif)"
@@ -50,12 +49,7 @@ document.addEventListener("keydown", (event) => {
     if (isMovingLeft && isMovingRight) Character.style.backgroundImage = "url(/images/leprechaun.png)"
 
 });
-document.addEventListener("keypress", (event) => {
-    if ((event.code === 'Space' || event.code === "ArrowUp") && isCollided) {
-        charJump();
-        Character.style.backgroundImage = "url(/images/leprechaun_jumping.png)"
-    }
-});
+
 document.addEventListener("keyup", (event) => {
     if (event.code === 'ArrowRight' || event.code === 'KeyD') stopAnimationRight();
     if (event.code === 'ArrowLeft' || event.code === 'KeyA') stopAnimationLeft();
@@ -120,7 +114,7 @@ function charJump() {
     if (isJumping) return;
 
     isJumping = true;
-    let currentJumpHeight = 0;
+    let currentJumpHeight = parseInt(thePlayer.style.bottom, 10);
 
     function jumpAnimation() {
         currentJumpHeight += 10;
@@ -178,7 +172,7 @@ export function resetGame() {
     }
     let floors = document.getElementById("floors")
     if (floors) {
-        floors.remove()
+        floors.hidden = "hidden"
         console.log("floors removed.")
     }
 }

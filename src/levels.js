@@ -1,6 +1,7 @@
 export const level1 = () =>{
     let theGame = document.getElementById("theGame")
-    let Floors = document.getElementById("floors");
-    Floors.style.bottom  = 0 + 'px';
-    theGame.appendChild(Floors);
+    let floors = document.getElementById("floors");
+    floors.removeAttribute("hidden")
+    floors.style.bottom  = 0 + 'px';
+    theGame.appendChild(floors);
 }
