@@ -9,7 +9,6 @@ let body = document.getElementById("playground")
 let theGame = document.getElementById("theGame")
 let Character = document.getElementById("thePlayer")
 let Floors = document.getElementById("floors")
-//let Floor = document.getElementById("floor-1")
 import { level1 } from "./levels.js";
 let frameTimes = []
 var gameIsPaused = false
@@ -49,11 +48,12 @@ function main() {
     frameRate() // get Framerate
     timer() // handle Timer
 
-   // let floor = parseInt(Floor.style.bottom, 10)
-    let CharacterPosY = parseInt(Character.style.bottom, 10)
-    //console.log("floor:", floor, "charposY:", CharacterPosY)
+    let floor = document.getElementById("floor-1")
+    let floorHeight = parseInt(floor.style.bottom, 10);
+
     if (Character.getBoundingClientRect().y === Floors.offsetHeight) isCollided = true
-    //else if (CharacterPosY === floor) isCollided = true
+    else if (Character.getBoundingClientRect().y === (floorHeight + 20)) isCollided = true
+
     else isCollided = false
     if (!isCollided && !isJumping) fallAnimation()
 
@@ -75,7 +75,8 @@ document.addEventListener("keydown", (event) => {
         Character.style.backgroundImage = "url(/images/leprechaun_walking_LEFT.png)"
     }
     if ((event.code === 'Space' || event.code === "ArrowUp") && isCollided) {
-        charJump();
+        let jumpHeight = parseInt(Character.style.bottom, 10)
+        charJump(jumpHeight);
         Character.style.backgroundImage = "url(/images/leprechaun_jumping.png)"
     }
 
@@ -143,17 +144,17 @@ function moveRight() {
     animationId = requestAnimationFrame(moveAnimation);
 }
 
-function charJump() {
+function charJump(startY) {
     if (isJumping) return;
 
     isJumping = true;
-    let currentJumpHeight = parseInt(thePlayer.style.bottom, 10);
+    let currentJumpHeight = parseInt(thePlayer.style.bottom + startY, 15);
 
     function jumpAnimation() {
-        currentJumpHeight += 10;
+        currentJumpHeight += 15;
         thePlayer.style.bottom = currentJumpHeight + 'px';
 
-        if (currentJumpHeight >= 100) {
+        if (currentJumpHeight >= 120 + startY) {
             isJumping = false
         } else {
             requestAnimationFrame(jumpAnimation);
@@ -165,11 +166,17 @@ function charJump() {
 
 
 function fallAnimation() {
+    let characterX = parseInt(Character.style.left, 10) + 15
+    let characterY = parseInt(Character.style.bottom, 10);
+    let floor = document.getElementById("floor-1")
+    let floorMin = parseInt(floor.style.left, 10)
+    let floorMax = floorMin + 500
+    let floorS = parseInt(Floors.style.bottom, 10)
+    let floorHeight = parseInt(floor.style.bottom, 10);
 
-    let currentHeight = parseInt(Character.style.bottom, 10);
-
-    let floor = parseInt(Floors.style.bottom, 10)
-    if (isCollided || currentHeight === floor + Floors.offsetHeight || currentHeight <= 10) {
+    if (isCollided || characterY === floorS + Floors.offsetHeight || characterY <= 10
+        || (characterY === (floorHeight + floor.offsetHeight) && (characterX >= floorMin && characterX <= floorMax))
+    ) {
         isCollided = true
         if (!isMovingLeft && !isMovingRight) {
             Character.style.backgroundImage = "url(/images/leprechaun.png)"
@@ -181,8 +188,8 @@ function fallAnimation() {
 
         return
     }
-    currentHeight -= 10;
-    thePlayer.style.bottom = currentHeight + 'px';
+    characterY -= 10;
+    thePlayer.style.bottom = characterY + 'px';
 }
 
 export function stopGame() {
@@ -190,10 +197,9 @@ export function stopGame() {
 }
 export function startGame() {
     gameRunning = true;
-    Character.style.bottom = 30 + 'px'
+    Character.style.bottom = 30 + 'px';
     level1()
     main()
-
 }
 
 export function resetGame() {
