@@ -148,10 +148,10 @@ function charJump(startY) {
     if (isJumping) return;
 
     isJumping = true;
-    let currentJumpHeight = parseInt(thePlayer.style.bottom + startY, 15);
-
+    let currentJumpHeight = startY;
+    
     function jumpAnimation() {
-        currentJumpHeight += 15;
+        currentJumpHeight += 10;
         thePlayer.style.bottom = currentJumpHeight + 'px';
 
         if (currentJumpHeight >= 120 + startY) {
@@ -166,11 +166,11 @@ function charJump(startY) {
 
 
 function fallAnimation() {
-    let characterX = parseInt(Character.style.left, 10) + 15
+    let characterX = parseInt(Character.style.left, 10) + 25
     let characterY = parseInt(Character.style.bottom, 10);
     let floor = document.getElementById("floor-1")
     let floorMin = parseInt(floor.style.left, 10)
-    let floorMax = floorMin + 500
+    let floorMax = floorMin + floor.offsetWidth + 20;
     let floorS = parseInt(Floors.style.bottom, 10)
     let floorHeight = parseInt(floor.style.bottom, 10);
 

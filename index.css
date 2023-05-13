@@ -17,7 +17,7 @@ body {
     position: relative;
     background-image: url("/images/main_menu_gamename.png");
     background-size: cover;
-    min-width: 1280px;
+    min-width: 1080px;
     min-height: 720px;
 }
 
@@ -96,6 +96,6 @@ h3{
 #floors {
     position: absolute;
     background-color: blue;
-    width: 1024px;
+    width: 1080px;
     height: 20px;
 }

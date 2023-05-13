@@ -13,5 +13,6 @@ export const level1 = () =>{
 
     floors.appendChild(floor)
     floors.style.bottom  = 0 + 'px';
+    floors.removeAttribute("hidden")
     theGame.appendChild(floors);
 }
