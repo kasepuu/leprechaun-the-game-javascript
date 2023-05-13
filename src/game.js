@@ -10,7 +10,7 @@ let theGame = document.getElementById("theGame")
 let Character = document.getElementById("thePlayer")
 let Floors = document.getElementById("floors")
 import { level1 } from "./levels.js";
-
+let frameTimes = []
 
 
 
@@ -19,6 +19,15 @@ function main() {
     if (!gameRunning) {
         return
     }
+
+
+    const now = performance.now() // current performance
+    while (frameTimes.length > 0 && frameTimes[0] <= now - 1000) {
+        frameTimes.shift();
+    }
+    frameTimes.push(now)
+    document.getElementById("fps").innerHTML = "FPS: " + frameTimes.length.toString()
+
 
     if (Character.getBoundingClientRect().y === Floors.offsetHeight) isCollided = true
     else isCollided = false
