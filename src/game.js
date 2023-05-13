@@ -26,8 +26,8 @@ function main() {
         frameTimes.shift();
     }
     frameTimes.push(now)
-    document.getElementById("fps").innerHTML = "FPS: " + frameTimes.length.toString()
-
+    let fps = frameTimes.length > 30 ? frameTimes.length.toString() : "Initializing..."
+    document.getElementById("fps").innerHTML = "FPS: " + fps
 
     if (Character.getBoundingClientRect().y === Floors.offsetHeight) isCollided = true
     else isCollided = false
