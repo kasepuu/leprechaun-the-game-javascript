@@ -102,7 +102,7 @@ function moveRight() {
         const newLeft = currentLeft + 7;
         thePlayer.style.left = newLeft + 'px';
         if (newLeft >= body.offsetWidth - 30) {
-            stopAnimation();
+            stopAnimationRight();
         } else {
             animationId = requestAnimationFrame(moveAnimation);
         }
@@ -135,9 +135,11 @@ function charJump() {
 function fallAnimation() {
 
     let currentHeight = parseInt(Character.style.bottom, 10) || 30;
-    if (isCollided || currentHeight === Floors.offsetHeight) {
-        isCollided = true
 
+    let floor = parseInt(Floors.style.bottom, 10)
+//    if (Character.getBoundingClientRect().y === Floors.offsetHeight) 
+    if (isCollided || currentHeight === Floors.getBoundingClientRect().y || currentHeight === floor) {
+        isCollided = true
         if (!isMovingLeft && !isMovingRight) {
             Character.style.backgroundImage = "url(/images/leprechaun.png)"
         } else if (isMovingLeft && !isMovingRight) {
