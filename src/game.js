@@ -23,7 +23,7 @@ function main() {
 
     const now = performance.now() // current performance
     while (frameTimes.length > 0 && frameTimes[0] <= now - 1000) {
-        frameTimes.shift();
+        frameTimes.shift()
     }
     frameTimes.push(now)
     let fps = frameTimes.length > 30 ? frameTimes.length.toString() : "Initializing..."
