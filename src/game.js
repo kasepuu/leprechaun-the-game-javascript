@@ -4,9 +4,13 @@ let isJumping = false;
 let animationId = null;
 let animationIdLeft = null;
 let gameRunning = false;
+let isCollided = false
 let body = document.getElementById("playground")
 let theGame = document.getElementById("theGame")
 let Character = document.getElementById("thePlayer")
+let Floors = document.getElementById("floors")
+import { level1 } from "./levels.js";
+
 
 
 
@@ -15,6 +19,11 @@ export const main = () => {
     if (!gameRunning) {
         return
     }
+
+    if (Character.getBoundingClientRect().y === Floors.offsetHeight) isCollided = true
+    else isCollided = false
+    if (!isCollided && !isJumping) fallAnimation()
+    
     theGame.appendChild(Character)
     body.appendChild(theGame)
     requestAnimationFrame(main)
@@ -24,6 +33,7 @@ export const main = () => {
 document.addEventListener("keydown", (event) => {
     let bodyPos = body.getBoundingClientRect()
     let currentPos = Character.getBoundingClientRect()
+
     if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= body.offsetWidth + bodyPos.x - 30) {
         moveRight();
         Character.style.backgroundImage = "url(/images/leprechaun_walking_RIGHT.png)"
@@ -32,7 +42,7 @@ document.addEventListener("keydown", (event) => {
         moveLeft();
         Character.style.backgroundImage = "url(/images/leprechaun_walking_LEFT.png)"
     }
-    if (event.code === 'Space' || event.code === "ArrowUp") charJump();
+    if ((event.code === 'Space' || event.code === "ArrowUp") && isCollided) charJump();
 });
 
 document.addEventListener("keyup", (event) => {
@@ -58,7 +68,7 @@ function moveLeft() {
 
     function moveAnimationLeft() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
-        const newLeft = currentLeft - 10;
+        const newLeft = currentLeft - 7;
         thePlayer.style.left = newLeft + 'px';
         if (newLeft <= 0) {
             stopAnimationLeft();
@@ -85,9 +95,9 @@ function moveRight() {
 
     function moveAnimation() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
-        const newLeft = currentLeft + 10;
+        const newLeft = currentLeft + 7;
         thePlayer.style.left = newLeft + 'px';
-        if (newLeft >=body.offsetWidth - 30) {
+        if (newLeft >= body.offsetWidth - 30) {
             stopAnimation();
         } else {
             animationId = requestAnimationFrame(moveAnimation);
@@ -109,33 +119,34 @@ function charJump() {
         thePlayer.style.bottom = currentJumpHeight + 'px';
 
         if (currentJumpHeight >= 100) {
-            fallAnimation();
+            isJumping = false
         } else {
             requestAnimationFrame(jumpAnimation);
-        }
-    }
-
-    function fallAnimation() {
-        currentJumpHeight -= 10;
-        thePlayer.style.bottom = currentJumpHeight + 'px';
-
-        if (currentJumpHeight <= 0) {
-            isJumping = false;
-            Character.style.backgroundImage = "url(/images/leprechaun.png)"
-        } else {
-            requestAnimationFrame(fallAnimation);
         }
     }
     requestAnimationFrame(jumpAnimation);
 }
 
 
+function fallAnimation() {
+
+    let currentHeight = parseInt(Character.style.bottom, 10) || 30;
+    if (isCollided || currentHeight === Floors.offsetHeight) {
+        isCollided = true
+        Character.style.backgroundImage = "url(/images/leprechaun.png)"
+        return
+    }
+    currentHeight -= 10;
+    thePlayer.style.bottom = currentHeight + 'px';
+}
+
 export function stopGame() {
     gameRunning = false;
 }
 export function startGame() {
     gameRunning = true;
-    Character.style.bottom = 0;
+    Character.style.bottom = 30 + 'px';
+    level1()
     main()
 }
 
@@ -146,5 +157,10 @@ export function resetGame() {
         console.log(thePlayer)
     } else {
         console.log("The player does not exist!", thePlayer)
+    }
+    let floors = document.getElementById("floors")
+    if (floors) {
+        floors.remove()
+        console.log("floors removed.")
     }
 }
