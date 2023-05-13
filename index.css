@@ -1,7 +1,7 @@
 body {
     background-color: black;
-    min-width: 1024px;
-    min-height: 576px;
+    min-width: 1280px;
+    min-height: 720px;
 
     margin: 0;
     display: flex;
@@ -17,8 +17,8 @@ body {
     position: relative;
     background-image: url("/images/main_menu_gamename.png");
     background-size: cover;
-    width: 1024px;
-    height: 576px;
+    min-width: 1280px;
+    min-height: 720px;
 }
 
 

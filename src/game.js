@@ -9,18 +9,14 @@ let body = document.getElementById("playground")
 let theGame = document.getElementById("theGame")
 let Character = document.getElementById("thePlayer")
 let Floors = document.getElementById("floors")
+//let Floor = document.getElementById("floor-1")
 import { level1 } from "./levels.js";
 let frameTimes = []
-
-
-
-//Refresh playground every frame
-function main() {
-    if (!gameRunning) {
-        return
-    }
-
-
+var gameIsPaused = false
+let timeElapsed = 0 // timer
+let startTime = 0 // game started at...
+// this function handles the framerate, displaying it in the game
+function frameRate() {
     const now = performance.now() // current performance
     while (frameTimes.length > 0 && frameTimes[0] <= now - 1000) {
         frameTimes.shift()
@@ -28,8 +24,36 @@ function main() {
     frameTimes.push(now)
     let fps = frameTimes.length > 30 ? frameTimes.length.toString() : "Initializing..."
     document.getElementById("fps").innerHTML = "FPS: " + fps
+}
+// this function handles the timer
+function timer() {
+    if (!gameIsPaused) {
+        timeElapsed += Date.now() - startTime
+        startTime = Date.now()
+        var minutes = Math.floor(timeElapsed / 60000);
+        var seconds = ((timeElapsed % 60000) / 1000).toFixed(0);
+        let timerHTML = (minutes < 10 ? '0' : '') + minutes + ":" + (seconds < 10 ? '0' : '') + seconds
 
+        document.getElementById(("time")).innerHTML = timerHTML
+    } else {
+        startTime = Date.now()
+    }
+}
+
+//Refresh playground every frame
+function main() {
+    if (!gameRunning) {
+        return
+    }
+
+    frameRate() // get Framerate
+    timer() // handle Timer
+
+   // let floor = parseInt(Floor.style.bottom, 10)
+    let CharacterPosY = parseInt(Character.style.bottom, 10)
+    //console.log("floor:", floor, "charposY:", CharacterPosY)
     if (Character.getBoundingClientRect().y === Floors.offsetHeight) isCollided = true
+    //else if (CharacterPosY === floor) isCollided = true
     else isCollided = false
     if (!isCollided && !isJumping) fallAnimation()
 
@@ -166,9 +190,10 @@ export function stopGame() {
 }
 export function startGame() {
     gameRunning = true;
-    Character.style.bottom = 30 + 'px';
+    Character.style.bottom = 30 + 'px'
     level1()
     main()
+
 }
 
 export function resetGame() {
