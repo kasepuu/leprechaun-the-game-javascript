@@ -50,7 +50,12 @@ document.addEventListener("keydown", (event) => {
     if (isMovingLeft && isMovingRight) Character.style.backgroundImage = "url(/images/leprechaun.png)"
 
 });
-
+document.addEventListener("keypress", (event) => {
+    if ((event.code === 'Space' || event.code === "ArrowUp") && isCollided) {
+        charJump();
+        Character.style.backgroundImage = "url(/images/leprechaun_jumping.png)"
+    }
+});
 document.addEventListener("keyup", (event) => {
     if (event.code === 'ArrowRight' || event.code === 'KeyD') stopAnimationRight();
     if (event.code === 'ArrowLeft' || event.code === 'KeyA') stopAnimationLeft();
@@ -134,11 +139,10 @@ function charJump() {
 
 function fallAnimation() {
 
-    let currentHeight = parseInt(Character.style.bottom, 10) || 30;
+    let currentHeight = parseInt(Character.style.bottom, 10);
 
     let floor = parseInt(Floors.style.bottom, 10)
-//    if (Character.getBoundingClientRect().y === Floors.offsetHeight) 
-    if (isCollided || currentHeight === Floors.getBoundingClientRect().y || currentHeight === floor) {
+    if (isCollided || currentHeight === floor + Floors.offsetHeight || currentHeight <= 10) {
         isCollided = true
         if (!isMovingLeft && !isMovingRight) {
             Character.style.backgroundImage = "url(/images/leprechaun.png)"
