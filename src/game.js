@@ -49,11 +49,7 @@ function main() {
     frameRate() // get Framerate
     timer() // handle Timer
 
-   // let floor = document.getElementById("floor-1")
-    //let floorHeight = parseInt(floor.style.bottom, 10);
-
     if (Character.getBoundingClientRect().y === 20) isCollided = true
-    //else if (Character.getBoundingClientRect().y === (floorHeight + 20)) isCollided = true
 
     else isCollided = false
     if (!isCollided && !isJumping) fallAnimation()
@@ -171,7 +167,6 @@ function charJump(startY) {
 
 
 function fallAnimation() {
-    console.log(Character.style.left)
     let characterX = parseInt(Character.style.left, 10) + 25
     let characterY = parseInt(Character.style.bottom, 10);
 
@@ -220,7 +215,6 @@ export function startGame() {
         let floorMax = parseInt(allFloors[i].style.left, 10) + allFloors[i].offsetWidth + 20 + "Max";
         let floorHeight = parseInt(allFloors[i].style.bottom, 10) + allFloors[i].offsetHeight + "H";
         floorArr.push(floorMin, floorMax, floorHeight);
-        console.log(floorArr)
     }
 
     main()
