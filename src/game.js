@@ -25,13 +25,26 @@ let winamp = new PlayMusic()
 let lives = 4
 
 // basics
+let prePause = ""
 function pause() {
+    prePause = playground.classList.value
+
+    playground.classList.remove("level_1")
+    playground.classList.remove("level_2")
+    playground.classList.remove("level_3")
+
+    playground.classList.add("paused")
+
+
     //...pause stuff
     gameIsPaused = true
-    PauseButton.src = "/images/unpause.png"
+    PauseButton.src = "/images/hud/unpause.png"
 }
 
 function unPause() {
+    playground.classList.remove("paused")
+    playground.classList.add(prePause)
+
     ///...pause stuff but in reverse
     gameIsPaused = false
     PauseButton.src = "/images/hud/pause.png"
@@ -354,6 +367,9 @@ const observer = new MutationObserver((mutations) => {
                 else winamp.pause()
             } else if (playground.classList.contains("level_3")) {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("level3.ogg")
+                else winamp.pause()
+            } else if (playground.classList.contains("paused")) {
+                if (!MuteButton.src.includes("off")) winamp.setAudio("paused.ogg")
                 else winamp.pause()
             }
         }

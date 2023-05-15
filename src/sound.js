@@ -12,6 +12,7 @@ export function playSoundOnce(sound, volume = 0.03) {
 export function PlayMusic() {
 
     let loop, audioFileTemp = "menu.ogg", playOnceTemp
+    let loading = false;
 
     this.setAudio = (audioFile, playOnce) => {
         playOnceTemp = playOnce;
@@ -19,15 +20,23 @@ export function PlayMusic() {
         audio.src = path + audioFile;
         audio.preload = "auto";
         audio.loop = true;
-      
-        audio.addEventListener('timeupdate', function(){
+
+        audio.addEventListener('timeupdate', function () {
             var buffer = 0.25
-            if(this.currentTime >= this.duration - buffer){
+            if (this.currentTime >= this.duration - buffer) {
                 this.currentTime = 0
                 this.play()
             }
         })
-        audio.play();
+        audio.addEventListener('canplaythrough', () => {
+            loading = false;
+            audio.play()
+        })
+
+        if (!loading) {
+            audio.load()
+            loading = true
+        }
     }
     this.setVolume = (newVolume) => {
         audio.volume = newVolume
