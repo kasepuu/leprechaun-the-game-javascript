@@ -34,7 +34,7 @@ function pause() {
 function unPause() {
     ///...pause stuff but in reverse
     gameIsPaused = false
-    PauseButton.src = "/images/pause.png"
+    PauseButton.src = "/images/hud/pause.png"
 }
 
 export function stopGame() {
@@ -45,7 +45,7 @@ export function stopGame() {
     playground.classList.remove("level_3")
 
     playground.classList.add("menu")
-    playground.style.backgroundImage = `url("/images/main_menu_gamename.png")`
+    playground.style.backgroundImage = `url("/images/levels/main_menu_gamename.png")`
 
     gameRunning = false;
 }
@@ -71,10 +71,10 @@ export function resetGame() {
 document.getElementById("toggleMusic").addEventListener("click", (e) => {
     if (MuteButton.src.includes("off")) {
         winamp.resume()
-        MuteButton.src = "/images/music_on.png"
+        MuteButton.src = "/images/hud/music_on.png"
     } else {
         winamp.pause()
-        MuteButton.src = "/images/music_off.png"
+        MuteButton.src = "/images/hud/music_off.png"
     }
 })
 document.getElementById("togglePause").addEventListener("click", (e) => {
@@ -134,19 +134,19 @@ document.addEventListener("keydown", (event) => {
     let currentPos = Character.getBoundingClientRect()
     if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= body.offsetWidth + bodyPos.x - 30) {
         moveRight()
-        Character.style.backgroundImage = "url(/images/leprechaun_walking_RIGHT.gif)"
+        Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
     }
     if ((event.code === 'ArrowLeft' || event.code === 'KeyA') && currentPos.x - 10 >= bodyPos.x) {
         moveLeft()
-        Character.style.backgroundImage = "url(/images/leprechaun_walking_LEFT.gif)"
+        Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
     }
     if ((event.code === 'Space' || event.code === "ArrowUp") && isCollided) {
         let jumpHeight = parseInt(Character.style.bottom, 10)
         charJump(jumpHeight)
-        Character.style.backgroundImage = "url(/images/leprechaun_jumping.png)"
+        Character.style.backgroundImage = "url(/images/characters/main/leprechaun_jumping.png)"
     }
 
-    if (isMovingLeft && isMovingRight) Character.style.backgroundImage = "url(/images/leprechaun.gif)"
+    if (isMovingLeft && isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
 
 })
 
@@ -173,7 +173,7 @@ function moveLeft() {
     animationIdLeft = requestAnimationFrame(moveAnimationLeft);
 }
 function stopAnimationLeft() {
-    Character.style.backgroundImage = "url(/images/leprechaun.gif)"
+    Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
 
     isMovingLeft = false;
     cancelAnimationFrame(animationIdLeft);
@@ -199,7 +199,7 @@ function moveRight() {
     animationIdRight = requestAnimationFrame(moveAnimation);
 }
 function stopAnimationRight() {
-    Character.style.backgroundImage = "url(/images/leprechaun.gif)"
+    Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
 
     isMovingRight = false;
     cancelAnimationFrame(animationIdRight);
@@ -271,11 +271,11 @@ function fallAnimation() {
 
 
             if (!isMovingLeft && !isMovingRight) {
-                Character.style.backgroundImage = "url(/images/leprechaun.gif)"
+                Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
             } else if (isMovingLeft && !isMovingRight) {
-                Character.style.backgroundImage = "url(/images/leprechaun_walking_LEFT.gif)"
+                Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
             } else if (!isMovingLeft && isMovingRight) {
-                Character.style.backgroundImage = "url(/images/leprechaun_walking_RIGHT.gif)"
+                Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
             }
 
             return
