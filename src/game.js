@@ -123,7 +123,6 @@ function main() {
     if (!isCollided && !isJumping) fallAnimation()
 
     theGame.appendChild(Character)
-    body.appendChild(theGame)
     requestAnimationFrame(main)
 }
 
@@ -141,7 +140,7 @@ document.addEventListener("keydown", (event) => {
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
     }
     if ((event.code === 'Space' || event.code === "ArrowUp") && isCollided) {
-        let jumpHeight = parseInt(Character.style.bottom, 10)
+        let jumpHeight = parseInt(Character.style.bottom)
         charJump(jumpHeight)
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_jumping.png)"
     }
@@ -161,15 +160,15 @@ function moveLeft() {
     isMovingLeft = true;
 
     function moveAnimationLeft() {
-        const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
+        const currentLeft = parseInt(thePlayer.style.left) || 0;
 
         let thePlayerHeight = parseInt(thePlayer.style.bottom)
         let walls = Floors.getElementsByTagName('div')
 
         for (let i = 0; i < walls.length; i++) {
             const wall = walls[i];
-            const wallLeft = parseInt(wall.style.left, 10) || 0;
-            const wallTop = parseInt(wall.style.bottom, 10) || 0;
+            const wallLeft = parseInt(wall.style.left) || 0;
+            const wallTop = parseInt(wall.style.bottom) || 0;
 
             if (currentLeft < wallLeft + walls[i].offsetWidth
                 && currentLeft > wallLeft
@@ -204,14 +203,14 @@ function moveRight() {
     isMovingRight = true;
 
     function moveAnimation() {
-        const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
+        const currentLeft = parseInt(thePlayer.style.left) || 0;
         let thePlayerHeight = parseInt(thePlayer.style.bottom)
         let walls = Floors.getElementsByTagName('div')
 
         for (let i = 0; i < walls.length; i++) {
             const wall = walls[i];
-            const wallLeft = parseInt(wall.style.left, 10) || 0;
-            const wallTop = parseInt(wall.style.bottom, 10) || 0;
+            const wallLeft = parseInt(wall.style.left) || 0;
+            const wallTop = parseInt(wall.style.bottom) || 0;
 
             if (currentLeft + Character.offsetWidth < wallLeft + walls[i].offsetWidth
                 && currentLeft + Character.offsetWidth > wallLeft
@@ -250,15 +249,19 @@ function charJump(startY) {
     let currentJumpHeight = startY
 
     function jumpAnimation() {
-        let thePlayerXpos = parseInt(thePlayer.style.left)
+        const currentLeft = parseInt(thePlayer.style.left);
         let thePlayerHeight = parseInt(thePlayer.style.bottom)
-        if (floorArr.includes(String(thePlayerHeight + 80) + "H")) {
+        let walls = Floors.getElementsByTagName('div')
+    
+        for (let i = 0; i < walls.length; i++) {
+            const wall = walls[i];
+            const wallLeft = parseInt(wall.style.left);
+            const wallTop = parseInt(wall.style.bottom);
+    
+            if (currentLeft <= wallLeft + walls[i].offsetWidth - 5
+                && currentLeft + Character.offsetWidth >= wallLeft + 5
+                && thePlayerHeight + Character.offsetHeight === wallTop) {
 
-            let num = floorArr.indexOf(String(thePlayerHeight + 80) + "H")
-            let floorMin = floorArr[num - 2] - 30
-            let floorMax = floorArr[num - 1] - 20
-
-            if (thePlayerXpos >= floorMin && thePlayerXpos <= floorMax) {
                 isJumping = false
                 return
             }
@@ -266,8 +269,6 @@ function charJump(startY) {
 
         currentJumpHeight += 10;
         thePlayer.style.bottom = currentJumpHeight + 'px';
-
-
 
         if (currentJumpHeight >= 120 + startY) {
             isJumping = false
@@ -281,22 +282,22 @@ function charJump(startY) {
 
 // function for falling
 function fallAnimation() {
-    let characterX = parseInt(Character.style.left, 10) + 25
-    let characterY = parseInt(Character.style.bottom, 10);
+    const currentLeft = parseInt(thePlayer.style.left) + 25;
+    let thePlayerHeight = parseInt(thePlayer.style.bottom)
+    let walls = Floors.getElementsByTagName('div')
 
-    if (isCollided || characterY <= 20
-        || (floorArr.includes(String(characterY) + "H"))) {
+    for (let i = 0; i < walls.length; i++) {
+        const wall = walls[i];
+        const wallLeft = parseInt(wall.style.left);
+        const wallTop = parseInt(wall.style.bottom);
 
-        let floorMin, floorMax;
-        if ((floorArr.includes(String(characterY) + "H"))) {
-            let num = floorArr.indexOf(String(characterY) + "H")
-            floorMin = floorArr[num - 2]
-            floorMax = floorArr[num - 1]
-        }
-
-        if (isCollided || characterY <= 20 || (characterX >= floorMin && characterX <= floorMax)) {
+        if (isCollided 
+            || thePlayerHeight <= 20 
+            || (currentLeft < wallLeft + walls[i].offsetWidth + Character.offsetWidth-5
+            && currentLeft >= wallLeft
+            && thePlayerHeight === wallTop + 20)) {
+                
             isCollided = true
-
 
             if (!isMovingLeft && !isMovingRight) {
                 Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
@@ -309,8 +310,8 @@ function fallAnimation() {
             return
         }
     }
-    characterY -= 10;
-    thePlayer.style.bottom = characterY + 'px';
+    thePlayerHeight -= 10;
+    thePlayer.style.bottom = thePlayerHeight + 'px';
     fallsoundOnce = true
 }
 
@@ -328,9 +329,9 @@ export function startGame() {
 
     let allFloors = Floors.getElementsByTagName('div');
     for (var i = 1; i < allFloors.length; i++) {
-        let floorMin = (parseInt(allFloors[i].style.left, 10));
-        let floorMax = parseInt(allFloors[i].style.left, 10) + allFloors[i].offsetWidth + 20;
-        let floorHeight = parseInt(allFloors[i].style.bottom, 10) + allFloors[i].offsetHeight + "H";
+        let floorMin = (parseInt(allFloors[i].style.left));
+        let floorMax = parseInt(allFloors[i].style.left) + allFloors[i].offsetWidth + 20;
+        let floorHeight = parseInt(allFloors[i].style.bottom) + allFloors[i].offsetHeight + "H";
         floorArr.push(floorMin, floorMax, floorHeight);
     }
 
@@ -346,7 +347,7 @@ const observer = new MutationObserver((mutations) => {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("menu.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_1")) {
-                if (!MuteButton.src.includes("off")) winamp.setAudio("level1.ogg")
+                if (!MuteButton.src.includes("off")) winamp.setAudio("level2.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_2")) {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("level2.ogg")
