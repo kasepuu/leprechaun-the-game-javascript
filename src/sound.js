@@ -18,7 +18,7 @@ export function PlayMusic() {
         audioFileTemp = audioFile
         clearInterval(loop)
         audio.src = path + audioFile
-
+        audio.preload = "auto"
 
         loop = setInterval(() => {
             audio.volume = 0.5
