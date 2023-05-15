@@ -1,56 +1,60 @@
 let playground = document.getElementById("playground")
 
+function createFloor(width, bottom, left, height = 20) {
+    let floor = document.createElement("div")
+    floor.style.width = width + "px"
+    floor.style.bottom = bottom + "px"
+    floor.style.left = left + "px"
+    floor.style.height = height + "px"
+
+    return floor
+}
+
+
 export const level1 = () => {
     playground.style.backgroundImage = `url("/images/levels/level1_background.png")`
     let theGame = document.getElementById("theGame")
     let floors = document.getElementById("floors")
 
-    let bottomFloor = document.createElement("div")
-    bottomFloor.style.bottom = 0 + 'px';
-    bottomFloor.style.backgroundColor = "blue";
-    bottomFloor.style.width = "1280px";
-    bottomFloor.style.height = "20px";
-    bottomFloor.style.backgroundImage = `url("/images/other/level1-floor.png"`
+    let numberOfFloors = 12 // the amount of floors to be appended
 
-    let floor1 = document.createElement("div")
-    floor1.style.width = "500px"
-    floor1.style.bottom = "90px"
-    floor1.style.left = "0px"
+    let floor0 = createFloor(1280, 0, 0)
+    floor0.style.backgroundImage = `url("/images/other/level1-floor.png"`
+
+    let floor1 = createFloor(500, 90, 0)
     floor1.style.backgroundImage = `url("/images/other/level1-floor.png"`
 
-    let floor2 = document.createElement("div")
-    floor2.style.width = "300px"
-    floor2.style.bottom = "110px"
-    floor2.style.left = "500px"
+    let floor2 = createFloor(300, 110, 500)
 
-    let floor3 = document.createElement("div")
-    floor3.style.width = "350px"
-    floor3.style.bottom = "90px"
-    floor3.style.left = "800px"
+    let floor3 = createFloor(350, 90, 800)
 
-    let floor4 = document.createElement("div")
-    floor4.style.width = "80px"
-    floor4.style.bottom = "90px"
-    floor4.style.left = "1200px"
+    let floor4 = createFloor(80, 90, 1200)
+    floor4.style.backgroundColor = "red"
 
-    let floor5 = document.createElement("div")
-    floor5.style.width = "20px"
-    floor5.style.bottom = "120px"
-    floor5.style.height = "500px"
-    floor5.style.left = "1150px"
+    // vertical floor, blockade for jumpup
+    let floor5 = createFloor(20, 90, 1130, 380)
+
+    // parkour
+    let floor6 = createFloor(30, 160, 1250)
+
+    let floor7 = createFloor(40, 250, 1240)
+
+    let floor8 = createFloor(30, 340, 1250)
+
+    let floor9 = createFloor(280, 540, 1000) // floor5 enemy
+
+    let floor10 = createFloor(200, 300, 300)
+
+    // vertical floor, blockade for jumpdown
+    let floor11 = createFloor(20, 180, 1000, 380)
+    let floor12 = createFloor(60, 180, 900)
 
 
-    let floor10 = document.createElement("div")
-    floor10.style.width = "200px"
-    floor10.style.bottom = "300px"
-    floor10.style.left = "300px"
+    for (let f = 0; f <= numberOfFloors; f++) {
+        eval(`floor${f}`).id = `floor-${f}` // setting a custom id for each floor
+        floors.appendChild(eval(`floor${f}`))
+    }
 
-    floors.appendChild(bottomFloor)
-    floors.appendChild(floor1)
-    floors.appendChild(floor2)
-    floors.appendChild(floor3)
-    floors.appendChild(floor4)   
-    floors.appendChild(floor5)
 
     floors.removeAttribute("hidden")
     theGame.appendChild(floors);

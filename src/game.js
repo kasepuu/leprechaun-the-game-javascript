@@ -271,8 +271,8 @@ function charJump(startY) {
             const wallLeft = parseInt(wall.style.left);
             const wallBottom = parseInt(wall.style.bottom);
     
-            if (currentLeft <= wallLeft + walls[i].offsetWidth - 5
-                && currentLeft + Character.offsetWidth >= wallLeft + 5
+            if (currentLeft <= wallLeft + walls[i].offsetWidth - 10
+                && currentLeft + Character.offsetWidth >= wallLeft + 10
                 && thePlayerHeight + Character.offsetHeight === wallBottom) {
 
                 isJumping = false
@@ -306,7 +306,7 @@ function fallAnimation() {
 
         if (isCollided 
             || thePlayerHeight <= 20 
-            || (currentLeft < wallLeft + walls[i].offsetWidth + Character.offsetWidth-5
+            || (currentLeft < wallLeft + walls[i].offsetWidth + Character.offsetWidth-10
             && currentLeft >= wallLeft
             && thePlayerHeight === wallBottom + walls[i].offsetHeight)) {
                 
