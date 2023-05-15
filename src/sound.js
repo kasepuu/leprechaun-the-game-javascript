@@ -2,7 +2,7 @@ const path = "../audio/"
 
 let audio = new Audio()
 
-export function playSoundOnce(sound, volume = 1) {
+export function playSoundOnce(sound, volume = 0.5) {
     let player = new Audio(path + sound)
     player.volume = volume
     player.play()
@@ -14,17 +14,21 @@ export function PlayMusic() {
     let loop, audioFileTemp = "menu.ogg", playOnceTemp
 
     this.setAudio = (audioFile, playOnce) => {
-        playOnceTemp = playOnce
-        audioFileTemp = audioFile
-        clearInterval(loop)
-        audio.src = path + audioFile
-        audio.preload = "auto"
-
-        loop = setInterval(() => {
-            audio.volume = 0.5
-            audio.play()
-        }, (audio.duration - 0.2) * 1000)
-
+        playOnceTemp = playOnce;
+        audioFileTemp = audioFile;
+        audio.src = path + audioFile;
+        audio.preload = "auto";
+        audio.loop = true;
+      
+        audio.addEventListener('timeupdate', function(){
+            var buffer = 0.25
+            console.log(this.currentTime, this.duration)
+            if(this.currentTime >= this.duration - buffer){
+                this.currentTime = 0
+                this.play()
+            }
+        })
+        audio.play();
     }
     this.setVolume = (newVolume) => {
         audio.volume = newVolume

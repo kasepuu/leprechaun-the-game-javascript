@@ -217,7 +217,6 @@ function charJump(startY) {
     function jumpAnimation() {
         let thePlayerXpos = parseInt(thePlayer.style.left)
         let thePlayerHeight = parseInt(thePlayer.style.bottom)
-        let thePlayerXcoord = thePlayerHeight + thePlayerXpos
         if (floorArr.includes(String(thePlayerHeight + 80) + "H")) {
 
             let num = floorArr.indexOf(String(thePlayerHeight + 80) + "H")
@@ -318,7 +317,7 @@ const observer = new MutationObserver((mutations) => {
                 if (!MuteButton.src.includes("off"))  winamp.setAudio("menu.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_1")) {
-                if (!MuteButton.src.includes("off")) winamp.setAudio("level1.ogg")
+                if (!MuteButton.src.includes("off")) winamp.setAudio("level3.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_2")) {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("level2.ogg")
