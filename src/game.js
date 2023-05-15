@@ -6,6 +6,7 @@ let animationIdRight = null
 let animationIdLeft = null
 let gameRunning = false
 let isCollided = false
+let rightWall = false
 let body = document.getElementById("playground")
 let theGame = document.getElementById("theGame")
 let Character = document.getElementById("thePlayer")
@@ -121,7 +122,7 @@ function main() {
     else isCollided = false
 
     if (!isCollided && !isJumping) fallAnimation()
-
+    console.log(rightWall)
 
     theGame.appendChild(Character)
     body.appendChild(theGame)
@@ -132,6 +133,7 @@ function main() {
 document.addEventListener("keydown", (event) => {
     let bodyPos = body.getBoundingClientRect()
     let currentPos = Character.getBoundingClientRect()
+
     if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= body.offsetWidth + bodyPos.x - 30) {
         moveRight()
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
@@ -162,6 +164,29 @@ function moveLeft() {
 
     function moveAnimationLeft() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
+
+        //let floorHeights = floorArr.join().match(/\d*[H]/g)
+        //floorHeights = floorHeights.map(item => parseInt(item));
+
+        let thePlayerHeight = parseInt(thePlayer.style.bottom)
+        let collidedWithWall = false;
+        let walls = Floors.getElementsByTagName('div')
+
+        for (let i = 0; i < walls.length; i++) {
+          const wall = walls[i];
+          const wallLeft = parseInt(wall.style.left, 10) || 0;
+          const wallTop = parseInt(wall.style.bottom, 10) || 0;
+          if (currentLeft >=  wallLeft - 50 && currentLeft <= wallLeft + 50 && thePlayerHeight >= wallTop + 20 && thePlayerHeight <= wallTop) {
+            console.log("ACT1:", currentLeft, "<", wallLeft-50, "ACT2", currentLeft, ">", wallLeft + 50, "ACT3:", thePlayerHeight, ">", wallTop - 80, "ACT4", thePlayerHeight, "<", wallTop + 80)
+            collidedWithWall = true;
+            break;
+          }
+        }
+    
+        if (collidedWithWall) {
+          stopAnimationLeft();
+          return;
+        }
         const newLeft = currentLeft - 7;
         thePlayer.style.left = newLeft + 'px';
         if (newLeft <= 0) {
@@ -172,6 +197,7 @@ function moveLeft() {
     }
     animationIdLeft = requestAnimationFrame(moveAnimationLeft);
 }
+
 function stopAnimationLeft() {
     Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
 
@@ -182,9 +208,7 @@ function stopAnimationLeft() {
 }
 function moveRight() {
     if (isMovingRight || animationIdRight) return;
-
     isMovingRight = true;
-
     function moveAnimation() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
         const newLeft = currentLeft + 7;
@@ -209,7 +233,7 @@ function stopAnimationRight() {
 // function for jumping
 function charJump(startY) {
     if (isJumping) return
-    playSoundOnce("jump.ogg", 0.1)
+    playSoundOnce("jump.ogg", 0.03)
 
     isJumping = true
     let currentJumpHeight = startY
@@ -253,13 +277,10 @@ function fallAnimation() {
 
     if (isCollided || characterY <= 20
         || (floorArr.includes(String(characterY) + "H"))) {
-        let floorMin, floorMax;
-        let num = floorArr.indexOf(String(characterY) + "H")
 
-        if (num === -1) {
-            floorMin = 9999
-            floorMax = 0
-        } else {
+        let floorMin, floorMax;
+        if ((floorArr.includes(String(characterY) + "H"))) {
+            let num = floorArr.indexOf(String(characterY) + "H")
             floorMin = floorArr[num - 2]
             floorMax = floorArr[num - 1]
         }
@@ -314,10 +335,10 @@ const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
         if (mutation.attributeName === "class") {
             if (playground.classList.contains("menu")) {
-                if (!MuteButton.src.includes("off"))  winamp.setAudio("menu.ogg")
+                if (!MuteButton.src.includes("off")) winamp.setAudio("menu.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_1")) {
-                if (!MuteButton.src.includes("off")) winamp.setAudio("level3.ogg")
+                if (!MuteButton.src.includes("off")) winamp.setAudio("level1.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_2")) {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("level2.ogg")

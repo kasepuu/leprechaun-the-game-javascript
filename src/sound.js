@@ -2,7 +2,7 @@ const path = "../audio/"
 
 let audio = new Audio()
 
-export function playSoundOnce(sound, volume = 0.5) {
+export function playSoundOnce(sound, volume = 0.03) {
     let player = new Audio(path + sound)
     player.volume = volume
     player.play()
@@ -22,7 +22,6 @@ export function PlayMusic() {
       
         audio.addEventListener('timeupdate', function(){
             var buffer = 0.25
-            console.log(this.currentTime, this.duration)
             if(this.currentTime >= this.duration - buffer){
                 this.currentTime = 0
                 this.play()

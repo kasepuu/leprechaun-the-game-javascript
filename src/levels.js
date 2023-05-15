@@ -15,7 +15,7 @@ export const level1 = () => {
     let floor1 = document.createElement("div")
     floor1.id = "floor-1"
     floor1.style.width = "500px"
-    floor1.style.bottom = "120px"
+    floor1.style.bottom = "20px"
     floor1.style.left = "300px"
 
     let floor2 = document.createElement("div")
