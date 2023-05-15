@@ -295,7 +295,6 @@ function fallAnimation() {
         }
 
         if (isCollided || characterY <= 20 || (characterX >= floorMin && characterX <= floorMax)) {
-            fallsoundOnce = true
             isCollided = true
 
 
@@ -306,13 +305,13 @@ function fallAnimation() {
             } else if (!isMovingLeft && isMovingRight) {
                 Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
             }
-
+            if (fallsoundOnce) { playSoundOnce("fall.ogg", 0.1), fallsoundOnce = false }
             return
         }
     }
     characterY -= 10;
     thePlayer.style.bottom = characterY + 'px';
-    if (fallsoundOnce) { playSoundOnce("fall.ogg", 0.5), fallsoundOnce = false }
+    fallsoundOnce = true
 }
 
 
