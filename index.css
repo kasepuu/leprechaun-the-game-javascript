@@ -11,13 +11,14 @@ body {
     font-family: sans-serif;
     color: white;
     overflow: hidden;
+    position: relative; /*TEST*/
 }
 
-.playground {
+#playground {
     position: relative;
     background-image: url("/images/main_menu_gamename.png");
     background-size: cover;
-    min-width: 1080px;
+    min-width: 1280px;
     min-height: 720px;
 }
 
@@ -46,13 +47,33 @@ body {
 }
 
 #startButton {
+    margin-left: 150;
     margin-top: 500px;
-
+    border-radius: 5px;
+    width: auto;
+    height: 50px;
+    color: white;
+    font-weight: 900;
+    font-style:italic;
+    font-size: large;
     background-color: red;
+    background-image: url("images/villain.gif");
+    background-size: cover;
 }
 
+
 #creditsButton {
-    background-color: aqua;
+
+    color: black;
+    font-weight: 900;
+    font-style:italic;
+    font-size: large;
+    background-image: url("images/leprechaun_walking_RIGHT.gif");
+    background-size: cover;
+    width: auto;
+    height: 50px;
+    border-radius: 5px;
+    background-color: green;
 }
 
 h3 {
@@ -89,7 +110,17 @@ h3 {
     position: 50%;
     width: 50px;
     height: 70px;
-    background-image: url("/images/villain.png");
+    background-image: url("/images/villain.gif");
+    /*    background-image: url("/images/villain_attack.png");*/
+}
+
+#theEnemy {
+    position: absolute;
+    bottom: 53%;
+    width: 40;
+    height: 25;
+    left:35%;
+    background-image: url("/images/black_dog.gif");
     /*    background-image: url("/images/villain_attack.png");*/
 }
 

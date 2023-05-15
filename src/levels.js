@@ -1,4 +1,7 @@
+let playground = document.getElementById("playground")
+
 export const level1 = () => {
+    playground.style.backgroundImage = `url("/images/level1_background.png")`
     let theGame = document.getElementById("theGame")
     let floors = document.getElementById("floors")
 

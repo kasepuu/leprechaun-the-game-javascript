@@ -6,34 +6,35 @@
     <link id="fav" rel="shortcut icon" type="image/x-icon" href="data:image/x-icon;,">
     <link rel="stylesheet" type="text/css" href="./index.css">
 </head>
-
 <script type="module" src="/src/main.js"></script><!--main script-->
 
 <body>
-    
-
-    <div id="playground" class="playground">
-
-        <button id="backToMenu" hidden="hidden">EXIT</button>
-        <!--div id="gameTitle"><p>PÄRDIKU HULLUS</p></div-->
-
-        <div class="centered" , id="screen">
-            <button id="startButton">START GAME</button>
-            <button id="creditsButton">CREDITS</button>
+    <div class="container">
+        <div id="playground" class="menu">
+            <img id="toggleMusic" src="images/music_on.png">
+            <img id="togglePause" src="images/pause.png" hidden="hidden">
+            <img id="backToMenu" src="images/exit.png" hidden="hidden">
+            <div class="centered" , id="screen">
+                <button id="startButton">START GAME</button>
+                <button id="creditsButton">CREDITS</button>
+            </div>
+            <div id="theGame" class="theGame" hidden="hidden">
+                <div id="score">SCORE: 0</div>
+                <div id="level">Level: 1</div>
+                <div id="time">00:00</div>
+                <div id="fps">FPS: 0</div>
+                <div id="thePlayer"></div> <!--PLAYER CHARACTER-->
+                <div id="levelTarget"></div> <!--LEVEL GOAL-->
+                <div id="theThief"></div> <!--DONKEY KONG-->
+                <div id="enemies">
+                    <div id="theEnemy" class="theEnemy" style="background-image:url(/images/brown_dog.gif); left:30%;"></div>
+                    <div id="theEnemy" class="theEnemy" style="background-image:url(/images/black_dog.gif);"></div>
+                </div>
+                <div id="floors"></div>
+            </div>
+            <h3 hidden="hidden">Juss Märtson & Joel Meeks</h3>
         </div>
 
-        <div id="theGame" class="theGame" hidden="hidden">
-            <div id="score">SCORE: 0</div>
-            <div id="level">Level: 1</div>
-            <div id="time">00:00</div>
-            <div id="fps">FPS: 0</div>
-            <div id="thePlayer"></div> <!--PLAYER CHARACTER-->
-            <div id="levelTarget"></div> <!--LEVEL GOAL-->
-            <div id="theThief"></div>
-            <div id="floors"></div>
-        </div>
-
-        <h3 hidden="hidden">Juss Märtson & Joel Meeks</h3>
     </div>
 </body>
 

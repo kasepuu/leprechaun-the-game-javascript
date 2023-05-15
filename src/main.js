@@ -1,35 +1,35 @@
 import { startGame, stopGame, resetGame } from "./game.js"
+import { PlayMusic } from "./sound.js"
+let winamp = new PlayMusic()
 
-var playground = document.querySelector("#playground")
+let MuteButton = document.getElementById("toggleMusic")
 var buttons = document.querySelectorAll("button")
-var divs = document.querySelectorAll("div")
-var creditsInfo = document.querySelector("h3")
+let exit = document.getElementById("backToMenu")
+let pause = document.getElementById("togglePause")
+let gameStart = document.getElementById("theGame")
 
-
+// HANDLING THE THEME SONG WHEN FIRST VISIT
+function themeSong(){
+    if (!MuteButton.src.includes("off"))  winamp.setAudio("menu.ogg")
+    else winamp.pause()
+}
 
 // START THE GAME!
 document.getElementById("startButton").addEventListener("click", (e) => {
+    winamp.pause()
+    winamp.stop()
     console.log("game started")
     // hiding buttons
     for (let b = 0; b < buttons.length; b++) {
-        if (buttons[b].id != "backToMenu") {
-            buttons[b].setAttribute("hidden", "hidden")
-        } else {
-            buttons[b].removeAttribute("hidden")
-        }
+        buttons[b].setAttribute("hidden", "hidden")
     }
-    // hiding game title
-    for (let gT = 0; gT < divs.length; gT++) {
-        if (divs[gT].id === "playground") {
-            divs[gT].style.backgroundImage = "url(../images/main_menu_noname.png)"
-            //  divs[gT].setAttribute("hidden", "hidden")
-        }
-    }
+
+    if (pause.hasAttribute("hidden")) pause.removeAttribute("hidden")
+    if (exit.hasAttribute("hidden")) exit.removeAttribute("hidden")
 
     if (!creditsInfo.hasAttribute("hidden")) creditsInfo.setAttribute("hidden", "hidden") // hide credits
 
-
-    let gameStart = document.querySelector(".theGame")
+    // starting the game
     if (gameStart.hasAttribute("hidden")) {
         gameStart.removeAttribute("hidden")
         startGame()
@@ -38,44 +38,38 @@ document.getElementById("startButton").addEventListener("click", (e) => {
 
 // RETURN BACK TO MENU
 document.getElementById("backToMenu").addEventListener("click", () => {
-    console.log("game exited:")
-    let buttons = document.querySelectorAll("button")
-    let divs = document.querySelectorAll("div")
 
-    // unhiding buttons
+    console.log("game exited:")
+    exit.removeAttribute("hidden")
+
     for (let b = 0; b < buttons.length; b++) {
-        if (buttons[b].id === "backToMenu") {
-            buttons[b].setAttribute("hidden", "hidden")
-        } else {
+        if (buttons[b].hasAttribute("hidden")) {
             buttons[b].removeAttribute("hidden")
         }
     }
 
-    // unhiding game title
-    for (let gT = 0; gT < divs.length; gT++) {
-        if (divs[gT].id === "playground") {
-            // divs[gT].removeAttribute("hidden")
-            divs[gT].style.backgroundImage = "url(../images/main_menu_gamename.png)"
-        }
-    }
-    let gameStart = document.querySelector(".theGame")
+    if (!exit.hasAttribute("hidden")) exit.setAttribute("hidden", "hidden")
+    if (!pause.hasAttribute("hidden")) pause.setAttribute("hidden", "hidden")
 
     if (!gameStart.hasAttribute("hidden")) {
         gameStart.setAttribute("hidden", "hidden")
+       // backToMenu_sound()
+            
         stopGame()
         resetGame()
     }
 })
 
 // SHOW CREDITS
-document.getElementById("creditsButton").addEventListener("click", () => {
-    console.log("credits shown:")
+var creditsInfo = document.querySelector("h3")
+ document.getElementById("creditsButton").addEventListener("click", () => {
+     console.log("credits shown:")
+     let creditsInfo = document.querySelector("h3")
+     if (creditsInfo.hasAttribute("hidden")) {
+         creditsInfo.removeAttribute("hidden")
+     } else {
+         creditsInfo.setAttribute("hidden", "hidden")
+     }
+ })
 
-    let creditsInfo = document.querySelector("h3")
-
-    if (creditsInfo.hasAttribute("hidden")) {
-        creditsInfo.removeAttribute("hidden")
-    } else {
-        creditsInfo.setAttribute("hidden", "hidden")
-    }
-})
+themeSong()
