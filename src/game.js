@@ -180,8 +180,8 @@ function moveLeft() {
 
         for (let i = 0; i < walls.length; i++) {
             const wall = walls[i];
-            const wallLeft = parseInt(wall.style.left) || 0;
-            const wallBottom = parseInt(wall.style.bottom) || 0;
+            const wallLeft = parseInt(wall.style.left);
+            const wallBottom = parseInt(wall.style.bottom);
 
             if (currentLeft < wallLeft + walls[i].offsetWidth
                 && currentLeft > wallLeft
@@ -222,8 +222,8 @@ function moveRight() {
 
         for (let i = 0; i < walls.length; i++) {
             const wall = walls[i];
-            const wallLeft = parseInt(wall.style.left) || 0;
-            const wallBottom = parseInt(wall.style.bottom) || 0;
+            const wallLeft = parseInt(wall.style.left);
+            const wallBottom = parseInt(wall.style.bottom);
 
             if (currentLeft + Character.offsetWidth < wallLeft + walls[i].offsetWidth
                 && currentLeft + Character.offsetWidth > wallLeft
@@ -259,18 +259,18 @@ function charJump(startY) {
     playSoundOnce("jump.ogg", 0.03)
 
     isJumping = true
-    let currentJumpHeight = startY
+    let currentJumpHeight = startY;
 
     function jumpAnimation() {
-        const currentLeft = parseInt(thePlayer.style.left);
-        let thePlayerHeight = parseInt(thePlayer.style.bottom)
+        const currentLeft = parseInt(thePlayer.style.left) || 0;
+        let thePlayerHeight = parseInt(thePlayer.style.bottom);
         let walls = Floors.getElementsByTagName('div')
     
         for (let i = 0; i < walls.length; i++) {
             const wall = walls[i];
             const wallLeft = parseInt(wall.style.left);
             const wallBottom = parseInt(wall.style.bottom);
-    
+            console.log(wallBottom, wallLeft, currentLeft, thePlayerHeight)
             if (currentLeft <= wallLeft + walls[i].offsetWidth - 10
                 && currentLeft + Character.offsetWidth >= wallLeft + 10
                 && thePlayerHeight + Character.offsetHeight === wallBottom) {
@@ -295,7 +295,7 @@ function charJump(startY) {
 
 // function for falling
 function fallAnimation() {
-    const currentLeft = parseInt(thePlayer.style.left) + 25;
+    const currentLeft = parseInt(thePlayer.style.left) + 25 || 0;
     let thePlayerHeight = parseInt(thePlayer.style.bottom)
     let walls = Floors.getElementsByTagName('div')
 
