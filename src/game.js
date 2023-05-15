@@ -6,7 +6,6 @@ let animationIdRight = null
 let animationIdLeft = null
 let gameRunning = false
 let isCollided = false
-let rightWall = false
 let body = document.getElementById("playground")
 let theGame = document.getElementById("theGame")
 let Character = document.getElementById("thePlayer")
@@ -122,7 +121,6 @@ function main() {
     else isCollided = false
 
     if (!isCollided && !isJumping) fallAnimation()
-    console.log(rightWall)
 
     theGame.appendChild(Character)
     body.appendChild(theGame)
@@ -165,28 +163,24 @@ function moveLeft() {
     function moveAnimationLeft() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
 
-        //let floorHeights = floorArr.join().match(/\d*[H]/g)
-        //floorHeights = floorHeights.map(item => parseInt(item));
-
         let thePlayerHeight = parseInt(thePlayer.style.bottom)
-        let collidedWithWall = false;
         let walls = Floors.getElementsByTagName('div')
 
         for (let i = 0; i < walls.length; i++) {
-          const wall = walls[i];
-          const wallLeft = parseInt(wall.style.left, 10) || 0;
-          const wallTop = parseInt(wall.style.bottom, 10) || 0;
-          if (currentLeft >=  wallLeft - 50 && currentLeft <= wallLeft + 50 && thePlayerHeight >= wallTop + 20 && thePlayerHeight <= wallTop) {
-            console.log("ACT1:", currentLeft, "<", wallLeft-50, "ACT2", currentLeft, ">", wallLeft + 50, "ACT3:", thePlayerHeight, ">", wallTop - 80, "ACT4", thePlayerHeight, "<", wallTop + 80)
-            collidedWithWall = true;
-            break;
-          }
+            const wall = walls[i];
+            const wallLeft = parseInt(wall.style.left, 10) || 0;
+            const wallTop = parseInt(wall.style.bottom, 10) || 0;
+
+            if (currentLeft < wallLeft + walls[i].offsetWidth
+                && currentLeft > wallLeft
+                && thePlayerHeight < wallTop + 20
+                && thePlayerHeight + 60 > wallTop) {
+
+                animationIdLeft = requestAnimationFrame(moveAnimationLeft)
+                return
+            }
         }
-    
-        if (collidedWithWall) {
-          stopAnimationLeft();
-          return;
-        }
+
         const newLeft = currentLeft - 7;
         thePlayer.style.left = newLeft + 'px';
         if (newLeft <= 0) {
@@ -204,13 +198,30 @@ function stopAnimationLeft() {
     isMovingLeft = false;
     cancelAnimationFrame(animationIdLeft);
     animationIdLeft = null;
-
 }
 function moveRight() {
     if (isMovingRight || animationIdRight) return;
     isMovingRight = true;
+
     function moveAnimation() {
         const currentLeft = parseInt(thePlayer.style.left, 10) || 0;
+        let thePlayerHeight = parseInt(thePlayer.style.bottom)
+        let walls = Floors.getElementsByTagName('div')
+
+        for (let i = 0; i < walls.length; i++) {
+            const wall = walls[i];
+            const wallLeft = parseInt(wall.style.left, 10) || 0;
+            const wallTop = parseInt(wall.style.bottom, 10) || 0;
+
+            if (currentLeft + Character.offsetWidth < wallLeft + walls[i].offsetWidth
+                && currentLeft + Character.offsetWidth > wallLeft
+                && thePlayerHeight < wallTop + 20
+                && thePlayerHeight + 60 > wallTop) {
+
+                animationIdRight = requestAnimationFrame(moveAnimation)
+                return
+            }
+        }
         const newLeft = currentLeft + 7;
         thePlayer.style.left = newLeft + 'px';
         if (newLeft >= body.offsetWidth - 30) {
@@ -222,9 +233,9 @@ function moveRight() {
 
     animationIdRight = requestAnimationFrame(moveAnimation);
 }
+
 function stopAnimationRight() {
     Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
-
     isMovingRight = false;
     cancelAnimationFrame(animationIdRight);
     animationIdRight = null;
@@ -247,9 +258,7 @@ function charJump(startY) {
             let floorMin = floorArr[num - 2] - 30
             let floorMax = floorArr[num - 1] - 20
 
-            if (thePlayerXpos >= floorMin && thePlayerXpos <= floorMax //&&
-                //             (thePlayerXcoord )
-            ) {
+            if (thePlayerXpos >= floorMin && thePlayerXpos <= floorMax) {
                 isJumping = false
                 return
             }
