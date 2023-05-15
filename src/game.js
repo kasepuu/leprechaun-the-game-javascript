@@ -181,12 +181,12 @@ function moveLeft() {
         for (let i = 0; i < walls.length; i++) {
             const wall = walls[i];
             const wallLeft = parseInt(wall.style.left) || 0;
-            const wallTop = parseInt(wall.style.bottom) || 0;
+            const wallBottom = parseInt(wall.style.bottom) || 0;
 
             if (currentLeft < wallLeft + walls[i].offsetWidth
                 && currentLeft > wallLeft
-                && thePlayerHeight < wallTop + 20
-                && thePlayerHeight + 60 > wallTop) {
+                && thePlayerHeight < wallBottom + walls[i].offsetHeight
+                && thePlayerHeight + 60 > wallBottom) {
 
                 animationIdLeft = requestAnimationFrame(moveAnimationLeft)
                 return
@@ -223,12 +223,12 @@ function moveRight() {
         for (let i = 0; i < walls.length; i++) {
             const wall = walls[i];
             const wallLeft = parseInt(wall.style.left) || 0;
-            const wallTop = parseInt(wall.style.bottom) || 0;
+            const wallBottom = parseInt(wall.style.bottom) || 0;
 
             if (currentLeft + Character.offsetWidth < wallLeft + walls[i].offsetWidth
                 && currentLeft + Character.offsetWidth > wallLeft
-                && thePlayerHeight < wallTop + 20
-                && thePlayerHeight + 60 > wallTop) {
+                && thePlayerHeight < wallBottom + walls[i].offsetHeight
+                && thePlayerHeight + 60 > wallBottom) {
 
                 animationIdRight = requestAnimationFrame(moveAnimation)
                 return
@@ -269,11 +269,11 @@ function charJump(startY) {
         for (let i = 0; i < walls.length; i++) {
             const wall = walls[i];
             const wallLeft = parseInt(wall.style.left);
-            const wallTop = parseInt(wall.style.bottom);
+            const wallBottom = parseInt(wall.style.bottom);
     
             if (currentLeft <= wallLeft + walls[i].offsetWidth - 5
                 && currentLeft + Character.offsetWidth >= wallLeft + 5
-                && thePlayerHeight + Character.offsetHeight === wallTop) {
+                && thePlayerHeight + Character.offsetHeight === wallBottom) {
 
                 isJumping = false
                 return
@@ -302,13 +302,13 @@ function fallAnimation() {
     for (let i = 0; i < walls.length; i++) {
         const wall = walls[i];
         const wallLeft = parseInt(wall.style.left);
-        const wallTop = parseInt(wall.style.bottom);
+        const wallBottom = parseInt(wall.style.bottom);
 
         if (isCollided 
             || thePlayerHeight <= 20 
             || (currentLeft < wallLeft + walls[i].offsetWidth + Character.offsetWidth-5
             && currentLeft >= wallLeft
-            && thePlayerHeight === wallTop + 20)) {
+            && thePlayerHeight === wallBottom + walls[i].offsetHeight)) {
                 
             isCollided = true
 
@@ -339,14 +339,6 @@ export function startGame() {
     Character.style.bottom = 30 + 'px'
 
     level1() // executing level 1
-
-    let allFloors = Floors.getElementsByTagName('div');
-    for (var i = 1; i < allFloors.length; i++) {
-        let floorMin = (parseInt(allFloors[i].style.left));
-        let floorMax = parseInt(allFloors[i].style.left) + allFloors[i].offsetWidth + 20;
-        let floorHeight = parseInt(allFloors[i].style.bottom) + allFloors[i].offsetHeight + "H";
-        floorArr.push(floorMin, floorMax, floorHeight);
-    }
 
     main() // starting the animation process
 }
