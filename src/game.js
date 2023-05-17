@@ -106,7 +106,7 @@ function main(currentTime) {
   playGround.appendChild(Character);
 
   const elapsed = currentTime - lastFrameTime;
-  const delay = Math.max(1000 / 60 - elapsed, 0);
+  const delay = Math.max(1000 / 41 - elapsed, 0);
   lastFrameTime = currentTime;
 
   setTimeout(() => {
