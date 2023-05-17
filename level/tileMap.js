@@ -18,6 +18,11 @@ export function createEnemies(level){
     }
 }
 
+export function removeEnemies(){
+    let enemiesParent = document.getElementById("enemies")
+    enemiesParent.innerHTML = ""
+}
+
 export function drawTiles(map, color) {
     let parent = document.getElementById("tileMap")
     parent.innerHTML = ""

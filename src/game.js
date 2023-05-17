@@ -21,7 +21,7 @@ import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnima
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
-import { drawTiles, deleteTiles, createEnemies } from "../level/tileMap.js"
+import { drawTiles, deleteTiles, createEnemies, removeEnemies } from "../level/tileMap.js"
 import { frameRate, getFpsDelay, timer } from "./overlayItems.js"
 export let lastLeftMove = false
 
@@ -71,7 +71,7 @@ export function ExitGame() {
     mainMenu.removeAttribute("hidden")
     PauseButton.setAttribute("hidden", "")
     backToMenu.setAttribute("hidden", "")
-
+    removeEnemies()
     cancelAnimationFrame(animationFrameId)
     animationFrameId = null
 }
@@ -176,6 +176,7 @@ export function levelUp() {
     currentLevel += 1
 
     //changelevel!
+    removeEnemies()
     deleteTiles()
     resetCharacter()
     if (currentLevel <= maxLevels) {
@@ -211,6 +212,7 @@ export function loseLife() {
         Character.style.left = 40
         Character.style.bottom = 40
         healthBar.src = `images/hud/lives_4.png`
+        createEnemies(currentLevel)
         drawTiles(eval(`level${currentLevel}_map`)) // setting up current level
     }
     else healthBar.src = `images/hud/lives_${lives}.png`
