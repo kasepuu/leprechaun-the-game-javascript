@@ -33,14 +33,14 @@ export function charJump(startY, currentTime) {
     currentJumpHeight += 10;
     character.style.bottom = currentJumpHeight + 'px';
     const elapsed = currentTime - lastFrameTime;
-    const delay = Math.max(1000 / 41 - elapsed, 0);
+    const delay = Math.max(1000 / 37 - elapsed, 0);
     lastFrameTime =  currentTime;
     setTimeout(() => {
       requestAnimationFrame(jumpAnimation);
     }, delay);
   }
   const elapsed = currentTime - lastFrameTime;
-  const delay = Math.max(1000 / 41 - elapsed, 0);
+  const delay = Math.max(1000 / 37 - elapsed, 0);
   setTimeout(() => {
     requestAnimationFrame(jumpAnimation);
   }, delay);
@@ -80,7 +80,7 @@ export function moveLeft(currentTime) {
 
     if (isMovingLeft) {
       const elapsed = currentTime - lastFrameTime;
-      const delay = Math.max(1000 / 41 - elapsed, 0);
+      const delay = Math.max(1000 / 37 - elapsed, 0);
       lastFrameTime = currentTime;
       setTimeout(() => {
         animationIdLeft = requestAnimationFrame(moveAnimationLeft);
@@ -90,7 +90,7 @@ export function moveLeft(currentTime) {
     }
   }
   const elapsed = currentTime - lastFrameTime;
-  const delay = Math.max(1000 / 41 - elapsed, 0);
+  const delay = Math.max(1000 / 37 - elapsed, 0);
   lastFrameTime = currentTime;
   setTimeout(() => {
     animationIdLeft = requestAnimationFrame(moveAnimationLeft);
@@ -115,7 +115,7 @@ export function moveRight(currentTime) {
     let currentBottom = parseInt(character.style.bottom) || 40;
 
     const elapsed = currentTime - lastFrameTime;
-    const delay = Math.max(1000 / 41 - elapsed, 0);
+    const delay = Math.max(1000 / 37 - elapsed, 0);
 
     let newX = currentLeft;
     newX += 5;
@@ -134,7 +134,7 @@ export function moveRight(currentTime) {
     }
   }
   const elapsed = currentTime - lastFrameTime;
-  const delay = Math.max(1000 / 41 - elapsed, 0);
+  const delay = Math.max(1000 / 37 - elapsed, 0);
   lastFrameTime = currentTime;
   setTimeout(() => {
     animationIdRight = requestAnimationFrame(moveAnimationRight);
