@@ -27,7 +27,7 @@ B,|,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,-,-,w,w,w,-,-,w,w,w,-,-,-,-,-,-,-,-,-,-,E,E,E,
 B,|,E,E,E,E,E,E,E,E,E,E,E,-,-,-,-,E,E,-,-,-,-,-,-,-,-,-,E,E,E,E,E,E,E,E,-,E,E,E,E,E,E,E,E,E,E,E,|,E,E,E,E,E,E,E,-,-,E,E,E,E,E,B
 B,-,-,-,-,-,-,-,-,w,w,w,-,-,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,-,e,e,e,e,e,e,e,e,e,e,e,-,E,E,E,E,E,E,E,E,E,E,E,E,E,E,B
 B,E,E,-,-,-,-,E,-,-,-,-,-,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,B
-B,E,E,E,E,E,E,E,-,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,B
+B,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,B
 B,0,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,-,-,-,-,-,-,B
 B,0,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,B
 B,0,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,-,-,e,e,e,e,-,-,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,E,B
