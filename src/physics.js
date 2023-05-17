@@ -15,14 +15,14 @@ import { tileSize } from "../level/tileMap.js"
 import { currentLevel, levelUp, loseLife } from "../src/game.js"
 
 // function for jumping
-export function charJump(startY) {
+export function charJump(startY, currentTime) {
   if (isJumping) return
   //playSoundOnce("jump.ogg", 0.03)
-
+  let lastFrameTime = 0;
   isJumping = true
   let currentJumpHeight = parseInt(character.style.bottom) || 40;
 
-  function jumpAnimation() {
+  function jumpAnimation(currentTime) {
     const currentLeft = parseInt(character.style.left) || 40;
     if (currentJumpHeight + character.offsetHeight >= startY + tileSize || checkCollision(currentLeft, character.offsetHeight + currentJumpHeight, 'up')
       || checkCollision(currentLeft + character.offsetWidth, character.offsetHeight + currentJumpHeight, 'up')) {
@@ -32,11 +32,18 @@ export function charJump(startY) {
 
     currentJumpHeight += 10;
     character.style.bottom = currentJumpHeight + 'px';
-
-    requestAnimationFrame(jumpAnimation);
+    const elapsed = currentTime - lastFrameTime;
+    const delay = Math.max(1000 / 60 - elapsed, 0);
+    lastFrameTime =  currentTime;
+    setTimeout(() => {
+      requestAnimationFrame(jumpAnimation);
+    }, delay);
   }
-
-  requestAnimationFrame(jumpAnimation);
+  const elapsed = currentTime - lastFrameTime;
+  const delay = Math.max(1000 / 60 - elapsed, 0);
+  setTimeout(() => {
+    requestAnimationFrame(jumpAnimation);
+  }, delay);
 }
 
 // function for falling
@@ -58,28 +65,36 @@ export function fallAnimation() {
   character.style.bottom = characterBottom + 'px';
 }
 
-export function moveLeft() {
+export function moveLeft(currentTime) {
   if (isMovingLeft || animationIdLeft) return;
   isMovingLeft = true;
-
-  function moveAnimationLeft() {
+  let lastFrameTime = 0;
+  function moveAnimationLeft(currentTime) {
     let currentLeft = parseInt(character.style.left) || 40;
     let currentBottom = parseInt(character.style.bottom) || 40;
 
     let newX = currentLeft - 5;
     if (!checkCollision(newX, currentBottom, 'left')) {
       character.style.left = newX + "px";
-
     }
 
     if (isMovingLeft) {
-      animationIdLeft = requestAnimationFrame(moveAnimationLeft);
+      const elapsed = currentTime - lastFrameTime;
+      const delay = Math.max(1000 / 60 - elapsed, 0);
+      lastFrameTime = currentTime;
+      setTimeout(() => {
+        animationIdLeft = requestAnimationFrame(moveAnimationLeft);
+      }, delay);
     } else {
       animationIdLeft = stopAnimationLeft();
     }
   }
-
-  animationIdLeft = requestAnimationFrame(moveAnimationLeft);
+  const elapsed = currentTime - lastFrameTime;
+  const delay = Math.max(1000 / 60 - elapsed, 0);
+  lastFrameTime = currentTime;
+  setTimeout(() => {
+    animationIdLeft = requestAnimationFrame(moveAnimationLeft);
+  }, delay);
 }
 
 export function stopAnimationLeft() {
@@ -91,13 +106,16 @@ export function stopAnimationLeft() {
 }
 
 
-export function moveRight() {
+export function moveRight(currentTime) {
   if (isMovingRight || animationIdRight) return;
   isMovingRight = true;
-
-  function moveAnimationRight() {
+  let lastFrameTime = 0;
+  function moveAnimationRight(currentTime) {
     let currentLeft = parseInt(character.style.left) || 40;
     let currentBottom = parseInt(character.style.bottom) || 40;
+
+    const elapsed = currentTime - lastFrameTime;
+    const delay = Math.max(1000 / 60 - elapsed, 0);
 
     let newX = currentLeft;
     newX += 5;
@@ -107,13 +125,20 @@ export function moveRight() {
     }
 
     if (isMovingRight) {
-      animationIdRight = requestAnimationFrame(moveAnimationRight);
+      lastFrameTime = currentTime;
+      setTimeout(() => {
+        animationIdRight = requestAnimationFrame(moveAnimationRight);
+      }, delay);
     } else {
       animationIdRight = stopAnimationRight();
     }
   }
-  animationIdRight = requestAnimationFrame(moveAnimationRight);
-}
+  const elapsed = currentTime - lastFrameTime;
+  const delay = Math.max(1000 / 60 - elapsed, 0);
+  lastFrameTime = currentTime;
+  setTimeout(() => {
+    animationIdRight = requestAnimationFrame(moveAnimationRight);
+  }, delay);}
 
 export function stopAnimationRight() {
   character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
@@ -167,16 +192,18 @@ export function checkCollision(x, y, direction, isCharacter = true) {
     return false;
   }
 }
+
 export function characterEnemyCollision(enemy) {
   let enemyPos = enemy.getBoundingClientRect();
   let characterPos = character.getBoundingClientRect();
-
   if (
     characterPos.bottom >= enemyPos.top &&
-    characterPos.bottom <= enemyPos.top + 10 &&
+    characterPos.bottom <= enemyPos.top + 5 &&
     enemyPos.left <= characterPos.right &&
     enemyPos.right >= characterPos.left
   ) {
+    isJumping = false;
+    charJump(parseInt(character.style.bottom) + character.offsetHeight * 2);
     enemy.remove();
     return;
   }
@@ -199,7 +226,7 @@ export function moveEnemy(enemiesParent) {
     let currentBottom = parseInt(enemy.style.bottom);
 
     let direction = parseInt(enemy.style.transform.match(/-?\d/));
-    let newX = currentLeft + (2 * -direction);
+    let newX = currentLeft + (3 * -direction);
 
     if (!checkCollision(newX, currentBottom, 'left', false) && checkCollision(newX, currentBottom - 10, 'down', false) &&
         !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && checkCollision(newX + enemy.offsetWidth, currentBottom - 10, 'down', false)) {

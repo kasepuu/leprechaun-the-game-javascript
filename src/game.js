@@ -76,32 +76,42 @@ export function ExitGame() {
 
 
 //Main function, refreshes the playground every frame
-function main() {
-    if (animationFrameId !== null) cancelAnimationFrame(animationFrameId)
+let lastFrameTime = 0;
 
-    frameRate(frameTimes) // handles Framerate
-    timer(startTime, timeElapsed) // handles Timer
+function main(currentTime) {
+  if (animationFrameId !== null) {
+    cancelAnimationFrame(animationFrameId);
+  }
 
-    let currentLeft = parseInt(Character.style.left, 10) || 40;
-    let currentBottom = parseInt(Character.style.bottom, 10) || 40;
-    let newX = currentLeft;
-    let newY = currentBottom - 10;
-    moveEnemy(enemiesParent);
+  frameRate(frameTimes); // handles Framerate
+  timer(startTime, timeElapsed); // handles Timer
 
-    if (!checkCollision(newX, newY, "down") && !physics.isJumping && !checkCollision(newX + Character.offsetWidth - 5, newY, 'down') && lives != 0) {
-        fallAnimation()
-        Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
-    }
-    playGround.appendChild(enemiesParent)
-    playGround.appendChild(Character)
+  let currentLeft = parseInt(Character.style.left, 10) || 40;
+  let currentBottom = parseInt(Character.style.bottom, 10) || 40;
+  let newX = currentLeft;
+  let newY = currentBottom - 10;
+  moveEnemy(enemiesParent);
 
+  if (
+    !checkCollision(newX, newY, "down") &&
+    !physics.isJumping &&
+    !checkCollision(newX + Character.offsetWidth - 5, newY, "down") &&
+    lives !== 0
+  ) {
+    fallAnimation();
+    Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)";
+  }
 
-    // limiting to 60 fps, to prove rich people that money doesnt buy happiness
-   //let delay = getFpsDelay()
-    //setTimeout(() => {
-        animationFrameId = requestAnimationFrame(main)
-   // }, delay)
-}
+  playGround.appendChild(enemiesParent);
+  playGround.appendChild(Character);
+
+  const elapsed = currentTime - lastFrameTime;
+  const delay = Math.max(1000 / 60 - elapsed, 0);
+  lastFrameTime = currentTime;
+
+  setTimeout(() => {
+    animationFrameId = requestAnimationFrame(main);
+  }, delay);}
 
 // eventlisteners for movement
 document.addEventListener("keydown", (event) => {
