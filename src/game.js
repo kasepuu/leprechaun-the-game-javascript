@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 3
+export let currentLevel = 1
 let lives = 4
 let maxLevels = 3
 
@@ -88,7 +88,10 @@ function main() {
     let newX = currentLeft;
     let newY = currentBottom - 10;
 
-    if (!checkCollision(newX, newY, "down") && !physics.isJumping && !checkCollision(newX + Character.offsetWidth - 5, newY, 'down')) fallAnimation()
+    if (!checkCollision(newX, newY, "down") && !physics.isJumping && !checkCollision(newX + Character.offsetWidth - 5, newY, 'down')) {
+        fallAnimation()
+        Character.style.backgroundImage ="url(/images/characters/main/leprechaun.gif)"
+    }
     playGround.appendChild(Character)
 
     // limiting to 60 fps, to prove rich people that money doesnt buy happiness
