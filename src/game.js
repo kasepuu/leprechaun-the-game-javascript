@@ -11,13 +11,13 @@ let timeElapsed = 0 // timer
 let startTime // game started at...
 let fallsoundOnce = false
 let gameRunning = false
-
+let enemiesParent = document.getElementById("enemies")
 // importing 
 import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
 let MuteButton = document.getElementById("toggleMute")
 let PauseButton = document.getElementById("togglePause")
 //imports
-import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft } from "./physics.js"
+import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy } from "./physics.js"
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
@@ -28,7 +28,7 @@ export let lastLeftMove = false
 
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
 
-function resetCharacter(xPos = "left", yPos ="bottom", xPosValue = 40, yPosValue = 40) {
+function resetCharacter(xPos = "left", yPos = "bottom", xPosValue = 40, yPosValue = 40) {
     Character.style[xPos] = xPosValue + "px"
     Character.style[yPos] = yPosValue + "px"
 }
@@ -48,14 +48,12 @@ export function StartGame() {
     healthBar.src = "images/hud/lives_4.png"
     resetCharacter()
     drawTiles(eval(`level${currentLevel}_map`)) // setting up current level
-    createEnemies(currentLevel) // creating current enemies for currentlevel
-
+    createEnemies(currentLevel) // creating current enemies for currentlevel    
     playground.classList.add("level_1") // type of theme song 
     playground.classList.remove("menu") // remove the previous class
     gameIsPaused = false
     gameRunning = true; // sets the game status to "is running"
     startTime = Date.now() // timer startpoint
-
     main() // animation frame loop
 }
 
@@ -88,18 +86,21 @@ function main() {
     let currentBottom = parseInt(Character.style.bottom, 10) || 40;
     let newX = currentLeft;
     let newY = currentBottom - 10;
+    moveEnemy(enemiesParent);
 
-    if (!checkCollision(newX, newY, "down") && !physics.isJumping && !checkCollision(newX + Character.offsetWidth - 5, newY, 'down')) {
+    if (!checkCollision(newX, newY, "down") && !physics.isJumping && !checkCollision(newX + Character.offsetWidth - 5, newY, 'down') && lives != 0) {
         fallAnimation()
-        Character.style.backgroundImage ="url(/images/characters/main/leprechaun.gif)"
+        Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
     }
+    playGround.appendChild(enemiesParent)
     playGround.appendChild(Character)
 
+
     // limiting to 60 fps, to prove rich people that money doesnt buy happiness
-    let delay = getFpsDelay()
-    setTimeout(() => {
+   //let delay = getFpsDelay()
+    //setTimeout(() => {
         animationFrameId = requestAnimationFrame(main)
-    }, delay)
+   // }, delay)
 }
 
 // eventlisteners for movement
@@ -148,7 +149,7 @@ const observer = new MutationObserver((mutations) => {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("menu.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_1")) {
-                if (!MuteButton.src.includes("off")) winamp.setAudio("level1.ogg")
+                if (!MuteButton.src.includes("off")) winamp.setAudio("level3.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_2")) {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("level2.ogg")
@@ -198,12 +199,13 @@ export function levelUp() {
 export function loseLife() {
     console.log("OUCH!")
     playSoundOnce("jump.ogg")
-
     resetCharacter()
     lives -= 1
-    if (lives < 0) {
+    if (lives === 0) {
+        removeEnemies()
         console.log("HEY! YOU JUST COMPLETELY BLEW THE GAME, LEARN TO PLAY!")
         deleteTiles()
+
         playground.classList.remove(`level_${currentLevel}`)
         currentLevel = 1
         playground.classList.add(`level_${currentLevel}`)

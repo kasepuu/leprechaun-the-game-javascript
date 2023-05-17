@@ -80,8 +80,8 @@ body {
     position: absolute;
     right: 0;
     bottom: 0;
-    background-image: url("images/characters/villains/black_dog.gif");
-    background-size: cover;
+    background-image: url("images/characters/villains/brown_dog.gif");
+    background-size:cover;
     width: 20;
     height: 20;
 }

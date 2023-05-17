@@ -5,11 +5,14 @@ let animationIdRight = null
 let animationIdLeft = null
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
 
-let Character = document.getElementById("character")
+let playGround = document.getElementById('playground')
+let character = document.getElementById("character")
+//let enemiesParent = document.getElementById("enemies")
+//export let enemy = enemiesParent.getElementsByTagName('div')
 
 import { tileSize } from "../level/tileMap.js"
 
-import { currentLevel, levelUp, loseLife} from "../src/game.js"
+import { currentLevel, levelUp, loseLife } from "../src/game.js"
 
 // function for jumping
 export function charJump(startY) {
@@ -17,18 +20,18 @@ export function charJump(startY) {
   //playSoundOnce("jump.ogg", 0.03)
 
   isJumping = true
-  let currentJumpHeight = parseInt(Character.style.bottom) || 40;
+  let currentJumpHeight = parseInt(character.style.bottom) || 40;
 
   function jumpAnimation() {
-    const currentLeft = parseInt(Character.style.left) || 40;
-    if (currentJumpHeight + Character.offsetHeight >= startY + tileSize || checkCollision(currentLeft, Character.offsetHeight + currentJumpHeight, 'up')
-    || checkCollision(currentLeft + Character.offsetWidth, Character.offsetHeight + currentJumpHeight, 'up')) {
+    const currentLeft = parseInt(character.style.left) || 40;
+    if (currentJumpHeight + character.offsetHeight >= startY + tileSize || checkCollision(currentLeft, character.offsetHeight + currentJumpHeight, 'up')
+      || checkCollision(currentLeft + character.offsetWidth, character.offsetHeight + currentJumpHeight, 'up')) {
       isJumping = false;
       return; // Exit the animation loop
     }
 
     currentJumpHeight += 10;
-    Character.style.bottom = currentJumpHeight + 'px';
+    character.style.bottom = currentJumpHeight + 'px';
 
     requestAnimationFrame(jumpAnimation);
   }
@@ -38,21 +41,21 @@ export function charJump(startY) {
 
 // function for falling
 export function fallAnimation() {
-  let currentLeft = parseInt(Character.style.left) || 40;
-  let characterBottom = parseInt(Character.style.bottom) || 40;
+  let currentLeft = parseInt(character.style.left) || 40;
+  let characterBottom = parseInt(character.style.bottom) || 40;
 
   if (checkCollision(currentLeft, characterBottom, 'down') && checkCollision(currentLeft + 35, characterBottom, 'down')) {
     if (!isMovingLeft && !isMovingRight) {
-      Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
+      character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
     } else if (isMovingLeft && !isMovingRight) {
-      Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
+      character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
     } else if (!isMovingLeft && isMovingRight) {
-      Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
+      character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
     }
     return;
   }
   characterBottom -= 10;
-  Character.style.bottom = characterBottom + 'px';
+  character.style.bottom = characterBottom + 'px';
 }
 
 export function moveLeft() {
@@ -60,12 +63,13 @@ export function moveLeft() {
   isMovingLeft = true;
 
   function moveAnimationLeft() {
-    let currentLeft = parseInt(Character.style.left) || 40;
-    let currentBottom = parseInt(Character.style.bottom) || 40;
+    let currentLeft = parseInt(character.style.left) || 40;
+    let currentBottom = parseInt(character.style.bottom) || 40;
 
     let newX = currentLeft - 5;
     if (!checkCollision(newX, currentBottom, 'left')) {
-      Character.style.left = newX + "px";
+      character.style.left = newX + "px";
+
     }
 
     if (isMovingLeft) {
@@ -79,7 +83,7 @@ export function moveLeft() {
 }
 
 export function stopAnimationLeft() {
-  Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
+  character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
 
   isMovingLeft = false;
   cancelAnimationFrame(animationIdLeft);
@@ -92,14 +96,14 @@ export function moveRight() {
   isMovingRight = true;
 
   function moveAnimationRight() {
-    let currentLeft = parseInt(Character.style.left) || 40;
-    let currentBottom = parseInt(Character.style.bottom) || 40;
+    let currentLeft = parseInt(character.style.left) || 40;
+    let currentBottom = parseInt(character.style.bottom) || 40;
 
     let newX = currentLeft;
     newX += 5;
     // Check if the new position has a collision
     if (!checkCollision(newX, currentBottom, 'right')) {
-      Character.style.left = newX + "px";
+      character.style.left = newX + "px";
     }
 
     if (isMovingRight) {
@@ -112,14 +116,14 @@ export function moveRight() {
 }
 
 export function stopAnimationRight() {
-  Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
+  character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
   isMovingRight = false;
   cancelAnimationFrame(animationIdRight);
   animationIdRight = null;
 }
 
 
-export function checkCollision(x, y, direction) {
+export function checkCollision(x, y, direction, isCharacter = true) {
   // Calculate the character's tile position
   let characterTileX = Math.floor(x / 20);
   let characterTileY = Math.floor(y / 20);
@@ -131,7 +135,7 @@ export function checkCollision(x, y, direction) {
   if (direction === "left") {
     adjacentTileX = Math.floor((x) / 20);
   } else if (direction === "right") {
-    adjacentTileX = Math.floor((x + Character.offsetWidth) / 20);
+    adjacentTileX = Math.floor((x + character.offsetWidth) / 20);
   } else if (direction === "up") {
     adjacentTileY = Math.floor((y) / 20);
   } else if (direction === "down") {
@@ -141,25 +145,73 @@ export function checkCollision(x, y, direction) {
   // Check if the adjacent tiles are collision tiles
   let currentTile = eval(`level${currentLevel}_map`)[35 - characterTileY][characterTileX];
   let adjacentTile = eval(`level${currentLevel}_map`)[35 - adjacentTileY][adjacentTileX];
-  
-  if (currentTile === "7" || adjacentTile === "7"){
+
+  if ((currentTile === "7" || adjacentTile === "7") && isCharacter) {
     levelUp()
     return true
-  } 
-  if (currentTile === "w" || adjacentTile === "w"){
+  }
+  if ((currentTile === "w" || adjacentTile === "w") && isCharacter) {
     loseLife()
     return true
   }
 
-  if (currentTile === "r" || adjacentTile === "r"){
+  if (currentTile === "r" || adjacentTile === "r") {
     return false
   }
 
   if ((currentTile !== "E" || adjacentTile !== "E") &&
-   (currentTile !== "e" || adjacentTile !== "e") &&
-   (currentTile !== "r" || adjacentTile !== "r")) {
+    (currentTile !== "e" || adjacentTile !== "e") &&
+    (currentTile !== "r" || adjacentTile !== "r")) {
     return true;
   } else {
     return false;
   }
+}
+export function characterEnemyCollision(enemy) {
+  let enemyPos = enemy.getBoundingClientRect();
+  let characterPos = character.getBoundingClientRect();
+
+  if (
+    characterPos.bottom >= enemyPos.top &&
+    characterPos.bottom <= enemyPos.top + 10 &&
+    enemyPos.left <= characterPos.right &&
+    enemyPos.right >= characterPos.left
+  ) {
+    enemy.remove();
+    return;
+  }
+ 
+  if (
+    characterPos.left <= enemyPos.right &&
+    characterPos.right >= enemyPos.left &&
+    enemyPos.top <= characterPos.bottom &&
+    enemyPos.bottom >= characterPos.top
+  ) {
+    loseLife();
+    return;
+  }
+}
+
+export function moveEnemy(enemiesParent) {
+  let enemies = enemiesParent.getElementsByTagName("div");
+  Array.from(enemies).forEach(enemy => {
+    let currentLeft = parseInt(enemy.style.left);
+    let currentBottom = parseInt(enemy.style.bottom);
+
+    let direction = parseInt(enemy.style.transform.match(/-?\d/));
+    let newX = currentLeft + (2 * -direction);
+
+    if (!checkCollision(newX, currentBottom, 'left', false) && checkCollision(newX, currentBottom - 10, 'down', false) &&
+        !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && checkCollision(newX + enemy.offsetWidth, currentBottom - 10, 'down', false)) {
+      enemy.style.left = newX + "px";
+    } else {
+      enemy.style.transform = 'scaleX(' + -direction + ')';
+    }
+
+    characterEnemyCollision(enemy);
+  });
+}
+export function stopEnemyAnimation(enemy) {
+  cancelAnimationFrame(enemy.animationId);
+  enemy.animationId = null;
 }
