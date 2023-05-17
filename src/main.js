@@ -1,5 +1,5 @@
 import { StartGame, ExitGame } from "./game.js"
-import { buildMaps } from "../level/levels.js"
+import { buildMaps } from "../levels/levels.js"
 import { PlayMusic } from "./sound.js"
 
 // element variables
