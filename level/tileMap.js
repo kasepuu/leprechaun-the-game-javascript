@@ -1,6 +1,22 @@
 import { currentLevel } from "../src/game.js"
 export const tileSize = 20
 
+export function createEnemies(level){
+    let enemiesParent = document.getElementById("enemies")
+    let amountOfEnemies = 3
+    let positionsX = [640, 820,1100]
+    let positionsY = [220, 240,40] 
+    if (level === 1){
+        for (let e = 0; e < amountOfEnemies; e++){
+            let enemy = document.createElement("div")
+            enemy.id = "theAttacker"
+            enemy.style.backgroundColor = "purple"
+            enemy.style.left = positionsX[e]
+            enemy.style.bottom = positionsY[e]
+            enemiesParent.appendChild(enemy)
+        }
+    }
+}
 
 export function drawTiles(map, color) {
     let parent = document.getElementById("tileMap")

@@ -21,7 +21,7 @@ import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnima
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
-import { drawTiles, deleteTiles } from "../level/tileMap.js"
+import { drawTiles, deleteTiles, createEnemies } from "../level/tileMap.js"
 import { frameRate, getFpsDelay, timer } from "./overlayItems.js"
 export let lastLeftMove = false
 
@@ -48,6 +48,7 @@ export function StartGame() {
     healthBar.src = "images/hud/lives_4.png"
     resetCharacter()
     drawTiles(eval(`level${currentLevel}_map`)) // setting up current level
+    createEnemies(currentLevel) // creating current enemies for currentlevel
 
     playground.classList.add("level_1") // type of theme song 
     playground.classList.remove("menu") // remove the previous class
