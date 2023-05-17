@@ -151,8 +151,13 @@ export function checkCollision(x, y, direction) {
     return true
   }
 
+  if (currentTile === "r" || adjacentTile === "r"){
+    return false
+  }
+
   if ((currentTile !== "E" || adjacentTile !== "E") &&
-   (currentTile !== "e" || adjacentTile !== "e")) {
+   (currentTile !== "e" || adjacentTile !== "e") &&
+   (currentTile !== "r" || adjacentTile !== "r")) {
     return true;
   } else {
     return false;

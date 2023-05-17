@@ -133,6 +133,5 @@ body {
 }
 
 #playground{
-    background-image: url("level/sprites/level1_background.png");
     background-size: cover;
 }

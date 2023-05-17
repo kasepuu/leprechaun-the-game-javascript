@@ -1,7 +1,7 @@
 
 // simple variables, health, current level etc
+export let currentLevel = 3
 let lives = 4
-export let currentLevel = 1
 let maxLevels = 3
 
 // list of variables
@@ -28,14 +28,16 @@ export let lastLeftMove = false
 
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
 
-function resetCharacter(left = 40, bottom = 40) {
-    Character.style.left = left
-    Character.style.bottom = bottom
+function resetCharacter(xPos = "left", yPos ="bottom", xPosValue = 40, yPosValue = 40) {
+    Character.style[xPos] = xPosValue + "px"
+    Character.style[yPos] = yPosValue + "px"
 }
+
 
 export function StartGame() {
     playground.classList.remove(`menu`)
     playground.classList.add(`level_${currentLevel}`)
+    playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
 
     mainMenu.setAttribute("hidden", "")
     playGround.removeAttribute("hidden")
@@ -170,12 +172,13 @@ export function levelUp() {
     currentLevel += 1
 
     //changelevel!
-    resetCharacter()
     deleteTiles()
+    resetCharacter()
     if (currentLevel <= maxLevels) {
         drawTiles(eval(`level${currentLevel}_map`))
         playground.classList.remove(`level_${currentLevel - 1}`)
         playground.classList.add(`level_${currentLevel}`)
+        playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
     }
     else {
         console.log("HEY! YOU JUST COMPLETED THE GAME!")
@@ -183,6 +186,7 @@ export function levelUp() {
         lives = 4
         playground.classList.remove(`level_${maxLevels}`)
         playground.classList.add(`level_${currentLevel}`)
+        playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
         drawTiles(eval(`level${currentLevel}_map`)) // setting up current level
     }
 }
@@ -199,8 +203,10 @@ export function loseLife() {
         currentLevel = 1
         playground.classList.add(`level_${currentLevel}`)
         lives = 4
+        playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
         Character.style.left = 40
         Character.style.bottom = 40
+        healthBar.src = `images/hud/lives_4.png`
         drawTiles(eval(`level${currentLevel}_map`)) // setting up current level
     }
     else healthBar.src = `images/hud/lives_${lives}.png`
