@@ -1,0 +1,138 @@
+body {
+    background-color: black;
+    overflow: hidden;
+}
+
+.inner {
+    position: relative;
+    width: 1280px;
+    margin: auto;
+    margin-top: 10vh;
+}
+
+.tile-row{
+
+}
+
+#start-menu {
+    background-image: url("/images/main_menu_gamename.png");
+    background-size: cover;
+    width: 1280px;
+    height: 720px;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.61);
+    backdrop-filter: blur(5px);
+}
+
+#startButton {
+    margin-left: 650;
+    margin-top: 550px;
+    border-radius: 5px;
+    width: auto;
+    height: 50px;
+    color: white;
+    font-weight: 900;
+    font-style: italic;
+    font-size: large;
+    background-color: red;
+    background-image: url("images/characters/villains/villain.gif");
+    background-size: cover;
+}
+
+#creditsButton {
+    color: black;
+    font-weight: 900;
+    font-style: italic;
+    font-size: large;
+    background-image: url("images/characters/main/leprechaun_walking_RIGHT.gif");
+    background-size: cover;
+    width: auto;
+    height: 50px;
+    border-radius: 5px;
+    background-color: green;
+}
+
+#leprecoin{
+    position: absolute;
+    top: 120;
+    left: 400;
+    width: 40;
+    height: 40;
+    background-image: url("images/leprecoin.png");
+}
+
+#character {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    background-image: url("images/characters/main/leprechaun.gif");
+    background-size: cover;
+    width: 40px;
+    height: 60px;
+}
+#theBadGuy {
+    position: absolute;
+    top: 80px;
+    left: 80px;
+    background-image: url("images/characters/villains/villain.gif");
+    background-size: cover;
+    width: 50px;
+    height: 80px;
+}
+
+#theAttackers{
+    transform: scaleX(-1);
+    position: absolute;
+    top: 120px;
+    left: 180px;
+    background-image: url("images/characters/villains/black_dog.gif");
+    background-size: cover;
+    width: 64;
+    height: 40;
+}
+
+#lives{
+    position: absolute;
+    right: 10;
+    bottom: 10;
+}
+
+#score,
+#fps,
+#timer {
+    top:0;
+    position: absolute;
+    color: white;
+}
+#score{
+    left:200;
+}
+#fps {
+    left:0;
+}
+#timer {
+    left:100;
+}
+
+#toggleMute, #togglePause, #backToMenu{
+    position: absolute;
+    right: 0;
+}
+#toggleMute {
+    top: 0;
+    border-radius: 100%;
+
+}
+#togglePause{
+    top: 40;
+    border-radius: 100%;
+}
+#backToMenu{
+    top: 80;
+    border-radius: 100%;
+}
+
+#playground{
+    background-image: url("level/sprites/level1_background.png");
+    background-size: cover;
+}
