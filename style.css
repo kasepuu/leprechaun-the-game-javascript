@@ -6,13 +6,12 @@ body {
 .inner {
     position: relative;
     width: 1280px;
+    height: 720px;
     margin: auto;
     margin-top: 10vh;
 }
 
-.tile-row{
-
-}
+.tile-row {}
 
 #start-menu {
     background-image: url("/images/main_menu_gamename.png");
@@ -52,7 +51,7 @@ body {
     background-color: green;
 }
 
-#leprecoin{
+#leprecoin {
     position: absolute;
     top: 120;
     left: 400;
@@ -70,23 +69,43 @@ body {
     width: 40px;
     height: 60px;
 }
-#enemies {
+
+#enemies,
+#flyingEnemies {
+    bottom: 0;
+    left: 0;
     position: absolute;
-    background-image: url("images/characters/villains/villain.gif");
-    background-size: cover;
 }
 
-#theAttacker{
+#flyingSaucer {
+    position: absolute;
+    bottom: 0;
+    left: 40;
+    width: 100;
+    height: 60;
+    background-image: url("images/characters/villains/ufo.gif");
+}
+
+#tinyAttacker {
     position: absolute;
     right: 0;
     bottom: 0;
     background-image: url("images/characters/villains/brown_dog.gif");
-    background-size:cover;
+    background-size: cover;
     width: 40;
     height: 25;
 }
+#largeAttacker {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-image: url("images/characters/villains/brown_dog.gif");
+    background-size: cover;
+    width: 40;
+    height: 60;
+}
 
-#lives{
+#lives {
     position: absolute;
     right: 10;
     bottom: 10;
@@ -95,38 +114,46 @@ body {
 #score,
 #fps,
 #timer {
-    top:0;
+    top: 0;
     position: absolute;
     color: white;
 }
-#score{
-    left:200;
-}
-#fps {
-    left:0;
-}
-#timer {
-    left:100;
+
+#score {
+    left: 200;
 }
 
-#toggleMute, #togglePause, #backToMenu{
+#fps {
+    left: 0;
+}
+
+#timer {
+    left: 100;
+}
+
+#toggleMute,
+#togglePause,
+#backToMenu {
     position: absolute;
     right: 0;
 }
+
 #toggleMute {
     top: 0;
     border-radius: 100%;
 
 }
-#togglePause{
+
+#togglePause {
     top: 40;
     border-radius: 100%;
 }
-#backToMenu{
+
+#backToMenu {
     top: 80;
     border-radius: 100%;
 }
 
-#playground{
+#playground {
     background-size: cover;
 }

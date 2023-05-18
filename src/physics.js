@@ -10,9 +10,30 @@ let character = document.getElementById("character")
 //let enemiesParent = document.getElementById("enemies")
 //export let enemy = enemiesParent.getElementsByTagName('div')
 
+export function setIsJumping(value){
+  isJumping = value
+}
+export function getIsJumping() {
+  return isJumping
+}
+
+let tiles = {
+  air: " ",
+  airBait: "-",
+  levelDesign: "r",
+  nextLevel: "7",
+  previousLevel: "<",
+  deathElement: "w", //water,lava...
+  checkPoint: "*",
+  // e => small enemy
+  // E => large enemy
+  // u => flying saucer
+}
+
+
 import { tileSize } from "../level/tileMap.js"
 
-import { currentLevel, levelUp, loseLife } from "../src/game.js"
+import { currentLevel, levelUp, levelDown, loseLife } from "../src/game.js"
 
 // function for jumping
 export function charJump(startY, currentTime) {
@@ -34,7 +55,7 @@ export function charJump(startY, currentTime) {
     character.style.bottom = currentJumpHeight + 'px';
     const elapsed = currentTime - lastFrameTime;
     const delay = Math.max(1000 / 37 - elapsed, 0);
-    lastFrameTime =  currentTime;
+    lastFrameTime = currentTime;
     setTimeout(() => {
       requestAnimationFrame(jumpAnimation);
     }, delay);
@@ -138,7 +159,8 @@ export function moveRight(currentTime) {
   lastFrameTime = currentTime;
   setTimeout(() => {
     animationIdRight = requestAnimationFrame(moveAnimationRight);
-  }, delay);}
+  }, delay);
+}
 
 export function stopAnimationRight() {
   character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
@@ -171,22 +193,33 @@ export function checkCollision(x, y, direction, isCharacter = true) {
   let currentTile = eval(`level${currentLevel}_map`)[35 - characterTileY][characterTileX];
   let adjacentTile = eval(`level${currentLevel}_map`)[35 - adjacentTileY][adjacentTileX];
 
-  if ((currentTile === "7" || adjacentTile === "7") && isCharacter) {
+  if ((currentTile === tiles.previousLevel || adjacentTile === tiles.previousLevel) && isCharacter) {
+    levelDown()
+    return true
+  }
+
+  if ((currentTile === tiles.nextLevel || adjacentTile === tiles.nextLevel) && isCharacter) {
     levelUp()
     return true
   }
-  if ((currentTile === "w" || adjacentTile === "w") && isCharacter) {
+  if ((currentTile === tiles.deathElement || adjacentTile === tiles.deathElement) && isCharacter) {
     loseLife()
     return true
   }
-
-  if (currentTile === "r" || adjacentTile === "r") {
+  if (currentTile === tiles.deathElement || adjacentTile === tiles.deathElement && !isCharacter){
     return false
   }
 
-  if ((currentTile !== "E" || adjacentTile !== "E") &&
-    (currentTile !== "e" || adjacentTile !== "e") &&
-    (currentTile !== "r" || adjacentTile !== "r")) {
+  if (currentTile === tiles.levelDesign || adjacentTile === tiles.levelDesign
+    || currentTile === "e" || adjacentTile === "e" 
+    || currentTile === "E" || adjacentTile === "E"
+    || currentTile === "u" || adjacentTile === "u" 
+    || currentTile === tiles.checkPoint || adjacentTile === tiles.checkPoint)  {
+    return false
+  }
+
+  if ((currentTile !== tiles.air || adjacentTile !== tiles.air) &&
+    (currentTile !== tiles.airBait || adjacentTile !== tiles.airBait))   {
     return true;
   } else {
     return false;
@@ -204,10 +237,12 @@ export function characterEnemyCollision(enemy) {
   ) {
     isJumping = false;
     charJump(parseInt(character.style.bottom) + character.offsetHeight * 2);
+    console.log("+Respekt") // add score
+
     enemy.remove();
     return;
   }
- 
+
   if (
     characterPos.left <= enemyPos.right &&
     characterPos.right >= enemyPos.left &&
@@ -229,7 +264,7 @@ export function moveEnemy(enemiesParent) {
     let newX = currentLeft + (3 * -direction);
 
     if (!checkCollision(newX, currentBottom, 'left', false) && checkCollision(newX, currentBottom - 10, 'down', false) &&
-        !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && checkCollision(newX + enemy.offsetWidth, currentBottom - 10, 'down', false)) {
+      !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && checkCollision(newX + enemy.offsetWidth, currentBottom - 10, 'down', false)) {
       enemy.style.left = newX + "px";
     } else {
       enemy.style.transform = 'scaleX(' + -direction + ')';

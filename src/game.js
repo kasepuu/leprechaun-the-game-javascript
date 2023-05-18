@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 1
+export let currentLevel = 3
 let lives = 4
 let maxLevels = 3
 
@@ -21,20 +21,22 @@ import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnima
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
-import { drawTiles, deleteTiles, createEnemies, removeEnemies } from "../level/tileMap.js"
+import { drawTiles, deleteTiles, createEnemies, createFlyingEnemies, deleteEnemies, fetchCheckpoints } from "../level/tileMap.js"
 import { frameRate, getFpsDelay, timer } from "./overlayItems.js"
 export let lastLeftMove = false
-
+let ignoreKeydownEvents = false
 
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
+let checkpoints
 
-function resetCharacter(xPos = "left", yPos = "bottom", xPosValue = 40, yPosValue = 40) {
-    Character.style[xPos] = xPosValue + "px"
-    Character.style[yPos] = yPosValue + "px"
+function resetCharacter(xPosValue = 40, yPosValue = 50) {
+    Character.style.left = xPosValue + "px"
+    Character.style.bottom = yPosValue + "px"
 }
 
 
 export function StartGame() {
+    checkpoints = fetchCheckpoints() // getting checkpoints
     playground.classList.remove(`menu`)
     playground.classList.add(`level_${currentLevel}`)
     playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
@@ -46,9 +48,11 @@ export function StartGame() {
 
     console.log("Game started!")
     healthBar.src = "images/hud/lives_4.png"
+
     resetCharacter()
-    drawTiles(eval(`level${currentLevel}_map`)) // setting up current level
+    drawTiles(eval(`level${currentLevel}_map`), currentLevel) // setting up current level
     createEnemies(currentLevel) // creating current enemies for currentlevel    
+    createFlyingEnemies(currentLevel)
     playground.classList.add("level_1") // type of theme song 
     playground.classList.remove("menu") // remove the previous class
     gameIsPaused = false
@@ -69,7 +73,7 @@ export function ExitGame() {
     mainMenu.removeAttribute("hidden")
     PauseButton.setAttribute("hidden", "")
     backToMenu.setAttribute("hidden", "")
-    removeEnemies()
+    deleteEnemies()
     cancelAnimationFrame(animationFrameId)
     animationFrameId = null
 }
@@ -79,41 +83,43 @@ export function ExitGame() {
 let lastFrameTime = 0;
 
 function main(currentTime) {
-  if (animationFrameId !== null) {
-    cancelAnimationFrame(animationFrameId);
-  }
+    if (animationFrameId !== null) {
+        cancelAnimationFrame(animationFrameId);
+    }
 
-  frameRate(frameTimes); // handles Framerate
-  timer(startTime, timeElapsed); // handles Timer
+    frameRate(frameTimes); // handles Framerate
+    timer(startTime, timeElapsed); // handles Timer
 
-  let currentLeft = parseInt(Character.style.left, 10) || 40;
-  let currentBottom = parseInt(Character.style.bottom, 10) || 40;
-  let newX = currentLeft;
-  let newY = currentBottom - 10;
-  moveEnemy(enemiesParent);
+    let currentLeft = parseInt(Character.style.left, 10) || 40;
+    let currentBottom = parseInt(Character.style.bottom, 10) || 40;
+    let newX = currentLeft;
+    let newY = currentBottom - 10;
+    moveEnemy(enemiesParent);
 
-  if (
-    !checkCollision(newX, newY, "down") &&
-    !physics.isJumping &&
-    !checkCollision(newX + Character.offsetWidth - 5, newY, "down") &&
-    lives !== 0
-  ) {
-    fallAnimation();
-    Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)";
-  }
+    if (
+        !checkCollision(newX, newY, "down") &&
+        !physics.isJumping &&
+        !checkCollision(newX + Character.offsetWidth - 5, newY, "down") &&
+        lives !== 0
+    ) {
+        fallAnimation();
+        Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)";
+    }
 
-  playGround.appendChild(enemiesParent);
-  playGround.appendChild(Character);
+    playGround.appendChild(enemiesParent);
+    playGround.appendChild(Character);
 
-  const elapsed = currentTime - lastFrameTime;
-  const delay = Math.max(1000 / 37 - elapsed, 0);
-  lastFrameTime = currentTime;
+    const elapsed = currentTime - lastFrameTime;
+    const delay = 0//Math.max(1000 / 37 - elapsed, 0);
+    lastFrameTime = currentTime;
 
-  setTimeout(() => {
-    animationFrameId = requestAnimationFrame(main);
-  }, delay);}
+    setTimeout(() => {
+        animationFrameId = requestAnimationFrame(main);
+    }, delay);
+}
 
 // eventlisteners for movement
+
 document.addEventListener("keydown", (event) => {
 
     let bodyPos = playGround.getBoundingClientRect()
@@ -143,10 +149,14 @@ document.addEventListener("keydown", (event) => {
 })
 
 document.addEventListener("keyup", (event) => {
-    if (event.code === 'ArrowRight' || event.code === 'KeyD') stopAnimationRight()
-    if (event.code === 'ArrowLeft' || event.code === 'KeyA') stopAnimationLeft();
+    if (event.code === 'ArrowRight' || event.code === 'KeyD') {
+        stopAnimationRight()
+    }
+    if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
+        stopAnimationLeft()
+    }
     //if (event.code === 'Space' || event.code === 'ArrowUp') physics.isJumping = false;
-});
+})
 
 
 
@@ -184,14 +194,15 @@ export function levelUp() {
     console.log("level up! yay!")
     playSoundOnce("fall.ogg")
 
+    stopAnimationLeft()
+    stopAnimationRight()
+
     currentLevel += 1
 
     //changelevel!
-    removeEnemies()
-    deleteTiles()
     resetCharacter()
     if (currentLevel <= maxLevels) {
-        drawTiles(eval(`level${currentLevel}_map`))
+        drawTiles(eval(`level${currentLevel}_map`), currentLevel)
         playground.classList.remove(`level_${currentLevel - 1}`)
         playground.classList.add(`level_${currentLevel}`)
         playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
@@ -203,18 +214,45 @@ export function levelUp() {
         playground.classList.remove(`level_${maxLevels}`)
         playground.classList.add(`level_${currentLevel}`)
         playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
-        drawTiles(eval(`level${currentLevel}_map`)) // setting up current level
+        drawTiles(eval(`level${currentLevel}_map`), currentLevel) // setting up current level
     }
 }
+
+export function levelDown() {
+
+    if (currentLevel === 1) { console.log("failed, trying to go down from level", currentLevel); return }
+    console.log(checkpoints[`level${currentLevel - 1}`])
+
+    stopAnimationLeft()
+    stopAnimationRight()
+
+    // changelevel!
+    playground.classList.remove(`level_${currentLevel}`)
+    currentLevel -= 1
+    playground.classList.add(`level_${currentLevel}`)
+    playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
+
+    resetCharacter(checkpoints[`level${currentLevel}`][0],
+        checkpoints[`level${currentLevel}`][1])
+
+    drawTiles(eval(`level${currentLevel}_map`), currentLevel)
+}
+
 export function loseLife() {
     console.log("OUCH!")
+
+
+    stopAnimationLeft()
+    stopAnimationRight()
+    if (physics.getIsJumping())   physics.setIsJumping(false)
+    
+    
     playSoundOnce("jump.ogg")
-    resetCharacter()
+
+    resetCharacter() // default setting
     lives -= 1
     if (lives === 0) {
-        removeEnemies()
         console.log("HEY! YOU JUST COMPLETELY BLEW THE GAME, LEARN TO PLAY!")
-        deleteTiles()
 
         playground.classList.remove(`level_${currentLevel}`)
         currentLevel = 1
@@ -225,10 +263,9 @@ export function loseLife() {
         Character.style.bottom = 40
         healthBar.src = `images/hud/lives_4.png`
         createEnemies(currentLevel)
-        drawTiles(eval(`level${currentLevel}_map`)) // setting up current level
+        drawTiles(eval(`level${currentLevel}_map`), currentLevel) // setting up current level
     }
     else healthBar.src = `images/hud/lives_${lives}.png`
-
 }
 
 // eventlisteners for pause & music on/off toggle'

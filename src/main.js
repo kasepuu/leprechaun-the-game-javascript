@@ -12,6 +12,8 @@ export let healthBar = document.getElementById("lives")
 export let backToMenu = document.getElementById("backToMenu") // RETURN TO LOBBY
 
 let winamp = new PlayMusic()
+
+
 // HANDLING THE THEME SONG WHEN FIRST VISIT, on click though :(
 window.addEventListener("click", (e) => {
     if (!mainMenu.hasAttribute("hidden")){
