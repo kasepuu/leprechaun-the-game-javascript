@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 3
+export let currentLevel = 1
 let lives = 4
 let maxLevels = 3
 
