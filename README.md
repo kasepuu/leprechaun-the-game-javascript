@@ -34,4 +34,4 @@ createenemies()
 if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`       
         else enemy.style.backgroundImage = `url("images/characters/villains/brown_dog.gif")`            
 
-see näiteks tekitab probleeme, if (e % 2 == 1) näiteks töötab ilusti, miskipärast random ajab selle for loopi seal lolliks?!    
+see näiteks tekitab probleeme, if (e % 2 == 1)'ga näiteks töötab ilusti, miskipärast random ajab selle for loopi seal lolliks?!    
