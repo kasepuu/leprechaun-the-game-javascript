@@ -27,3 +27,11 @@ teha item slot, sinna saab seeni korjata ja siis level3's relvi?, et see lendav 
 max asju slotis võiks olla 1, space korral kasutab eset         
 seene puhul teeb seda pulli, et reversib larrow ja rarrow mõneks ajaks ära          
 ja relva puhul laseb taevasse, bossfightiks         
+
+
+TEADAOLEVAD BUGID:          
+createenemies()     
+if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`       
+        else enemy.style.backgroundImage = `url("images/characters/villains/brown_dog.gif")`            
+
+see näiteks tekitab probleeme, if (e % 2 == 1) näiteks töötab ilusti, miskipärast random ajab selle for loopi seal lolliks?!    
