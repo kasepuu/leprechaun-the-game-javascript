@@ -9,27 +9,38 @@ let frameTimes = []
 export let gameIsPaused = true
 let timeElapsed = 0 // timer
 let startTime // game started at...
-let fallsoundOnce = false
 let gameRunning = false
-let enemiesParent = document.getElementById("enemies")
 // importing 
 import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
-let MuteButton = document.getElementById("toggleMute")
-let PauseButton = document.getElementById("togglePause")
+
 //imports
 import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy } from "./physics.js"
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
 import { drawTiles, deleteTiles, createEnemies, createFlyingEnemies, deleteEnemies, fetchCheckpoints } from "../level/tileMap.js"
-import { frameRate, getFpsDelay, timer } from "./overlayItems.js"
+import { frameRate, getFpsDelay, timerCounter } from "./overlayItems.js"
 export let lastLeftMove = false
 let ignoreKeydownEvents = false
+
+// for pausemenu
+export const pausedMenu = document.getElementById("paused-menu")
+export const continueButton = document.getElementById("continueButton")
+export const restartButton = document.getElementById("restartButton")
+
+let timer = document.getElementById("timer")
+let score = document.getElementById("score")
+const DeathScreen = document.getElementById("death-screen")
+const MuteButton = document.getElementById("toggleMute")
+const PauseButton = document.getElementById("togglePause")
+const enemiesParent = document.getElementById("enemies")
+const flyingEnemiesParent = document.getElementById("flyingEnemies")
+
 
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
 let checkpoints
 
-function resetCharacter(xPosValue = 40, yPosValue = 50) {
+function resetCharacter(xPosValue = 40, yPosValue = 40) {
     Character.style.left = xPosValue + "px"
     Character.style.bottom = yPosValue + "px"
 }
@@ -51,8 +62,6 @@ export function StartGame() {
 
     resetCharacter()
     drawTiles(eval(`level${currentLevel}_map`), currentLevel) // setting up current level
-    createEnemies(currentLevel) // creating current enemies for currentlevel    
-    createFlyingEnemies(currentLevel)
     playground.classList.add("level_1") // type of theme song 
     playground.classList.remove("menu") // remove the previous class
     gameIsPaused = false
@@ -63,11 +72,26 @@ export function StartGame() {
 
 let animationFrameId = null
 
+
+function Continue() {
+    console.log("continue!")
+    unPause()
+}
+function Restart() {
+    console.log("restart!")
+    ExitGame()
+    StartGame()
+    unPause()
+}
+
 export function ExitGame() {
     playground.classList.remove(`level_${currentLevel}`)
     currentLevel = 1
     lives = 0
     playground.classList.add(`menu`)
+    score.innerHTML = "Score: 0" // resetting score
+    timer.innerHTML = "00:00" // resetting timer
+    gameRunning = false
     deleteTiles()
     playGround.setAttribute("hidden", "")
     mainMenu.removeAttribute("hidden")
@@ -78,23 +102,53 @@ export function ExitGame() {
     animationFrameId = null
 }
 
+//if (!pausedMenu.hasAttribute("hidden")){
+continueButton.addEventListener("click", (e) => Continue())
+restartButton.addEventListener("click", (e) => Restart())
+//}
+
+
+document.addEventListener("keypress", (e) => {
+    if (e.key === "m") toggleAudio()
+    if (playGround.hasAttribute("hidden")) return
+    if (pausedMenu.hasAttribute("hidden")) {
+        if (e.key === "p") pause()
+        return
+    } else {
+        if (e.key === "p") unPause()
+        return
+    }
+})
+
 
 //Main function, refreshes the playground every frame
 let lastFrameTime = 0;
 
 function main(currentTime) {
+    if (!gameRunning) return
+    if (gameIsPaused) {
+
+        // Pause GIF images
+        //creatures[i].style.animationPlayState = "paused";
+        setTimeout(() => {
+            animationFrameId = requestAnimationFrame(main)
+        }, 0);
+        return
+    }
+
     if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId);
     }
 
     frameRate(frameTimes); // handles Framerate
-    timer(startTime, timeElapsed); // handles Timer
+    timerCounter(startTime, timeElapsed); // handles Timer
 
     let currentLeft = parseInt(Character.style.left, 10) || 40;
     let currentBottom = parseInt(Character.style.bottom, 10) || 40;
     let newX = currentLeft;
     let newY = currentBottom - 10;
     moveEnemy(enemiesParent);
+    moveEnemy(flyingEnemiesParent, true)
 
     if (
         !checkCollision(newX, newY, "down") &&
@@ -107,6 +161,7 @@ function main(currentTime) {
     }
 
     playGround.appendChild(enemiesParent);
+    playGround.appendChild(flyingEnemiesParent);
     playGround.appendChild(Character);
 
     const elapsed = currentTime - lastFrameTime;
@@ -118,10 +173,9 @@ function main(currentTime) {
     }, delay);
 }
 
-// eventlisteners for movement
-
+// eventlisteners for movement, character movement
 document.addEventListener("keydown", (event) => {
-
+    if (gameIsPaused) return
     let bodyPos = playGround.getBoundingClientRect()
     let currentPos = Character.getBoundingClientRect()
     let jumpHeight = parseInt(Character.style.bottom) || 40;
@@ -149,17 +203,14 @@ document.addEventListener("keydown", (event) => {
 })
 
 document.addEventListener("keyup", (event) => {
+    if (gameIsPaused) return
     if (event.code === 'ArrowRight' || event.code === 'KeyD') {
         stopAnimationRight()
     }
     if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
         stopAnimationLeft()
     }
-    //if (event.code === 'Space' || event.code === 'ArrowUp') physics.isJumping = false;
 })
-
-
-
 
 // handling the themesong between multiple levels
 const observer = new MutationObserver((mutations) => {
@@ -241,19 +292,30 @@ export function levelDown() {
 export function loseLife() {
     console.log("OUCH!")
 
+    playSoundOnce("jump.ogg")
 
     stopAnimationLeft()
     stopAnimationRight()
-    if (physics.getIsJumping())   physics.setIsJumping(false)
-    
-    
-    playSoundOnce("jump.ogg")
-
-    resetCharacter() // default setting
+    if (physics.getIsJumping()) physics.setIsJumping(false)
     lives -= 1
+
     if (lives === 0) {
         console.log("HEY! YOU JUST COMPLETELY BLEW THE GAME, LEARN TO PLAY!")
+        pause(true)
+        document.getElementById("currentLevel").innerHTML = "Level reached: " + currentLevel
+        document.getElementById("finalScore").innerHTML = "Your final score: " + score.innerHTML
+        document.getElementById("finalTimer").innerHTML = "Time survived: " + timer.innerHTML
+        DeathScreen.removeAttribute("hidden")
+        return // restart button handle
+    }
 
+    resetCharacter() // default setting
+    let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
+
+    score.innerHTML = "SCORE: " + (prevScore - 100)
+    if (lives === 0) {
+
+        // RESET GAME HERE:
         playground.classList.remove(`level_${currentLevel}`)
         currentLevel = 1
         playground.classList.add(`level_${currentLevel}`)
@@ -270,6 +332,9 @@ export function loseLife() {
 
 // eventlisteners for pause & music on/off toggle'
 MuteButton.addEventListener("click", (e) => {
+    toggleAudio()
+})
+function toggleAudio() {
     if (MuteButton.src.includes("off")) {
         winamp.resume()
         MuteButton.src = "/images/hud/music_on.png"
@@ -279,7 +344,7 @@ MuteButton.addEventListener("click", (e) => {
         MuteButton.src = "/images/hud/music_off.png"
         localStorage.setItem("muteButtonSrc", "/images/hud/music_off.png")
     }
-})
+}
 PauseButton.addEventListener("click", (e) => {
     if (gameIsPaused) gameIsPaused = unPause()
     else gameIsPaused = pause()
@@ -289,16 +354,20 @@ PauseButton.addEventListener("click", (e) => {
 
 
 // basics
-let songPrePause = ""
-function pause() {
-    songPrePause = playground.classList.value
-
+let songPrePause = "paused"
+function pause(death = false) {
+    if (!MuteButton.src.includes("off")) songPrePause = playground.classList.value
+    if (!death) pausedMenu.removeAttribute("hidden")
     playground.classList.remove("level_1")
     playground.classList.remove("level_2")
     playground.classList.remove("level_3")
 
     playground.classList.add("paused")
 
+
+    gameIsPaused = true
+    stopAnimationLeft()
+    stopAnimationRight()
     //...pause stuff
     PauseButton.src = "/images/hud/unpause.png"
     return true
@@ -306,8 +375,11 @@ function pause() {
 
 function unPause() {
     playground.classList.remove("paused")
-    playground.classList.add(songPrePause)
+    if (!MuteButton.src.includes("off")) playground.classList.add(songPrePause)
+    pausedMenu.setAttribute("hidden", "")
 
+
+    gameIsPaused = false
     ///...pause stuff but in reverse
     PauseButton.src = "/images/hud/pause.png"
     return false

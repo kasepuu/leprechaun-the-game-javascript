@@ -87,7 +87,8 @@ export function createEnemies() {
         enemy.style.left = smallEnemyPositionsX[e] + "px";
         enemy.style.bottom = smallEnemyPositionsY[e] + "px";
         enemy.className = "dog"
-        if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
+        if (Math.random() <= 0.5)  enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
+        //if (e % 2 == 1) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
         else enemy.style.backgroundImage = `url("images/characters/villains/brown_dog.gif")`
 
         enemy.style.transform = 'scaleX(1)';
@@ -146,6 +147,7 @@ export function drawTiles(map, currentLevel) {
     deleteTiles()
     fetchEnemyLocations(currentLevel)
     createEnemies()
+    createFlyingEnemies(currentLevel)
     let parent = document.getElementById("tileMap")
     parent.innerHTML = ""
     let mapDiv = document.createElement("div")

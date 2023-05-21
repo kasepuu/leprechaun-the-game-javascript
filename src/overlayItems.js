@@ -1,7 +1,5 @@
 import { gameIsPaused } from "../src/game.js"
 
-
-
 // this function handles the framerate, displaying it in game
 
 export function frameRate(frameTimes) {
@@ -31,7 +29,7 @@ export function getFpsDelay() {
 }
 
 // this function handles the timer, displaying it in game
-export function timer(startTime, timeElapsed) {
+export function timerCounter(startTime, timeElapsed) {
     if (!gameIsPaused) {
         timeElapsed += Date.now() - startTime
         startTime = Date.now()
