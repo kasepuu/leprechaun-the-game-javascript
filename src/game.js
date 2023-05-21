@@ -26,7 +26,8 @@ let ignoreKeydownEvents = false
 // for pausemenu
 export const pausedMenu = document.getElementById("paused-menu")
 export const continueButton = document.getElementById("continueButton")
-export const restartButton = document.getElementById("restartButton")
+export const restartButtonP = document.getElementById("restartButtonPause")
+export const restartButtonD = document.getElementById("restartButtonDeath")
 
 let timer = document.getElementById("timer")
 let score = document.getElementById("score")
@@ -52,6 +53,7 @@ export function StartGame() {
     playground.classList.add(`level_${currentLevel}`)
     playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
 
+
     mainMenu.setAttribute("hidden", "")
     playGround.removeAttribute("hidden")
     PauseButton.removeAttribute("hidden")
@@ -60,6 +62,7 @@ export function StartGame() {
     console.log("Game started!")
     healthBar.src = "images/hud/lives_4.png"
 
+    createEnemies(currentLevel)
     resetCharacter()
     drawTiles(eval(`level${currentLevel}_map`), currentLevel) // setting up current level
     playground.classList.add("level_1") // type of theme song 
@@ -80,6 +83,7 @@ function Continue() {
 function Restart() {
     console.log("restart!")
     ExitGame()
+    resetCharacter() // reset character to default position 
     StartGame()
     unPause()
 }
@@ -87,12 +91,20 @@ function Restart() {
 export function ExitGame() {
     playground.classList.remove(`level_${currentLevel}`)
     currentLevel = 1
-    lives = 0
+    playground.classList.add(`level_${currentLevel}`)
+    lives = 4
+    playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
+    Character.style.left = 40
+    Character.style.bottom = 40
+    healthBar.src = `images/hud/lives_4.png`
+
     playground.classList.add(`menu`)
     score.innerHTML = "Score: 0" // resetting score
     timer.innerHTML = "00:00" // resetting timer
     gameRunning = false
     deleteTiles()
+    pausedMenu.setAttribute("hidden", "")
+    DeathScreen.setAttribute("hidden", "")
     playGround.setAttribute("hidden", "")
     mainMenu.removeAttribute("hidden")
     PauseButton.setAttribute("hidden", "")
@@ -104,7 +116,8 @@ export function ExitGame() {
 
 //if (!pausedMenu.hasAttribute("hidden")){
 continueButton.addEventListener("click", (e) => Continue())
-restartButton.addEventListener("click", (e) => Restart())
+restartButtonP.addEventListener("click", (e) => Restart())
+restartButtonD.addEventListener("click", (e) => Restart())
 //}
 
 
@@ -298,6 +311,8 @@ export function loseLife() {
     stopAnimationRight()
     if (physics.getIsJumping()) physics.setIsJumping(false)
     lives -= 1
+    let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
+    score.innerHTML = "SCORE: " + (prevScore - 100)
 
     if (lives === 0) {
         console.log("HEY! YOU JUST COMPLETELY BLEW THE GAME, LEARN TO PLAY!")
@@ -309,25 +324,10 @@ export function loseLife() {
         return // restart button handle
     }
 
-    resetCharacter() // default setting
-    let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
+    resetCharacter() // default character setting
 
-    score.innerHTML = "SCORE: " + (prevScore - 100)
-    if (lives === 0) {
 
-        // RESET GAME HERE:
-        playground.classList.remove(`level_${currentLevel}`)
-        currentLevel = 1
-        playground.classList.add(`level_${currentLevel}`)
-        lives = 4
-        playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
-        Character.style.left = 40
-        Character.style.bottom = 40
-        healthBar.src = `images/hud/lives_4.png`
-        createEnemies(currentLevel)
-        drawTiles(eval(`level${currentLevel}_map`), currentLevel) // setting up current level
-    }
-    else healthBar.src = `images/hud/lives_${lives}.png`
+    healthBar.src = `images/hud/lives_${lives}.png`
 }
 
 // eventlisteners for pause & music on/off toggle'

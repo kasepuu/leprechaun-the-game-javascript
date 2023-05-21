@@ -92,7 +92,7 @@ body {
     background-size: cover;
 }
 
-#restartButton {
+#restartButtonPause,#restartButtonDeath {
 
     border-radius: 5px;
     width: auto;
