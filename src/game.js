@@ -38,8 +38,8 @@ let score = document.getElementById("score")
 const DeathScreen = document.getElementById("death-screen")
 const MuteButton = document.getElementById("toggleMute")
 const PauseButton = document.getElementById("togglePause")
-const enemiesParent = document.getElementById("enemies")
-const flyingEnemiesParent = document.getElementById("flyingEnemies")
+let enemiesParent = document.getElementById("enemies")
+let flyingEnemiesParent = document.getElementById("flyingEnemies")
 
 
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
@@ -110,14 +110,15 @@ export function ExitGame() {
     timer.innerHTML = "00:00" // resetting timer
     gameRunning = false
     deleteTiles()
+    deleteEnemies()
+    deleteFlyingEnemies()
     pausedMenu.setAttribute("hidden", "")
     DeathScreen.setAttribute("hidden", "")
     playGround.setAttribute("hidden", "")
     mainMenu.removeAttribute("hidden")
     PauseButton.setAttribute("hidden", "")
     backToMenu.setAttribute("hidden", "")
-    deleteEnemies()
-    deleteFlyingEnemies()
+   
     cancelAnimationFrame(animationFrameId)
     animationFrameId = null
 }

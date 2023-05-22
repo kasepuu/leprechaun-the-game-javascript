@@ -241,7 +241,7 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
     let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
 
     let newScore = enemy.id === "largeAttacker" ? prevScore + 200 : prevScore + 100; // largeattacker gives more score :)
-    
+
     eval(`levelCompletion.level${currentLevel}`).push(enemy.className)
 
     score.innerHTML = "SCORE: " + newScore
@@ -267,23 +267,20 @@ function getRandomInterval() {
 }
 
 export function moveEnemy(enemiesParent, isFlying = false) {
-
   let enemies = enemiesParent.getElementsByTagName("div");
-
   Array.from(enemies).forEach(enemy => {
-    if (isFlying && flyingEnemyIntervalId === null && enemy != undefined) {
-      console.log(enemy)
+
+    if (isFlying && flyingEnemyIntervalId === null) {
       flyingEnemyIntervalId = setInterval(() => {
-        if(gameIsPaused) return
+        if (gameIsPaused) return
         createProjectile(enemiesParent, enemy);
-      }, getRandomInterval());
-    }
-    if (enemy.id === 'projectile') {
+      }, getRandomInterval())
+    } else if (enemy.id === 'projectile') {
       moveProjectile(enemy)
     } else {
       enemyMovement(enemy, isFlying)
     }
-  });
+  })
 }
 
 function enemyMovement(enemy, isFlying) {
@@ -302,15 +299,18 @@ function enemyMovement(enemy, isFlying) {
   if (!isFlying) characterEnemyCollision(enemy);
 }
 
-function createProjectile(enemiesParent, enemy) {
-  
+function createProjectile(flyingEnemiesParent, enemy) {
+  if (!document.getElementById("flyingSaucer")) return // PAREM LAHENDUS LEIDA SELLELE
+  let enemies = flyingEnemiesParent.getElementsByTagName("div");
+
+  console.log(enemy)
   let projectile = document.createElement('div');
 
   projectile.className = 'projectile';
   projectile.id = 'projectile'
   projectile.style.left = parseInt(enemy.style.left) + "px";
   projectile.style.bottom = parseInt(enemy.style.bottom) + "px";
-  enemiesParent.appendChild(projectile);
+  flyingEnemiesParent.appendChild(projectile);
 }
 
 function moveProjectile(enemy) {
