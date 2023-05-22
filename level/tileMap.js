@@ -164,6 +164,7 @@ export function deleteTiles() {
 export function deleteEnemies() {
     let enemiesParent = document.getElementById("enemies")
     enemiesParent.innerHTML = ""
+
 }
 export function deleteFlyingEnemies() {
     let ufoParent = document.getElementById("flyingEnemies")

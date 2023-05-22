@@ -18,7 +18,7 @@ import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnima
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
-import { drawTiles, deleteTiles, createEnemies, deleteEnemies, fetchCheckpoints } from "../level/tileMap.js"
+import { drawTiles, deleteTiles, createEnemies, deleteEnemies, fetchCheckpoints, deleteFlyingEnemies } from "../level/tileMap.js"
 import { frameRate, getFpsDelay, timerCounter } from "./overlayItems.js"
 export let lastLeftMove = false
 let ignoreKeydownEvents = false
@@ -117,6 +117,7 @@ export function ExitGame() {
     PauseButton.setAttribute("hidden", "")
     backToMenu.setAttribute("hidden", "")
     deleteEnemies()
+    deleteFlyingEnemies()
     cancelAnimationFrame(animationFrameId)
     animationFrameId = null
 }

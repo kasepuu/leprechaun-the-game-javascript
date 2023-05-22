@@ -271,10 +271,11 @@ export function moveEnemy(enemiesParent, isFlying = false) {
   let enemies = enemiesParent.getElementsByTagName("div");
 
   Array.from(enemies).forEach(enemy => {
-    if (isFlying && flyingEnemyIntervalId === null) {
+    if (isFlying && flyingEnemyIntervalId === null && enemy != undefined) {
+      console.log(enemy)
       flyingEnemyIntervalId = setInterval(() => {
         if(gameIsPaused) return
-        createProjectile(enemiesParent);
+        createProjectile(enemiesParent, enemy);
       }, getRandomInterval());
     }
     if (enemy.id === 'projectile') {
@@ -301,14 +302,14 @@ function enemyMovement(enemy, isFlying) {
   if (!isFlying) characterEnemyCollision(enemy);
 }
 
-function createProjectile(enemiesParent) {
+function createProjectile(enemiesParent, enemy) {
+  
   let projectile = document.createElement('div');
-  let enemy = enemiesParent.getElementsByTagName('div')
 
   projectile.className = 'projectile';
   projectile.id = 'projectile'
-  projectile.style.left = parseInt(enemy[0].style.left) + "px";
-  projectile.style.bottom = parseInt(enemy[0].style.bottom) + "px";
+  projectile.style.left = parseInt(enemy.style.left) + "px";
+  projectile.style.bottom = parseInt(enemy.style.bottom) + "px";
   enemiesParent.appendChild(projectile);
 }
 
