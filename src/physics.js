@@ -322,7 +322,7 @@ function moveProjectile(enemy) {
   let currentLeft = parseInt(enemy.style.left);
   let currentBottom = parseInt(enemy.style.bottom); // Set the initial position below the enemy
 
-  let projectileSpeed = 5; // Adjust the speed as needed
+  let projectileSpeed = 8; // Adjust the speed as needed
   if (enemy.id === 'projectile') {
     currentBottom -= projectileSpeed;
     if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom, 'down', false))) {
@@ -333,7 +333,8 @@ function moveProjectile(enemy) {
   }
   else {
     currentBottom += projectileSpeed;
-    if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom + enemy.offsetHeight, 'up', false)) || currentBottom + enemy.offsetHeight+5 >= playGround.offsetHeight) {
+    if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom + enemy.offsetHeight, 'up', false)) ||
+     currentBottom + enemy.offsetHeight+projectileSpeed >= playGround.offsetHeight) {
       enemy.remove();
     }
     enemy.style.bottom = currentBottom + 'px';
