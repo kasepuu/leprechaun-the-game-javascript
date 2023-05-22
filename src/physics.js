@@ -233,7 +233,7 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
     characterPos.bottom >= enemyPos.top &&
     characterPos.bottom <= enemyPos.top + 5 &&
     enemyPos.left <= characterPos.right &&
-    enemyPos.right >= characterPos.left
+    enemyPos.right >= characterPos.left && !isProjectile
   ) {
     isJumping = false;
     charJump(parseInt(Character.style.bottom) + Character.offsetHeight * 2);
