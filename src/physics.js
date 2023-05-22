@@ -3,6 +3,7 @@ let isMovingRight = false
 export let isJumping = false
 let animationIdRight = null
 let animationIdLeft = null
+let flyingEnemyIntervalId = null
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
 
 import { playGround, Character } from "./main.js"
@@ -32,7 +33,7 @@ let tiles = {
 
 import { tileSize } from "../level/tileMap.js"
 
-import { currentLevel, levelUp, levelDown, loseLife } from "../src/game.js"
+import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused } from "../src/game.js"
 
 // function for jumping
 export function charJump(startY, currentTime) {
@@ -225,7 +226,7 @@ export function checkCollision(x, y, direction, isCharacter = true) {
   }
 }
 
-export function characterEnemyCollision(enemy) {
+export function characterEnemyCollision(enemy, isProjectile = false) {
   let enemyPos = enemy.getBoundingClientRect();
   let characterPos = Character.getBoundingClientRect();
   if (
@@ -252,30 +253,78 @@ export function characterEnemyCollision(enemy) {
     enemyPos.top <= characterPos.bottom &&
     enemyPos.bottom >= characterPos.top
   ) {
+    if (isProjectile) enemy.remove()
     loseLife();
     return;
   }
 }
 
+function getRandomInterval() {
+  // Generate a random interval between 1 and 3 seconds (2000 - 6000 milliseconds)
+  return Math.floor(Math.random() * 3000) + 1000;
+}
+
 export function moveEnemy(enemiesParent, isFlying = false) {
+
   let enemies = enemiesParent.getElementsByTagName("div");
+
   Array.from(enemies).forEach(enemy => {
-    let currentLeft = parseInt(enemy.style.left);
-    let currentBottom = parseInt(enemy.style.bottom);
-    let direction = parseInt(enemy.style.transform.match(/-?\d/)) || 1;
-    let newX = currentLeft + (3 * -direction);
-
-    if (!checkCollision(newX, currentBottom, 'left', false) && (checkCollision(newX, currentBottom - 10, 'down', false) || isFlying) &&
-      !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && (checkCollision(newX + enemy.offsetWidth, currentBottom - 10, 'down', false) || isFlying)) {
-      enemy.style.left = newX + "px";
-    } else {
-      enemy.style.transform = 'scaleX(' + -direction + ')';
+    if (isFlying && flyingEnemyIntervalId === null) {
+      flyingEnemyIntervalId = setInterval(() => {
+        if(gameIsPaused) return
+        createProjectile(enemiesParent);
+      }, getRandomInterval());
     }
-
-    if (!isFlying) characterEnemyCollision(enemy);
+    if (enemy.id === 'projectile') {
+      moveProjectile(enemy)
+    } else {
+      enemyMovement(enemy, isFlying)
+    }
   });
 }
-export function stopEnemyAnimation(enemy) {
-  cancelAnimationFrame(enemy.animationId);
-  enemy.animationId = null;
+
+function enemyMovement(enemy, isFlying) {
+  let currentLeft = parseInt(enemy.style.left);
+  let currentBottom = parseInt(enemy.style.bottom);
+  let direction = parseInt(enemy.style.transform.match(/-?\d/)) || 1;
+  let newX = currentLeft + (3 * -direction);
+
+  if (!checkCollision(newX, currentBottom, 'left', false) && (checkCollision(newX, currentBottom - 10, 'down', false) || isFlying) &&
+    !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && (checkCollision(newX + enemy.offsetWidth, currentBottom - 10, 'down', false) || isFlying)) {
+    enemy.style.left = newX + "px";
+  } else {
+    enemy.style.transform = 'scaleX(' + -direction + ')';
+  }
+
+  if (!isFlying) characterEnemyCollision(enemy);
+}
+
+function createProjectile(enemiesParent) {
+  let projectile = document.createElement('div');
+  let enemy = enemiesParent.getElementsByTagName('div')
+
+  console.log(enemiesParent)
+  projectile.className = 'projectile';
+  projectile.id = 'projectile'
+  projectile.style.left = parseInt(enemy[0].style.left) + "px";
+  projectile.style.bottom = parseInt(enemy[0].style.bottom) + "px";
+  enemiesParent.appendChild(projectile);
+}
+
+function moveProjectile(enemy) {
+  let currentLeft = parseInt(enemy.style.left);
+  let currentBottom = parseInt(enemy.style.bottom); // Set the initial position below the enemy
+
+  let projectileSpeed = 5; // Adjust the speed as needed
+
+  currentBottom -= projectileSpeed;
+  console.log(currentBottom)
+
+  if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom, 'down', false))) {
+    enemy.remove();
+  } else {
+    console.log("siin")
+    enemy.style.bottom = currentBottom + 'px';
+    characterEnemyCollision(enemy, true);
+  }
 }

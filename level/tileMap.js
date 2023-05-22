@@ -125,29 +125,11 @@ export function createEnemies() {
     }
 }
 
-export function createFlyingEnemies(level) {
-    let parent = document.getElementById("flyingEnemies");
-    let amountOfEnemies = 1;
-
-    let positionX = [400]
-    let positionY = [450]
-    if (level === 1) {
-        for (let e = 0; e < amountOfEnemies; e++) {
-            let ufo = document.createElement("div");
-            ufo.id = "theFlyingSaucer";
-            ufo.style.left = positionX[e] + "px";
-            ufo.style.bottom = positionY[e] + "px";
-            parent.appendChild(ufo);
-        }
-    }
-}
-
 
 export function drawTiles(map, currentLevel) {
     deleteTiles()
     fetchEnemyLocations(currentLevel)
     createEnemies()
-    createFlyingEnemies(currentLevel)
     let parent = document.getElementById("tileMap")
     parent.innerHTML = ""
     let mapDiv = document.createElement("div")

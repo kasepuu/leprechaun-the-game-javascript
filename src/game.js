@@ -1,9 +1,9 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 1
+export let currentLevel = 3
 let lives = 4
 let maxLevels = 3
-
+//let 
 // list of variables
 let frameTimes = []
 export let gameIsPaused = true
@@ -18,7 +18,7 @@ import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnima
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
-import { drawTiles, deleteTiles, createEnemies, createFlyingEnemies, deleteEnemies, fetchCheckpoints } from "../level/tileMap.js"
+import { drawTiles, deleteTiles, createEnemies, deleteEnemies, fetchCheckpoints } from "../level/tileMap.js"
 import { frameRate, getFpsDelay, timerCounter } from "./overlayItems.js"
 export let lastLeftMove = false
 let ignoreKeydownEvents = false
