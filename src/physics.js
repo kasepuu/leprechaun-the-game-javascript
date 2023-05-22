@@ -301,7 +301,7 @@ function enemyMovement(enemy, isFlying) {
 }
 
 export function createProjectile(flyingEnemiesParent, enemy, charBool = false) {
-  if (!document.getElementById("flyingSaucer")) return // PAREM LAHENDUS LEIDA SELLELE
+  if (!document.getElementById("flyingSaucer")) return
   let projectile = document.createElement('div');
 
   if (!charBool) {
