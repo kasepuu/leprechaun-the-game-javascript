@@ -8,8 +8,7 @@ auto scale for screens smaller/equal than 1280x720p
 fps limit -> 60 fps     
 finish level 3          
 
-welcome screen -> choose language EST/FIN       
-death screen! VVVVV         
+    
 
 KINDLASTI!!!            
 peale levelivahetust salvestada mällu vaenlased kes jäid lömastamata!           
@@ -26,9 +25,13 @@ add enemyjumping to enemymove // et koerad oleksid hirmsamad, kui ei viitsi siis
 
 80% TEHTUD
 pause menu -> continue, restart, ja et loomad ka pausile paneks!            
+welcome screen -> choose language EST/FIN   -> language väärtuse saame kätte, nüüd on vaja seda rakendada
 
 99% TEHTUD
 more enemies // praegu vist piisavalt, aga kui on ideid siis mida rohkem, seda uhkem        
+
+TEHTUD      
+death screen! VVVVV     
 
 TEHTUD kui sured -> tuleb timer & score resetida           
 TEHTUD add enemy -> tilemap         

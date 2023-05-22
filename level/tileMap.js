@@ -1,4 +1,5 @@
 import { level1_map, level2_map, level3_map } from "./levels.js"
+import { currentLevel, levelCompletion } from "../src/game.js"
 export const tileSize = 20
 
 let screenHeigth = 720 - 20
@@ -80,13 +81,16 @@ export function createEnemies() {
 
     // create small enemies (dogs)
     for (let e = 0; e < amountOfEnemiesS; e++) {
+        if (eval(`levelCompletion.level${currentLevel}`).includes(`dog-${e+1}`)){
+            continue
+        }
         const randomNumber = Math.floor(Math.random() * 3) + 1
 
         let enemy = document.createElement("div");
         enemy.id = "tinyAttacker";
         enemy.style.left = smallEnemyPositionsX[e] + "px";
         enemy.style.bottom = smallEnemyPositionsY[e] + "px";
-        enemy.className = "dog"
+        enemy.className = `dog-${e+1}`
         if (Math.random() <= 0.5)  enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
         //if (e % 2 == 1) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
         else enemy.style.backgroundImage = `url("images/characters/villains/brown_dog.gif")`
@@ -97,13 +101,16 @@ export function createEnemies() {
 
     // create larger enemies (stormtroopers)
     for (let E = 0; E < amountOfEnemiesL; E++) {
+        if (eval(`levelCompletion.level${currentLevel}`).includes(`stormtrooper-${E+1}`)){
+            continue
+        }
         const randomNumber = Math.floor(Math.random() * 3) + 1
 
         let enemy = document.createElement("div");
         enemy.id = "largeAttacker";
         enemy.style.left = largeEnemyPositionsX[E] + "px";
         enemy.style.bottom = largeEnemyPositionsY[E] + "px";
-        enemy.className = "stormtrooper"
+        enemy.className = `stormtrooper-${E+1}`
         if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/villain.gif")`
         else enemy.style.backgroundImage = `url("images/characters/villains/villain.gif")`
 

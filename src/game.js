@@ -28,7 +28,11 @@ export const pausedMenu = document.getElementById("paused-menu")
 export const continueButton = document.getElementById("continueButton")
 export const restartButtonP = document.getElementById("restartButtonPause")
 export const restartButtonD = document.getElementById("restartButtonDeath")
-
+export let levelCompletion = {
+    level1: [],
+    level2: [],
+    level3: [],
+}
 let timer = document.getElementById("timer")
 let score = document.getElementById("score")
 const DeathScreen = document.getElementById("death-screen")
@@ -48,6 +52,9 @@ function resetCharacter(xPosValue = 40, yPosValue = 40) {
 
 
 export function StartGame() {
+    levelCompletion.level1 = []
+    levelCompletion.level2 = []
+    levelCompletion.level3 = []
     checkpoints = fetchCheckpoints() // getting checkpoints
     playground.classList.remove(`menu`)
     playground.classList.add(`level_${currentLevel}`)
@@ -260,6 +267,7 @@ export function levelUp() {
 
     stopAnimationLeft()
     stopAnimationRight()
+    console.log(eval(`levelCompletion.level${currentLevel}`))
 
     currentLevel += 1
 

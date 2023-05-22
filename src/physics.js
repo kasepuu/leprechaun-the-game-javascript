@@ -33,7 +33,7 @@ let tiles = {
 
 import { tileSize } from "../level/tileMap.js"
 
-import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused } from "../src/game.js"
+import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, levelCompletion } from "../src/game.js"
 
 // function for jumping
 export function charJump(startY, currentTime) {
@@ -241,6 +241,8 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
     let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
 
     let newScore = enemy.id === "largeAttacker" ? prevScore + 200 : prevScore + 100; // largeattacker gives more score :)
+    
+    eval(`levelCompletion.level${currentLevel}`).push(enemy.className)
 
     score.innerHTML = "SCORE: " + newScore
     enemy.remove();
@@ -303,7 +305,6 @@ function createProjectile(enemiesParent) {
   let projectile = document.createElement('div');
   let enemy = enemiesParent.getElementsByTagName('div')
 
-  console.log(enemiesParent)
   projectile.className = 'projectile';
   projectile.id = 'projectile'
   projectile.style.left = parseInt(enemy[0].style.left) + "px";
@@ -318,12 +319,10 @@ function moveProjectile(enemy) {
   let projectileSpeed = 5; // Adjust the speed as needed
 
   currentBottom -= projectileSpeed;
-  console.log(currentBottom)
 
   if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom, 'down', false))) {
     enemy.remove();
   } else {
-    console.log("siin")
     enemy.style.bottom = currentBottom + 'px';
     characterEnemyCollision(enemy, true);
   }
