@@ -135,7 +135,16 @@ body {
     position: absolute;
     width: 10px;
     height: 10px;
+    border-radius: 360px;
     background-color: red;
+}
+
+#userProjectile {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 360px;
+    background-color: rgb(5, 255, 5);
 }
 
 #flyingSaucer {

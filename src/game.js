@@ -10,6 +10,7 @@ export let gameIsPaused = true
 let timeElapsed = 0 // timer
 let startTime // game started at...
 let gameRunning = false
+let hasWeapon = true
 // importing 
 import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
 
@@ -212,14 +213,13 @@ document.addEventListener("keydown", (event) => {
         moveLeft()
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
     }
-    if ((event.code === 'Space' || event.code === "ArrowUp")
+    if ((event.code === 'KeyW' || event.code === "ArrowUp")
         && (checkCollision(currentLeft, jumpHeight - 10, 'down') || checkCollision(currentLeft + Character.offsetWidth, jumpHeight - 10, 'down'))
     ) {
 
         charJump(jumpHeight + Character.offsetHeight * 2.5)
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_jumping.png)"
     }
-
     if (physics.isMovingLeft && physics.isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
 
 })
@@ -228,6 +228,9 @@ document.addEventListener("keyup", (event) => {
     if (gameIsPaused) return
     if (event.code === 'ArrowRight' || event.code === 'KeyD') {
         stopAnimationRight()
+    }
+    if (event.code === 'Space' && hasWeapon) {
+        moveEnemy(flyingEnemiesParent, true, true)
     }
     if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
         stopAnimationLeft()

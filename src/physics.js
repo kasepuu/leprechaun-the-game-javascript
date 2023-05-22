@@ -263,19 +263,20 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
 
 function getRandomInterval() {
   // Generate a random interval between 1 and 3 seconds (2000 - 6000 milliseconds)
-  return Math.floor(Math.random() * 3000) + 1000;
+  return Math.floor(Math.random() * 2000) + 500;
 }
 
-export function moveEnemy(enemiesParent, isFlying = false) {
+export function moveEnemy(enemiesParent, isFlying = false, userProjectile = false) {
   let enemies = enemiesParent.getElementsByTagName("div");
-  Array.from(enemies).forEach(enemy => {
+  if (userProjectile) createProjectile(enemiesParent, Character, true)
 
+  Array.from(enemies).forEach(enemy => {
     if (isFlying && flyingEnemyIntervalId === null) {
       flyingEnemyIntervalId = setInterval(() => {
         if (gameIsPaused) return
         createProjectile(enemiesParent, enemy);
       }, getRandomInterval())
-    } else if (enemy.id === 'projectile') {
+    } else if (enemy.id === 'projectile' || enemy.id === 'userProjectile') {
       moveProjectile(enemy)
     } else {
       enemyMovement(enemy, isFlying)
@@ -299,17 +300,21 @@ function enemyMovement(enemy, isFlying) {
   if (!isFlying) characterEnemyCollision(enemy);
 }
 
-function createProjectile(flyingEnemiesParent, enemy) {
+export function createProjectile(flyingEnemiesParent, enemy, charBool = false) {
   if (!document.getElementById("flyingSaucer")) return // PAREM LAHENDUS LEIDA SELLELE
-  let enemies = flyingEnemiesParent.getElementsByTagName("div");
-
-  console.log(enemy)
   let projectile = document.createElement('div');
 
+  if (!charBool) {
   projectile.className = 'projectile';
   projectile.id = 'projectile'
   projectile.style.left = parseInt(enemy.style.left) + "px";
   projectile.style.bottom = parseInt(enemy.style.bottom) + "px";
+  } else {
+    projectile.className = 'userProjectile';
+    projectile.id = 'userProjectile';
+    projectile.style.left = parseInt(enemy.style.left) + Character.offsetWidth/2 + "px";
+    projectile.style.bottom = parseInt(enemy.style.bottom) + Character.offsetHeight + "px";
+  }
   flyingEnemiesParent.appendChild(projectile);
 }
 
@@ -318,13 +323,43 @@ function moveProjectile(enemy) {
   let currentBottom = parseInt(enemy.style.bottom); // Set the initial position below the enemy
 
   let projectileSpeed = 5; // Adjust the speed as needed
-
-  currentBottom -= projectileSpeed;
-
-  if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom, 'down', false))) {
-    enemy.remove();
-  } else {
+  if (enemy.id === 'projectile') {
+    currentBottom -= projectileSpeed;
+    if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom, 'down', false))) {
+      enemy.remove();
+    }
     enemy.style.bottom = currentBottom + 'px';
     characterEnemyCollision(enemy, true);
   }
+  else {
+    currentBottom += projectileSpeed;
+    if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom + enemy.offsetHeight, 'up', false)) || currentBottom + enemy.offsetHeight+5 >= playGround.offsetHeight) {
+      enemy.remove();
+    }
+    enemy.style.bottom = currentBottom + 'px';
+    projectileEnemyCollision(enemy);
+  }
 }
+
+
+export function projectileEnemyCollision(projectile) {
+  let enemy = document.getElementById("flyingSaucer")
+  let projectilePos = projectile.getBoundingClientRect();
+    let enemyCharacterPos = enemy.getBoundingClientRect();
+
+    if (
+      enemyCharacterPos.left <= projectilePos.right &&
+      enemyCharacterPos.right >= projectilePos.left &&
+      projectilePos.top <= enemyCharacterPos.bottom &&
+      projectilePos.bottom >= enemyCharacterPos.top
+    ) {
+      projectile.remove()
+      damageEnemy();
+      return;
+  }
+}
+
+export function damageEnemy() {
+  console.log("PIHTAS PÕHJAS!")
+}
+
