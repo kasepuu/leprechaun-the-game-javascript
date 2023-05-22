@@ -345,7 +345,7 @@ function moveProjectile(enemy) {
 export function projectileEnemyCollision(projectile) {
   let enemy = document.getElementById("flyingSaucer")
   let projectilePos = projectile.getBoundingClientRect();
-    let enemyCharacterPos = enemy.getBoundingClientRect();
+  let enemyCharacterPos = enemy.getBoundingClientRect();
 
     if (
       enemyCharacterPos.left <= projectilePos.right &&
