@@ -134,10 +134,14 @@ restartButtonD.addEventListener("click", (e) => Restart())
 document.addEventListener("keypress", (e) => {
     if (e.key === "m") toggleAudio()
     if (playGround.hasAttribute("hidden")) return
+    if (!DeathScreen.hasAttribute("hidden")) {
+        if (e.code === "KeyR") Restart()
+    }
     if (pausedMenu.hasAttribute("hidden")) {
         if (e.key === "p") pause()
         return
     } else {
+        if (e.code === "KeyR") Restart()
         if (e.key === "p") unPause()
         return
     }
@@ -221,7 +225,6 @@ document.addEventListener("keydown", (event) => {
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_jumping.png)"
     }
     if (physics.isMovingLeft && physics.isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
-
 })
 
 document.addEventListener("keyup", (event) => {
