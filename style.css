@@ -176,6 +176,13 @@ body {
     height: 60;
 }
 
+#inventory {
+    position: absolute;
+    right: 10;
+    bottom: 60;
+}
+
+
 #lives {
     position: absolute;
     right: 10;

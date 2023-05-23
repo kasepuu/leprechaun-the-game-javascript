@@ -256,6 +256,7 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
     enemyPos.bottom >= characterPos.top
   ) {
     if (isProjectile) enemy.remove()
+    isJumping = false
     loseLife();
     return;
   }

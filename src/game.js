@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 3
+export let currentLevel = 1
 let lives = 4
 let maxLevels = 3
 //let 
@@ -119,7 +119,7 @@ export function ExitGame() {
     mainMenu.removeAttribute("hidden")
     PauseButton.setAttribute("hidden", "")
     backToMenu.setAttribute("hidden", "")
-   
+
     cancelAnimationFrame(animationFrameId)
     animationFrameId = null
 }
@@ -245,7 +245,7 @@ const observer = new MutationObserver((mutations) => {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("menu.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_1")) {
-                if (!MuteButton.src.includes("off")) winamp.setAudio("level3.ogg")
+                if (!MuteButton.src.includes("off")) winamp.setAudio("level1.ogg")
                 else winamp.pause()
             } else if (playground.classList.contains("level_2")) {
                 if (!MuteButton.src.includes("off")) winamp.setAudio("level2.ogg")
@@ -273,6 +273,7 @@ export function levelUp() {
     stopAnimationLeft()
     stopAnimationRight()
     console.log(eval(`levelCompletion.level${currentLevel}`))
+    if (physics.getIsJumping()) physics.setIsJumping(false)
 
     currentLevel += 1
 
@@ -302,6 +303,7 @@ export function levelDown() {
 
     stopAnimationLeft()
     stopAnimationRight()
+    if (physics.getIsJumping()) physics.setIsJumping(false)
 
     // changelevel!
     playground.classList.remove(`level_${currentLevel}`)
