@@ -131,18 +131,18 @@ restartButtonD.addEventListener("click", (e) => Restart())
 //}
 
 
-document.addEventListener("keypress", (e) => {
+document.addEventListener("keydown", (e) => {
     if (e.key === "m") toggleAudio()
     if (playGround.hasAttribute("hidden")) return
     if (!DeathScreen.hasAttribute("hidden")) {
         if (e.code === "KeyR") Restart()
     }
     if (pausedMenu.hasAttribute("hidden")) {
-        if (e.key === "p") pause()
+        if (e.key === "p" || e.key === "Escape") pause()
         return
     } else {
         if (e.code === "KeyR") Restart()
-        if (e.key === "p") unPause()
+        if (e.key === "p" || e.key === "Escape") unPause()
         return
     }
 })
