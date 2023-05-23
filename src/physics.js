@@ -308,7 +308,7 @@ export function createProjectile(flyingEnemiesParent, enemy, charBool = false) {
   if (!charBool) {
   projectile.className = 'projectile';
   projectile.id = 'projectile'
-  projectile.style.left = parseInt(enemy.style.left) + "px";
+  projectile.style.left = parseInt(enemy.style.left) + enemy.offsetWidth/2 + "px";
   projectile.style.bottom = parseInt(enemy.style.bottom) + "px";
   } else {
     projectile.className = 'userProjectile';
