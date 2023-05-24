@@ -35,6 +35,9 @@ let tiles = {
 
 let bossHealth = 100
 
+export function resetBossHealth(){
+  bossHealth = 100
+}
 
 import { tileSize } from "../level/tileMap.js"
 
@@ -376,7 +379,7 @@ export function projectileEnemyCollision(projectile) {
     return;
   }
 }
-const DeathScreen = document.getElementById("death-screen")
+
 
 export function damageEnemy() {
   console.log("PIHTAS PÕHJAS!")
@@ -387,7 +390,7 @@ export function damageEnemy() {
     document.getElementById("currentLevel").innerHTML = "Level reached: " + currentLevel
     document.getElementById("finalScore").innerHTML = "Your final score: " + score.innerHTML
     document.getElementById("finalTimer").innerHTML = "Time survived: " + timer.innerHTML
-    DeathScreen.removeAttribute("hidden")
+    document.getElementById("death-screen").removeAttribute("hidden")
   }
 
   bossHealth -= 20 //boss damage per bullet

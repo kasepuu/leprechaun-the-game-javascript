@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 3
+export let currentLevel = 1
 export let currentAmmo = 3 // current ammo count
 let lives = 4
 let maxLevels = 3
@@ -14,7 +14,7 @@ let gameRunning = false
 let hasWeapon = !document.getElementById("gun").hasAttribute("hidden")
 // importing 
 import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
-
+import { resetBossHealth } from "./physics.js"
 //imports
 import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy, characterMushroomCollision } from "./physics.js"
 import * as physics from "./physics.js"
@@ -77,7 +77,10 @@ export function StartGame() {
     playground.classList.remove(`menu`)
     playground.classList.add(`level_${currentLevel}`)
     playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
-
+    document.getElementById("death-screen").setAttribute("hidden", "")
+    document.getElementById("bossHealthBar").setAttribute("hidden", "")
+    document.getElementById("health-level").style.width = 100%
+    resetBossHealth()
 
     mainMenu.setAttribute("hidden", "")
     playGround.removeAttribute("hidden")
@@ -303,6 +306,10 @@ export function levelUp() {
     stopAnimationLeft()
     stopAnimationRight()
     if (physics.getIsJumping()) physics.setIsJumping(false)
+    document.getElementById("death-screen").setAttribute("hidden", "")
+    document.getElementById("bossHealthBar").setAttribute("hidden", "")
+    document.getElementById("health-level").style.width = 100%
+    resetBossHealth()
 
     currentLevel += 1
 
@@ -341,6 +348,10 @@ export function levelDown() {
     if (currentLevel === 1) { console.log("failed, trying to go down from level", currentLevel); return }
     console.log(checkpoints[`level${currentLevel - 1}`])
 
+    document.getElementById("death-screen").setAttribute("hidden", "")
+    document.getElementById("bossHealthBar").setAttribute("hidden", "")
+    document.getElementById("health-level").style.width = 100%
+    resetBossHealth()
 
     stopAnimationLeft()
     stopAnimationRight()
