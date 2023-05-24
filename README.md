@@ -3,11 +3,9 @@ LEVEL 3 LÕPUNI
 TEHTUD! BOSSILE HEALTHBAR               
 
 TODO RUTTU!
--> Lisada seentele collision, mis lisab currentammole + 1 addAmmo funktsiooniga ja kustutab vastava seene                       
 seened loob funktsiooniga createElement()                       
 
 KINDLAD BUGFIXID!               
-UFO TULISTAMINE LÄHEB KATKI KUI LEVELIT VAHETADA                
 MOVEMENT SPEED TULEB MUUTA VASTAVALT FPS'ILE                    
 kui main tegelane liigub vasakule/paremale kargab jms pildid ei vahetu õigesti, pidevalt liigub tavalise leprechaun.png pildiga!         
                 

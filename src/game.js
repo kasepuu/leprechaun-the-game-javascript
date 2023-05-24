@@ -16,7 +16,7 @@ let hasWeapon = !document.getElementById("gun").hasAttribute("hidden")
 import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
 
 //imports
-import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy, createProjectile } from "./physics.js"
+import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy, characterMushroomCollision } from "./physics.js"
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
@@ -43,20 +43,23 @@ const MuteButton = document.getElementById("toggleMute")
 const PauseButton = document.getElementById("togglePause")
 let enemiesParent = document.getElementById("enemies")
 let flyingEnemiesParent = document.getElementById("flyingEnemies")
+let elements = document.getElementById('elements')
+let mushRoom = elements.getElementsByTagName('div')
+let shootInterval = false;
 
 
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
 let checkpoints
 
-export function addAmmo(value){
+export function addAmmo(value) {
     currentAmmo = currentAmmo + value
     document.getElementById("gun").innerText = currentAmmo
 }
-export function removeAmmo(value){
+export function removeAmmo(value) {
     currentAmmo = currentAmmo - value
     document.getElementById("gun").innerText = currentAmmo
 }
-export function getAmmo(){
+export function getAmmo() {
     return currentAmmo
 }
 
@@ -190,7 +193,7 @@ function main(currentTime) {
     let newY = currentBottom - 10;
     moveEnemy(enemiesParent);
     moveEnemy(flyingEnemiesParent, true)
-
+    characterMushroomCollision(mushRoom)
     if (
         !checkCollision(newX, newY, "down") &&
         !physics.isJumping &&
@@ -238,6 +241,19 @@ document.addEventListener("keydown", (event) => {
         charJump(jumpHeight + Character.offsetHeight * 2.5)
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_jumping.png)"
     }
+    if (event.code === 'Space' && hasWeapon) {
+        if (shootInterval) {
+            return;
+        }
+        shootInterval = true
+        if (currentAmmo <= 0) return
+        removeAmmo(1)
+        moveEnemy(flyingEnemiesParent, true, true)
+        setTimeout(() => {
+            shootInterval = false
+        }, 1000)
+    }
+
     if (physics.isMovingLeft && physics.isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
 })
 
@@ -245,11 +261,6 @@ document.addEventListener("keyup", (event) => {
     if (gameIsPaused) return
     if (event.code === 'ArrowRight' || event.code === 'KeyD') {
         stopAnimationRight()
-    }
-    if (event.code === 'Space' && hasWeapon) {
-        if (currentAmmo <= 0) return
-        removeAmmo(1)
-        moveEnemy(flyingEnemiesParent, true, true)
     }
     if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
         stopAnimationLeft()
@@ -295,7 +306,7 @@ export function levelUp() {
 
     currentLevel += 1
 
-    if (currentLevel === maxLevels){
+    if (currentLevel === maxLevels) {
         hasWeapon = true
         document.getElementById("bossHealthBar").removeAttribute("hidden")
         document.getElementById("gun").removeAttribute("hidden")
@@ -321,11 +332,11 @@ export function levelUp() {
 
 export function levelDown() {
 
-    if (currentLevel != maxLevels){
+    if (currentLevel != maxLevels) {
         hasWeapon = false
         document.getElementById("bossHealthBar").setAttribute("hidden", "")
         document.getElementById("gun").setAttribute("hidden", "")
-    } 
+    }
 
     if (currentLevel === 1) { console.log("failed, trying to go down from level", currentLevel); return }
     console.log(checkpoints[`level${currentLevel - 1}`])

@@ -215,7 +215,6 @@ export function checkCollision(x, y, direction, isCharacter = true) {
     return false
   }
   if (currentTile === tiles.droppedElement || adjacentTile === tiles.droppedElement && !isCharacter) {
-    addAmmo(1)
     return false
   }
 
@@ -391,3 +390,21 @@ export function damageEnemy() {
   document.getElementById("health-level").style.width = bossHealth + "%"
 }
 
+export function characterMushroomCollision(mushRooms) {
+  Array.from(mushRooms).forEach(mushRoom => {
+    let mushRoomPos = mushRoom.getBoundingClientRect();
+    let characterPos = Character.getBoundingClientRect();
+  
+    if (
+      characterPos.left <= mushRoomPos.right &&
+      characterPos.right >= mushRoomPos.left &&
+      mushRoomPos.top <= characterPos.bottom &&
+      mushRoomPos.bottom >= characterPos.top
+    ) {
+      mushRoom.remove()
+      isJumping = false
+      addAmmo(3)
+      return;
+    }
+  });
+}
