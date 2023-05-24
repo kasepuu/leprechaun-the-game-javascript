@@ -9,11 +9,15 @@ seened loob funktsiooniga createElement()
 KINDLAD BUGFIXID!               
 UFO TULISTAMINE LÄHEB KATKI KUI LEVELIT VAHETADA                
 MOVEMENT SPEED TULEB MUUTA VASTAVALT FPS'ILE                    
-
+kui main tegelane liigub vasakule/paremale kargab jms pildid ei vahetu õigesti, pidevalt liigub tavalise leprechaun.png pildiga!         
+                
 VAJALIK TODO
 üle mõelda, kes meil siis see pahalane on? ufo laev ei ole just kõige õigem "K O L L" imo, pahalase ideed gpt poolt:         
 - dragons, griffins, harpies, wyverns, sirens           
 fps limit -> 60 fps                     
+
+todod:          
+eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms          
 
 IDEED:           
 add enemyjumping to enemymove // et koerad oleksid hirmsamad, kui ei viitsi siis kamakolm           

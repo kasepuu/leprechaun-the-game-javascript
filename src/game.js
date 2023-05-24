@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 3
+export let currentLevel = 1
 export let currentAmmo = 3 // current ammo count
 let lives = 4
 let maxLevels = 3
@@ -295,6 +295,11 @@ export function levelUp() {
 
     currentLevel += 1
 
+    if (currentLevel === maxLevels){
+        hasWeapon = true
+        document.getElementById("bossHealthBar").removeAttribute("hidden")
+        document.getElementById("gun").removeAttribute("hidden")
+    }
     //changelevel!
     resetCharacter() // default character setting
     if (currentLevel <= maxLevels) {
@@ -316,8 +321,15 @@ export function levelUp() {
 
 export function levelDown() {
 
+    if (currentLevel != maxLevels){
+        hasWeapon = false
+        document.getElementById("bossHealthBar").setAttribute("hidden", "")
+        document.getElementById("gun").setAttribute("hidden", "")
+    } 
+
     if (currentLevel === 1) { console.log("failed, trying to go down from level", currentLevel); return }
     console.log(checkpoints[`level${currentLevel - 1}`])
+
 
     stopAnimationLeft()
     stopAnimationRight()
