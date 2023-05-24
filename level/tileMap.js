@@ -6,6 +6,7 @@ let screenHeigth = 720 - 20
 let enemyTile1 = "e"
 let enemyTile2 = "E"
 let enemyTile3 = "u"
+let ammoTile = "r"
 
 let smallEnemyPositionsX = [];
 let smallEnemyPositionsY = [];
@@ -13,6 +14,8 @@ let largeEnemyPositionsX = [];
 let largeEnemyPositionsY = [];
 let flyingSaucerPositionsX = [];
 let flyingSaucerPositionsY = [];
+let ammoPositionsX = [];
+let ammoPositionsY = [];
 
 export function resetPostitions() {
     smallEnemyPositionsX = [];
@@ -21,6 +24,8 @@ export function resetPostitions() {
     largeEnemyPositionsY = [];
     flyingSaucerPositionsX = [];
     flyingSaucerPositionsY = [];
+    ammoPositionsX = [];
+    ammoPositionsY = [];
 }
 
 // fetching the checkpoints, to enable going back to the previous level
@@ -52,7 +57,7 @@ function fetchEnemyLocations(currentLevel) {
     console.log(currentLevel, "new enemieS!")
     resetPostitions()
     deleteEnemies()
-    createEnemies()
+    deleteElements()
     deleteFlyingEnemies()
     //    createFlyingEnemies()
     let currentLevelMap = eval(`level${currentLevel}_map`)
@@ -70,6 +75,10 @@ function fetchEnemyLocations(currentLevel) {
                 flyingSaucerPositionsX.push(x * tileSize)
                 flyingSaucerPositionsY.push(screenHeigth - y * tileSize)
             }
+            if (currentLevelMap[y][x] === ammoTile) {
+                ammoPositionsX.push(x * tileSize)
+                ammoPositionsY.push(screenHeigth - y * tileSize)
+            }
         }
     }
 }
@@ -81,7 +90,7 @@ export function createEnemies() {
 
     // create small enemies (dogs)
     for (let e = 0; e < amountOfEnemiesS; e++) {
-        if (eval(`levelCompletion.level${currentLevel}`).includes(`dog-${e+1}`)){
+        if (eval(`levelCompletion.level${currentLevel}`).includes(`dog-${e + 1}`)) {
             continue
         }
         const randomNumber = Math.floor(Math.random() * 3) + 1
@@ -90,8 +99,8 @@ export function createEnemies() {
         enemy.id = "tinyAttacker";
         enemy.style.left = smallEnemyPositionsX[e] + "px";
         enemy.style.bottom = smallEnemyPositionsY[e] + "px";
-        enemy.className = `dog-${e+1}`
-        if (Math.random() <= 0.5)  enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
+        enemy.className = `dog-${e + 1}`
+        if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
         //if (e % 2 == 1) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
         else enemy.style.backgroundImage = `url("images/characters/villains/brown_dog.gif")`
 
@@ -101,7 +110,7 @@ export function createEnemies() {
 
     // create larger enemies (stormtroopers)
     for (let E = 0; E < amountOfEnemiesL; E++) {
-        if (eval(`levelCompletion.level${currentLevel}`).includes(`stormtrooper-${E+1}`)){
+        if (eval(`levelCompletion.level${currentLevel}`).includes(`stormtrooper-${E + 1}`)) {
             continue
         }
         const randomNumber = Math.floor(Math.random() * 3) + 1
@@ -110,7 +119,7 @@ export function createEnemies() {
         enemy.id = "largeAttacker";
         enemy.style.left = largeEnemyPositionsX[E] + "px";
         enemy.style.bottom = largeEnemyPositionsY[E] + "px";
-        enemy.className = `stormtrooper-${E+1}`
+        enemy.className = `stormtrooper-${E + 1}`
         if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/villain.gif")`
         else enemy.style.backgroundImage = `url("images/characters/villains/villain.gif")`
 
@@ -119,7 +128,7 @@ export function createEnemies() {
     }
 
     // create flying saucers (ufos)
-    let amountOfSaucers =flyingSaucerPositionsX.length 
+    let amountOfSaucers = flyingSaucerPositionsX.length
     let ufoParent = document.getElementById("flyingEnemies");
     for (let u = 0; u < amountOfSaucers; u++) {
         let enemy = document.createElement("div")
@@ -127,8 +136,29 @@ export function createEnemies() {
         enemy.style.left = flyingSaucerPositionsX[u] + "px"
         enemy.style.bottom = flyingSaucerPositionsY[u] + "px"
         enemy.className = "saucer"
-        
+
         ufoParent.appendChild(enemy)
+    }
+}
+
+export function createElements(){
+    let parent = document.getElementById("elements")
+    let amountOfAmmo = ammoPositionsX.length
+
+    for (let r = 0; r < amountOfAmmo; r++){
+        // if (eval(`levelCompletion.level${currentLevel}`).includes(`dog-${e + 1}`)) {
+        //     continue // TODO LISADA SEE KA!
+        // }
+
+        let ammo = document.createElement("div");
+        ammo.id = "ammo";
+        ammo.style.left = ammoPositionsX[r] + "px";
+        ammo.style.bottom = ammoPositionsY[r] + "px";
+        ammo.className = `shroom-${r + 1}`
+        ammo.style.backgroundImage = `url("images/ammo.png")`
+
+        ammo.style.transform = 'scaleX(1)';
+        parent.appendChild(ammo);
     }
 }
 
@@ -137,6 +167,7 @@ export function drawTiles(map, currentLevel) {
     deleteTiles()
     fetchEnemyLocations(currentLevel)
     createEnemies()
+    createElements()
     let parent = document.getElementById("tileMap")
     parent.innerHTML = ""
     let mapDiv = document.createElement("div")
@@ -148,7 +179,7 @@ export function drawTiles(map, currentLevel) {
         for (let j = 0; j < map[i].length; j++) {
             let elem = map[i][j]
             let img = document.createElement("img")
-            if (elem === enemyTile1 || elem === enemyTile2 || elem === enemyTile3 || elem == "*") elem = " "
+            if (elem === enemyTile1 || elem === enemyTile2 || elem === enemyTile3 || elem === "*" || elem === "r") elem = " "
             img.src = "../level/sprites/level" + currentLevel + "/" + elem + ".png"
             row.appendChild(img)
         }
@@ -164,8 +195,12 @@ export function deleteTiles() {
 export function deleteEnemies() {
     let enemiesParent = document.getElementById("enemies")
     enemiesParent.innerHTML = ""
-
 }
+export function deleteElements(){
+    let elementsParen = document.getElementById("elements")
+    elementsParen.innerHTML = ""
+}
+
 export function deleteFlyingEnemies() {
     let ufoParent = document.getElementById("flyingEnemies")
     ufoParent.innerHTML = ""

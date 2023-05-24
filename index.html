@@ -40,15 +40,22 @@
                 <div class="died" id="death-screen" hidden>
                     <h1 id="deathMessage" style="color: yellow;">YOU DIED, WHAT A NOOB!</h1>
                     <h2 style="color:burlywood" id="currentLevel">Level reached: <h2>
-                    <h2 style="color:red" id="finalScore">SCORE: </h2>
-                    <h2 style="color:white" id="finalTimer">TIME: </h2>
-                    <button id="restartButtonDeath">RESTART</button>
+                            <h2 style="color:red" id="finalScore">SCORE: </h2>
+                            <h2 style="color:white" id="finalTimer">TIME: </h2>
+                            <button id="restartButtonDeath">RESTART</button>
                 </div>
                 <div id="tileMap"></div>
+                <div id="elements"></div>
                 <div id="fps">FPS: 0</div>
-                <img id="inventory" src="images/hud/inventory.png">
+                <!--img id="inventory" src="images/hud/inventory.png"-->
+                <div id="bossHealthBar">BOSS HEALTH<br>
+                    <div id="health-bar">
+                        <div id="health-level"></div>
+                    </div>
+                </div>
+                <div id="gun">0</div>
                 <img id="lives">
-                <div id="character"></div> 
+                <div id="character"></div>
                 <div id="enemies"></div>
                 <div id="flyingEnemies"></div>
             </div>

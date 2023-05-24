@@ -1,6 +1,7 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 1
+export let currentLevel = 3
+export let currentAmmo = 3 // current ammo count
 let lives = 4
 let maxLevels = 3
 //let 
@@ -10,7 +11,7 @@ export let gameIsPaused = true
 let timeElapsed = 0 // timer
 let startTime // game started at...
 let gameRunning = false
-let hasWeapon = true
+let hasWeapon = !document.getElementById("gun").hasAttribute("hidden")
 // importing 
 import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
 
@@ -22,6 +23,7 @@ import { level1_map, level2_map, level3_map } from "../level/levels.js"
 import { drawTiles, deleteTiles, createEnemies, deleteEnemies, fetchCheckpoints, deleteFlyingEnemies } from "../level/tileMap.js"
 import { frameRate, getFpsDelay, timerCounter } from "./overlayItems.js"
 export let lastLeftMove = false
+
 let ignoreKeydownEvents = false
 
 // for pausemenu
@@ -46,7 +48,19 @@ let flyingEnemiesParent = document.getElementById("flyingEnemies")
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
 let checkpoints
 
-function resetCharacter(xPosValue = 40, yPosValue = 40) {
+export function addAmmo(value){
+    currentAmmo = currentAmmo + value
+    document.getElementById("gun").innerText = currentAmmo
+}
+export function removeAmmo(value){
+    currentAmmo = currentAmmo - value
+    document.getElementById("gun").innerText = currentAmmo
+}
+export function getAmmo(){
+    return currentAmmo
+}
+
+function resetCharacter(xPosValue = 40, yPosValue = 50) {
     Character.style.left = xPosValue + "px"
     Character.style.bottom = yPosValue + "px"
 }
@@ -233,6 +247,8 @@ document.addEventListener("keyup", (event) => {
         stopAnimationRight()
     }
     if (event.code === 'Space' && hasWeapon) {
+        if (currentAmmo <= 0) return
+        removeAmmo(1)
         moveEnemy(flyingEnemiesParent, true, true)
     }
     if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
@@ -275,13 +291,12 @@ export function levelUp() {
 
     stopAnimationLeft()
     stopAnimationRight()
-    console.log(eval(`levelCompletion.level${currentLevel}`))
     if (physics.getIsJumping()) physics.setIsJumping(false)
 
     currentLevel += 1
 
     //changelevel!
-    resetCharacter()
+    resetCharacter() // default character setting
     if (currentLevel <= maxLevels) {
         drawTiles(eval(`level${currentLevel}_map`), currentLevel)
         playground.classList.remove(`level_${currentLevel - 1}`)
@@ -373,7 +388,7 @@ PauseButton.addEventListener("click", (e) => {
 
 // basics
 let songPrePause = "paused"
-function pause(death = false) {
+export function pause(death = false) {
     if (!MuteButton.src.includes("off")) songPrePause = playground.classList.value
     if (!death) pausedMenu.removeAttribute("hidden")
     playground.classList.remove("level_1")

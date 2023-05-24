@@ -4,8 +4,9 @@ export let isJumping = false
 let animationIdRight = null
 let animationIdLeft = null
 let flyingEnemyIntervalId = null
-import { level1_map, level2_map, level3_map } from "../level/levels.js"
 
+import { level1_map, level2_map, level3_map } from "../level/levels.js"
+import { pause } from "../src/game.js"
 import { playGround, Character } from "./main.js"
 //let enemiesParent = document.getElementById("enemies")
 //export let enemy = enemiesParent.getElementsByTagName('div')
@@ -24,16 +25,19 @@ let tiles = {
   nextLevel: "7",
   previousLevel: "<",
   deathElement: "w", //water,lava...
+  droppedElement: "r",
   checkPoint: "*",
   // e => small enemy
   // E => large enemy
   // u => flying saucer
 }
 
+let bossHealth = 100
+
 
 import { tileSize } from "../level/tileMap.js"
 
-import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, levelCompletion } from "../src/game.js"
+import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, levelCompletion, currentAmmo, addAmmo, pausedMenu } from "../src/game.js"
 
 // function for jumping
 export function charJump(startY, currentTime) {
@@ -209,6 +213,10 @@ export function checkCollision(x, y, direction, isCharacter = true) {
   if (currentTile === tiles.deathElement || adjacentTile === tiles.deathElement && !isCharacter) {
     return false
   }
+  if (currentTile === tiles.droppedElement || adjacentTile === tiles.droppedElement && !isCharacter) {
+    addAmmo(1)
+    return false
+  }
 
   if (currentTile === tiles.levelDesign || adjacentTile === tiles.levelDesign
     || currentTile === "e" || adjacentTile === "e"
@@ -306,14 +314,14 @@ export function createProjectile(flyingEnemiesParent, enemy, charBool = false) {
   let projectile = document.createElement('div');
 
   if (!charBool) {
-  projectile.className = 'projectile';
-  projectile.id = 'projectile'
-  projectile.style.left = parseInt(enemy.style.left) + enemy.offsetWidth/2 + "px";
-  projectile.style.bottom = parseInt(enemy.style.bottom) + "px";
+    projectile.className = 'projectile';
+    projectile.id = 'projectile'
+    projectile.style.left = parseInt(enemy.style.left) + enemy.offsetWidth / 2 + "px";
+    projectile.style.bottom = parseInt(enemy.style.bottom) + "px";
   } else {
     projectile.className = 'userProjectile';
     projectile.id = 'userProjectile';
-    projectile.style.left = parseInt(enemy.style.left) + Character.offsetWidth/2 + "px";
+    projectile.style.left = parseInt(enemy.style.left) + Character.offsetWidth / 2 + "px";
     projectile.style.bottom = parseInt(enemy.style.bottom) + Character.offsetHeight + "px";
   }
   flyingEnemiesParent.appendChild(projectile);
@@ -335,7 +343,7 @@ function moveProjectile(enemy) {
   else {
     currentBottom += projectileSpeed;
     if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom + enemy.offsetHeight, 'up', false)) ||
-     currentBottom + enemy.offsetHeight+projectileSpeed >= playGround.offsetHeight) {
+      currentBottom + enemy.offsetHeight + projectileSpeed >= playGround.offsetHeight) {
       enemy.remove();
     }
     enemy.style.bottom = currentBottom + 'px';
@@ -349,19 +357,32 @@ export function projectileEnemyCollision(projectile) {
   let projectilePos = projectile.getBoundingClientRect();
   let enemyCharacterPos = enemy.getBoundingClientRect();
 
-    if (
-      enemyCharacterPos.left <= projectilePos.right &&
-      enemyCharacterPos.right >= projectilePos.left &&
-      projectilePos.top <= enemyCharacterPos.bottom &&
-      projectilePos.bottom >= enemyCharacterPos.top
-    ) {
-      projectile.remove()
-      damageEnemy();
-      return;
+  if (
+    enemyCharacterPos.left <= projectilePos.right &&
+    enemyCharacterPos.right >= projectilePos.left &&
+    projectilePos.top <= enemyCharacterPos.bottom &&
+    projectilePos.bottom >= enemyCharacterPos.top
+  ) {
+    projectile.remove()
+    damageEnemy();
+    return;
   }
 }
+const DeathScreen = document.getElementById("death-screen")
 
 export function damageEnemy() {
   console.log("PIHTAS PÕHJAS!")
+  if (bossHealth <= 0) {
+    console.log("game finished, you are a very good player!")
+    pause(true)
+    document.getElementById("deathMessage").innerHTML = "game finished, you are a very good player!"
+    document.getElementById("currentLevel").innerHTML = "Level reached: " + currentLevel
+    document.getElementById("finalScore").innerHTML = "Your final score: " + score.innerHTML
+    document.getElementById("finalTimer").innerHTML = "Time survived: " + timer.innerHTML
+    DeathScreen.removeAttribute("hidden")
+  }
+
+  bossHealth -= 45 // boss damage per bullet
+  document.getElementById("health-level").style.width = bossHealth + "%"
 }
 

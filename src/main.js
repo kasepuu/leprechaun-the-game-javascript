@@ -1,4 +1,4 @@
-import { StartGame, ExitGame } from "./game.js"
+import { StartGame, ExitGame, currentAmmo } from "./game.js"
 import { buildMaps } from "../level/levels.js"
 import { PlayMusic } from "./sound.js"
 
@@ -18,6 +18,8 @@ let winamp = new PlayMusic()
 let lang_EST = document.getElementById("EST")
 let lang_ENG = document.getElementById("ENG")
 let welcomeScreen = document.getElementById("welcome-screen")
+
+document.getElementById("gun").innerText = currentAmmo // imo tekitab laggi
 
 // FETCHING THE PREVIOUS STATE OF MUTEBUTTON STATUS
 window.addEventListener("load", (e) => {
