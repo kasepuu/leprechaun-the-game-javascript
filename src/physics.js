@@ -4,6 +4,7 @@ export let isJumping = false
 let animationIdRight = null
 let animationIdLeft = null
 let flyingEnemyIntervalId = null
+let flyingEnemyPosition = { left: 0, bottom: 0 };
 
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
 import { pause } from "../src/game.js"
@@ -272,7 +273,7 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
 
 function getRandomInterval() {
   // Generate a random interval between 1 and 3 seconds (2000 - 6000 milliseconds)
-  return Math.floor(Math.random() * 2000) + 500;
+  return Math.floor(Math.random() * 100) + 500;
 }
 
 export function moveEnemy(enemiesParent, isFlying = false, userProjectile = false) {
@@ -288,6 +289,10 @@ export function moveEnemy(enemiesParent, isFlying = false, userProjectile = fals
     } else if (enemy.id === 'projectile' || enemy.id === 'userProjectile') {
       moveProjectile(enemy)
     } else {
+      if (isFlying) {
+        flyingEnemyPosition.left = parseInt(enemy.style.left) + enemy.offsetWidth / 2;
+        flyingEnemyPosition.bottom = parseInt(enemy.style.bottom);
+      }
       enemyMovement(enemy, isFlying)
     }
   })
@@ -316,8 +321,8 @@ export function createProjectile(flyingEnemiesParent, enemy, charBool = false) {
   if (!charBool) {
     projectile.className = 'projectile';
     projectile.id = 'projectile'
-    projectile.style.left = parseInt(enemy.style.left) + enemy.offsetWidth / 2 + "px";
-    projectile.style.bottom = parseInt(enemy.style.bottom) + "px";
+    projectile.style.left = flyingEnemyPosition.left + "px";
+    projectile.style.bottom = flyingEnemyPosition.bottom + "px";
   } else {
     projectile.className = 'userProjectile';
     projectile.id = 'userProjectile';
@@ -382,7 +387,7 @@ export function damageEnemy() {
     DeathScreen.removeAttribute("hidden")
   }
 
-  bossHealth -= 45 // boss damage per bullet
+  bossHealth -= 20 //boss damage per bullet
   document.getElementById("health-level").style.width = bossHealth + "%"
 }
 

@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 1
+export let currentLevel = 3
 export let currentAmmo = 3 // current ammo count
 let lives = 4
 let maxLevels = 3
@@ -16,7 +16,7 @@ let hasWeapon = !document.getElementById("gun").hasAttribute("hidden")
 import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
 
 //imports
-import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy } from "./physics.js"
+import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy, createProjectile } from "./physics.js"
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
