@@ -303,6 +303,10 @@ function enemyMovement(enemy, isFlying) {
   let direction = parseInt(enemy.style.transform.match(/-?\d/)) || 1;
   let newX = currentLeft + (3 * -direction);
 
+  if (isFlying && Math.random() < 0.005) {
+    enemy.style.transform = 'scaleX(' + -direction + ')';
+  }
+
   if (!checkCollision(newX, currentBottom, 'left', false) && (checkCollision(newX, currentBottom - 10, 'down', false) || isFlying) &&
     !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && (checkCollision(newX + enemy.offsetWidth, currentBottom - 10, 'down', false) || isFlying)) {
     enemy.style.left = newX + "px";
