@@ -6,6 +6,7 @@ let animationIdLeft = null
 let flyingEnemyIntervalId = null
 let flyingEnemyPosition = { left: 0, bottom: 0 };
 
+
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
 import { pause } from "../src/game.js"
 import { playGround, Character } from "./main.js"
@@ -43,15 +44,22 @@ import { tileSize } from "../level/tileMap.js"
 
 import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, levelCompletion, currentAmmo, addAmmo, pausedMenu } from "../src/game.js"
 
+export function updateMovementSpeeds(newAirSpeed, newMovementSpeed, newEnemyMovementSpeed, newProjectileSpeed) {
+  airSpeed = newAirSpeed;
+  movementSpeed = newMovementSpeed;
+  enemyMovementSpeed = newEnemyMovementSpeed;
+  projectileSpeed = newProjectileSpeed;
+}
+
+export let airSpeed = 10;
 // function for jumping
-export function charJump(startY, currentTime) {
+export function charJump(startY) {
   if (isJumping) return
   //playSoundOnce("jump.ogg", 0.03)
-  let lastFrameTime = 0;
   isJumping = true
   let currentJumpHeight = parseInt(Character.style.bottom) || 40;
 
-  function jumpAnimation(currentTime) {
+  function jumpAnimation() {
     const currentLeft = parseInt(Character.style.left) || 40;
     if (currentJumpHeight + Character.offsetHeight >= startY + tileSize || checkCollision(currentLeft, Character.offsetHeight + currentJumpHeight, 'up')
       || checkCollision(currentLeft + Character.offsetWidth, Character.offsetHeight + currentJumpHeight, 'up')) {
@@ -59,20 +67,14 @@ export function charJump(startY, currentTime) {
       return; // Exit the animation loop
     }
 
-    currentJumpHeight += 10;
+    currentJumpHeight += airSpeed;
+
     Character.style.bottom = currentJumpHeight + 'px';
-    const elapsed = currentTime - lastFrameTime;
-    const delay = Math.max(1000 / 37 - elapsed, 0);
-    lastFrameTime = currentTime;
     setTimeout(() => {
       requestAnimationFrame(jumpAnimation);
-    }, delay);
+    }, 1000 / 72);
   }
-  const elapsed = currentTime - lastFrameTime;
-  const delay = Math.max(1000 / 37 - elapsed, 0);
-  setTimeout(() => {
     requestAnimationFrame(jumpAnimation);
-  }, delay);
 }
 
 // function for falling
@@ -90,40 +92,34 @@ export function fallAnimation() {
     }
     return;
   }
-  characterBottom -= 10;
+  characterBottom -= airSpeed;
   Character.style.bottom = characterBottom + 'px';
 }
 
-export function moveLeft(currentTime) {
+export let movementSpeed = 5;
+
+export function moveLeft() {
   if (isMovingLeft || animationIdLeft) return;
-  isMovingLeft = true;
-  let lastFrameTime = 0;
-  function moveAnimationLeft(currentTime) {
+   isMovingLeft = true;
+  function moveAnimationLeft() {
     let currentLeft = parseInt(Character.style.left) || 40;
     let currentBottom = parseInt(Character.style.bottom) || 40;
 
-    let newX = currentLeft - 5;
+    let newX = currentLeft - movementSpeed;
+
     if (!checkCollision(newX, currentBottom, 'left')) {
       Character.style.left = newX + "px";
     }
 
     if (isMovingLeft) {
-      const elapsed = currentTime - lastFrameTime;
-      const delay = Math.max(1000 / 37 - elapsed, 0);
-      lastFrameTime = currentTime;
       setTimeout(() => {
         animationIdLeft = requestAnimationFrame(moveAnimationLeft);
-      }, delay);
+      }, 1000 / 72);
     } else {
       animationIdLeft = stopAnimationLeft();
     }
   }
-  const elapsed = currentTime - lastFrameTime;
-  const delay = Math.max(1000 / 37 - elapsed, 0);
-  lastFrameTime = currentTime;
-  setTimeout(() => {
     animationIdLeft = requestAnimationFrame(moveAnimationLeft);
-  }, delay);
 }
 
 export function stopAnimationLeft() {
@@ -135,39 +131,30 @@ export function stopAnimationLeft() {
 }
 
 
-export function moveRight(currentTime) {
+export function moveRight() {
   if (isMovingRight || animationIdRight) return;
   isMovingRight = true;
-  let lastFrameTime = 0;
-  function moveAnimationRight(currentTime) {
+  function moveAnimationRight() {
     let currentLeft = parseInt(Character.style.left) || 40;
     let currentBottom = parseInt(Character.style.bottom) || 40;
 
-    const elapsed = currentTime - lastFrameTime;
-    const delay = Math.max(1000 / 37 - elapsed, 0);
-
     let newX = currentLeft;
-    newX += 5;
+
+    newX += movementSpeed;
     // Check if the new position has a collision
     if (!checkCollision(newX, currentBottom, 'right')) {
       Character.style.left = newX + "px";
     }
 
     if (isMovingRight) {
-      lastFrameTime = currentTime;
       setTimeout(() => {
         animationIdRight = requestAnimationFrame(moveAnimationRight);
-      }, delay);
+      }, 1000 / 72);
     } else {
       animationIdRight = stopAnimationRight();
     }
   }
-  const elapsed = currentTime - lastFrameTime;
-  const delay = Math.max(1000 / 37 - elapsed, 0);
-  lastFrameTime = currentTime;
-  setTimeout(() => {
-    animationIdRight = requestAnimationFrame(moveAnimationRight);
-  }, delay);
+  animationIdRight = requestAnimationFrame(moveAnimationRight);
 }
 
 export function stopAnimationRight() {
@@ -186,7 +173,6 @@ export function checkCollision(x, y, direction, isCharacter = true) {
   // Calculate the adjacent tiles based on the movement direction
   let adjacentTileX = characterTileX;
   let adjacentTileY = characterTileY;
-
   if (direction === "left") {
     adjacentTileX = Math.floor((x) / 20);
   } else if (direction === "right") {
@@ -300,18 +286,21 @@ export function moveEnemy(enemiesParent, isFlying = false, userProjectile = fals
   })
 }
 
+export let enemyMovementSpeed = 3;
+
 function enemyMovement(enemy, isFlying) {
   let currentLeft = parseInt(enemy.style.left);
   let currentBottom = parseInt(enemy.style.bottom);
   let direction = parseInt(enemy.style.transform.match(/-?\d/)) || 1;
-  let newX = currentLeft + (3 * -direction);
+
+  let newX = currentLeft + (enemyMovementSpeed * -direction) ;
 
   if (isFlying && Math.random() < 0.005) {
     enemy.style.transform = 'scaleX(' + -direction + ')';
   }
 
-  if (!checkCollision(newX, currentBottom, 'left', false) && (checkCollision(newX, currentBottom - 10, 'down', false) || isFlying) &&
-    !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && (checkCollision(newX + enemy.offsetWidth, currentBottom - 10, 'down', false) || isFlying)) {
+  if (!checkCollision(newX, currentBottom, 'left', false) && (checkCollision(newX, currentBottom - enemyMovementSpeed, 'down', false) || isFlying) &&
+    !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && (checkCollision(newX + enemy.offsetWidth, currentBottom -  enemyMovementSpeed, 'down', false) || isFlying)) {
     enemy.style.left = newX + "px";
   } else {
     enemy.style.transform = 'scaleX(' + -direction + ')';
@@ -338,11 +327,12 @@ export function createProjectile(flyingEnemiesParent, enemy, charBool = false) {
   flyingEnemiesParent.appendChild(projectile);
 }
 
+export let projectileSpeed = 8;
+
 function moveProjectile(enemy) {
   let currentLeft = parseInt(enemy.style.left);
   let currentBottom = parseInt(enemy.style.bottom); // Set the initial position below the enemy
 
-  let projectileSpeed = 8; // Adjust the speed as needed
   if (enemy.id === 'projectile') {
     currentBottom -= projectileSpeed;
     if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom, 'down', false))) {

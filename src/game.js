@@ -21,10 +21,8 @@ import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
 import { drawTiles, deleteTiles, createEnemies, deleteEnemies, fetchCheckpoints, deleteFlyingEnemies } from "../level/tileMap.js"
-import { frameRate, getFpsDelay, timerCounter } from "./overlayItems.js"
+import { frameRate, timerCounter } from "./overlayItems.js"
 export let lastLeftMove = false
-
-let ignoreKeydownEvents = false
 
 // for pausemenu
 export const pausedMenu = document.getElementById("paused-menu")
@@ -98,7 +96,7 @@ export function StartGame() {
     gameIsPaused = false
     gameRunning = true; // sets the game status to "is running"
     startTime = Date.now() // timer startpoint
-    main() // animation frame loop
+    requestAnimationFrame(main); // animation frame loop
 }
 
 let animationFrameId = null
@@ -167,26 +165,18 @@ document.addEventListener("keydown", (e) => {
     }
 })
 
-
-//Main function, refreshes the playground every frame
-let lastFrameTime = 0;
-
-function main(currentTime) {
+function main() {
     if (!gameRunning) return
     if (gameIsPaused) {
-
         // Pause GIF images
         //creatures[i].style.animationPlayState = "paused";
-        setTimeout(() => {
-            animationFrameId = requestAnimationFrame(main)
-        }, 0);
+        animationFrameId = requestAnimationFrame(main)
         return
     }
-
     if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId);
     }
-
+    
     frameRate(frameTimes); // handles Framerate
     timerCounter(startTime, timeElapsed); // handles Timer
 
@@ -210,14 +200,9 @@ function main(currentTime) {
     playGround.appendChild(enemiesParent);
     playGround.appendChild(flyingEnemiesParent);
     playGround.appendChild(Character);
-
-    const elapsed = currentTime - lastFrameTime;
-    const delay = 0//Math.max(1000 / 37 - elapsed, 0);
-    lastFrameTime = currentTime;
-
     setTimeout(() => {
         animationFrameId = requestAnimationFrame(main);
-    }, delay);
+    }, 1000 / 72);
 }
 
 // eventlisteners for movement, character movement
@@ -302,7 +287,6 @@ observer.observe(playground, { attributes: true }) // observing the current stat
 export function levelUp() {
     console.log("level up! yay!")
     playSoundOnce("fall.ogg")
-
     stopAnimationLeft()
     stopAnimationRight()
     if (physics.getIsJumping()) physics.setIsJumping(false)
@@ -338,7 +322,6 @@ export function levelUp() {
 }
 
 export function levelDown() {
-
     if (currentLevel != maxLevels) {
         hasWeapon = false
         document.getElementById("bossHealthBar").setAttribute("hidden", "")
