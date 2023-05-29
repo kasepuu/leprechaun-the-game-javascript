@@ -10,10 +10,10 @@ let ammoTile = "r"
 
 export let currentElements = 0
 
+// see mant hoopis äkki game.js tõsta, koos elements väärtustega?
 export function getElements(){
     return currentElements
 }
-
 export function removeElements(){
     currentElements = 0
 }

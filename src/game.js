@@ -170,8 +170,6 @@ document.addEventListener("keydown", (e) => {
 function main() {
     if (!gameRunning) return
     if (gameIsPaused) {
-        // Pause GIF images
-        //creatures[i].style.animationPlayState = "paused";
         animationFrameId = requestAnimationFrame(main)
         return
     }
