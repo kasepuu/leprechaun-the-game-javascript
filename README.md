@@ -1,7 +1,7 @@
 TODO:                        
 LEVEL 3 LÕPUNI                                
 OPTIMIZATIONS, funktsioone loope jms proovida vähendada? Koodipilt puhtamaks? :D                                
-proovida veel fps värkisärki -> vaatan homme, täna ei viitsi
+proovida veel fps värkisärki -> vaatan homme, täna ei viitsi            
 mul ei lasknud koeri lömastada? sain surma, suuri mehikesi lasi?       
 level 3's relv kaob käest ära, kui kuulid otsa saavad? Komistasin vahest leveldowni ka, vb see tegi midagi?                      
                     
