@@ -2,8 +2,9 @@ TODO:
 LEVEL 3 LÕPUNI                                
 OPTIMIZATIONS, funktsioone loope jms proovida vähendada? Koodipilt puhtamaks? :D                                
 proovida veel fps värkisärki -> vaatan homme, täna ei viitsi            
-mul ei lasknud koeri lömastada? sain surma, suuri mehikesi lasi? EDIT: panin mängu veebiserveris käima, seal okidoki EDIT: seal ei saa suuri mehikesi lömastada?                        
-level 3's relv kaob käest ära, kui kuulid otsa saavad? Komistasin vahest leveldowni ka, vb see tegi midagi?                      
+mul ei lasknud koeri lömastada? sain surma, suuri mehikesi lasi? EDIT: panin mängu veebiserveris käima, seal chromega okidoki           
+Firefoxis ei saa suuri mehikesi lömastada! watefuk?     
+level 3's relv kaob käest ära, kui kuulid otsa saavaad? Komistasin vahest leveldowni ka, vb see tegi midagi?                      
                     
 KINDLAD BUGFIXID!               
 kui main tegelane liigub vasakule/paremale kargab jms pildid ei vahetu õigesti, pidevalt liigub tavalise leprechaun.png pildiga!         
