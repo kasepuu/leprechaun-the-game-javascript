@@ -40,7 +40,7 @@ export function resetBossHealth(){
   bossHealth = 100
 }
 
-import { tileSize } from "../level/tileMap.js"
+import { removeElements, tileSize } from "../level/tileMap.js"
 
 import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, levelCompletion, currentAmmo, addAmmo, pausedMenu } from "../src/game.js"
 
@@ -72,7 +72,7 @@ export function charJump(startY) {
     Character.style.bottom = currentJumpHeight + 'px';
     setTimeout(() => {
       requestAnimationFrame(jumpAnimation);
-    }, 1000 / 72);
+    }, 0); // 1000 / 72
   }
     requestAnimationFrame(jumpAnimation);
 }
@@ -370,7 +370,6 @@ export function projectileEnemyCollision(projectile) {
   }
 }
 
-
 export function damageEnemy() {
   console.log("PIHTAS PÕHJAS!")
   if (bossHealth <= 0) {
@@ -399,6 +398,7 @@ export function characterMushroomCollision(mushRooms) {
       mushRoomPos.bottom >= characterPos.top
     ) {
       mushRoom.remove()
+      removeElements()
       isJumping = false
       addAmmo(3)
       return;

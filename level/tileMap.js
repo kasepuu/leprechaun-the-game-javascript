@@ -8,6 +8,19 @@ let enemyTile2 = "E"
 let enemyTile3 = "u"
 let ammoTile = "r"
 
+export let currentElements = 0
+
+export function getElements(){
+    return currentElements
+}
+
+export function removeElements(){
+    currentElements = 0
+}
+export function setElements(amount = 1){
+    currentElements = amount
+}
+
 let smallEnemyPositionsX = [];
 let smallEnemyPositionsY = [];
 let largeEnemyPositionsX = [];
@@ -145,11 +158,13 @@ export function createElements(){
     let parent = document.getElementById("elements")
     let amountOfAmmo = ammoPositionsX.length
 
-    for (let r = 0; r < amountOfAmmo; r++){
-        // if (eval(`levelCompletion.level${currentLevel}`).includes(`dog-${e + 1}`)) {
-        //     continue // TODO LISADA SEE KA!
-        // }
+    let randomAmmo = Math.floor(Math.random() * (amountOfAmmo - 1));
 
+    console.log(randomAmmo)
+    for (let r = 0; r < amountOfAmmo; r++){
+        if (r != randomAmmo) continue
+    
+        currentElements += 1
         let ammo = document.createElement("div");
         ammo.id = "ammo";
         ammo.style.left = ammoPositionsX[r] + "px";

@@ -1,20 +1,16 @@
 TODO:                        
 LEVEL 3 LÕPUNI                                
-TEHTUD! BOSSILE HEALTHBAR               
-
-TODO RUTTU!
-seened loob funktsiooniga createElement()                       
-
+OPTIMIZATIONS, funktsioone loope jms proovida vähendada? Koodipilt puhtamaks? :D                                
+proovida veel fps värkisärki -> vaatan homme
+mul ei lasknud koeri lömastada? sain surma, suuri mehikesi lasi?            
+                    
 KINDLAD BUGFIXID!               
-MOVEMENT SPEED TULEB MUUTA VASTAVALT FPS'ILE                    
 kui main tegelane liigub vasakule/paremale kargab jms pildid ei vahetu õigesti, pidevalt liigub tavalise leprechaun.png pildiga!         
                 
-VAJALIK TODO
+MUU:
 üle mõelda, kes meil siis see pahalane on? ufo laev ei ole just kõige õigem "K O L L" imo, pahalase ideed gpt poolt:         
-- dragons, griffins, harpies, wyverns, sirens           
-fps limit -> 60 fps                     
-
-todod:          
+- dragons, griffins, harpies, wyverns, sirens                               
+                  
 eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms          
 
 IDEED:           
@@ -25,6 +21,3 @@ ENNE AUDITIT ÜLE VAADATA!
 pause menu, welcome screen -> choose language EST/FIN                           
 hud menu                     
 auto scale for screens smaller/equal than 1280x720p                     
-
-hea teada!      
-SPAWNID SAAB DEFINEDA TILEMAPPI "r" => ammo -> RELVA RANDOM SPAWNID TILEMAPPI                   

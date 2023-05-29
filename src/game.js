@@ -2,8 +2,11 @@
 // simple variables, health, current level etc
 export let currentLevel = 3
 export let currentAmmo = 3 // current ammo count
+
 let lives = 4
 let maxLevels = 3
+let hasWeapon = (currentLevel === maxLevels)
+
 //let 
 // list of variables
 let frameTimes = []
@@ -11,7 +14,6 @@ export let gameIsPaused = true
 let timeElapsed = 0 // timer
 let startTime // game started at...
 let gameRunning = false
-let hasWeapon = !document.getElementById("gun").hasAttribute("hidden")
 // importing 
 import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
 import { resetBossHealth } from "./physics.js"
@@ -20,7 +22,7 @@ import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnima
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
-import { drawTiles, deleteTiles, createEnemies, deleteEnemies, fetchCheckpoints, deleteFlyingEnemies } from "../level/tileMap.js"
+import { drawTiles, deleteTiles, createEnemies, deleteEnemies, fetchCheckpoints, deleteFlyingEnemies, currentElements, removeElements, getElements } from "../level/tileMap.js"
 import { frameRate, timerCounter } from "./overlayItems.js"
 export let lastLeftMove = false
 
@@ -201,10 +203,12 @@ function main() {
     playGround.appendChild(flyingEnemiesParent);
     playGround.appendChild(Character);
     setTimeout(() => {
-        animationFrameId = requestAnimationFrame(main);
-    }, 1000 / 72);
+        animationFrameId = requestAnimationFrame(main); // mul tiksub 46-56 fps vahepeal xd 
+    }, 0); // 0 asemel oli 1000 / 72, 0'iga on fps normis? 240hz ekraanil (linuxis)
+    // level 3 oli 1000/72 kohutav, 30 fps lausa
 }
 
+import { createElements } from "../level/tileMap.js"
 // eventlisteners for movement, character movement
 document.addEventListener("keydown", (event) => {
     if (gameIsPaused) return
@@ -231,9 +235,15 @@ document.addEventListener("keydown", (event) => {
     }
     if (event.code === 'Space' && hasWeapon) {
         if (shootInterval) {
+            // tulistamine bugib siia vist, v siis hasweapon muutub falseks vahest
             return;
         }
         shootInterval = true
+        console.log(currentElements, currentAmmo)
+        if (currentAmmo == 1 && getElements() === 0){
+            removeElements()
+            createElements()
+        }
         if (currentAmmo <= 0) return
         removeAmmo(1)
         moveEnemy(flyingEnemiesParent, true, true)
@@ -298,7 +308,6 @@ export function levelUp() {
     currentLevel += 1
 
     if (currentLevel === maxLevels) {
-        hasWeapon = true
         document.getElementById("bossHealthBar").removeAttribute("hidden")
         document.getElementById("gun").removeAttribute("hidden")
     }
@@ -323,7 +332,6 @@ export function levelUp() {
 
 export function levelDown() {
     if (currentLevel != maxLevels) {
-        hasWeapon = false
         document.getElementById("bossHealthBar").setAttribute("hidden", "")
         document.getElementById("gun").setAttribute("hidden", "")
     }
