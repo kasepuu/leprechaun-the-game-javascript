@@ -72,7 +72,7 @@ export function charJump(startY) {
     Character.style.bottom = currentJumpHeight + 'px';
     setTimeout(() => {
       requestAnimationFrame(jumpAnimation);
-    }, 0); // 1000 / 72
+    }, 1000/72); // 1000 / 72
   }
     requestAnimationFrame(jumpAnimation);
 }

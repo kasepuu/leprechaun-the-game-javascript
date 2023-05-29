@@ -202,7 +202,7 @@ function main() {
     playGround.appendChild(Character);
     setTimeout(() => {
         animationFrameId = requestAnimationFrame(main); // mul tiksub 46-56 fps vahepeal xd 
-    }, 0); // 0 asemel oli 1000 / 72, 0'iga on fps normis? 240hz ekraanil (linuxis)
+    }, 1000/72); // 0 asemel oli 1000 / 72, 0'iga on fps normis? 240hz ekraanil (linuxis)
     // level 3 oli 1000/72 kohutav, 30 fps lausa
 }
 
