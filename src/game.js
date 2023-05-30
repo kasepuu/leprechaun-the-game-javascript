@@ -230,19 +230,30 @@ document.addEventListener("keydown", (event) => {
 
         charJump(jumpHeight + Character.offsetHeight * 2.5)
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_jumping.png)"
+        // if (physics.isMovingLeft) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
+        // if (physics.isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
+
     }
-    if (event.code === 'Space' && hasWeapon) {
+    if (event.code === 'Space' && (currentLevel === maxLevels)) {
+     
         if (shootInterval) {
-            // tulistamine bugib siia vist, v siis hasweapon muutub falseks vahest
             return;
         }
+
+        // handling score, making each shot cost some score points :)
+        let score =   document.getElementById("score")
+        let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value    
+        score.innerHTML = "SCORE: " + (prevScore -50) // +500 score for every hit
+        ///
+
         shootInterval = true
         console.log(currentElements, currentAmmo)
+        
         if (currentAmmo == 1 && getElements() === 0){
             removeElements()
             createElements()
         }
-        if (currentAmmo <= 0) return
+        if (currentAmmo <= 0) {shootInterval = false; return}
         removeAmmo(1)
         moveEnemy(flyingEnemiesParent, true, true)
         setTimeout(() => {

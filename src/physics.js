@@ -105,6 +105,8 @@ export function moveLeft() {
     let currentLeft = parseInt(Character.style.left) || 40;
     let currentBottom = parseInt(Character.style.bottom) || 40;
 
+    Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
+
     let newX = currentLeft - movementSpeed;
 
     if (!checkCollision(newX, currentBottom, 'left')) {
@@ -138,6 +140,8 @@ export function moveRight() {
     let currentLeft = parseInt(Character.style.left) || 40;
     let currentBottom = parseInt(Character.style.bottom) || 40;
 
+    Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
+    
     let newX = currentLeft;
 
     newX += movementSpeed;
@@ -159,6 +163,7 @@ export function moveRight() {
 
 export function stopAnimationRight() {
   Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
+
   isMovingRight = false;
   cancelAnimationFrame(animationIdRight);
   animationIdRight = null;
@@ -227,9 +232,9 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
   let enemyPos = enemy.getBoundingClientRect();
   let characterPos = Character.getBoundingClientRect();
   if (
-    characterPos.bottom >= enemyPos.top &&
-    characterPos.bottom <= enemyPos.top + 5 &&
-    enemyPos.left <= characterPos.right &&
+    characterPos.bottom >= enemyPos.top && 
+    characterPos.bottom <= enemyPos.top + 10 && // + 5 previously
+    enemyPos.left <= characterPos.right && 
     enemyPos.right >= characterPos.left && !isProjectile
   ) {
     isJumping = false;
@@ -254,6 +259,7 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
   ) {
     if (isProjectile) enemy.remove()
     isJumping = false
+    console.log(characterPos, enemyPos)
     loseLife();
     return;
   }
@@ -261,6 +267,7 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
 
 function getRandomInterval() {
   // Generate a random interval between 1 and 3 seconds (2000 - 6000 milliseconds)
+
   return Math.floor(Math.random() * 100) + 500;
 }
 
@@ -270,10 +277,14 @@ export function moveEnemy(enemiesParent, isFlying = false, userProjectile = fals
 
   Array.from(enemies).forEach(enemy => {
     if (isFlying && flyingEnemyIntervalId === null) {
+
       flyingEnemyIntervalId = setInterval(() => {
         if (gameIsPaused) return
         createProjectile(enemiesParent, enemy);
+   //    document.getElementById("flyingSaucer").style.backgroundImage = `url("images/characters/villains/ufo.gif")`
+
       }, getRandomInterval())
+
     } else if (enemy.id === 'projectile' || enemy.id === 'userProjectile') {
       moveProjectile(enemy)
     } else {
@@ -312,6 +323,8 @@ function enemyMovement(enemy, isFlying) {
 export function createProjectile(flyingEnemiesParent, enemy, charBool = false) {
   if (!document.getElementById("flyingSaucer")) return
   let projectile = document.createElement('div');
+ // document.getElementById("flyingSaucer").style.backgroundImage = `url("images/characters/villains/ufo_attack.png")`
+
 
   if (!charBool) {
     projectile.className = 'projectile';
@@ -382,7 +395,12 @@ export function damageEnemy() {
     document.getElementById("death-screen").removeAttribute("hidden")
   }
 
-  bossHealth -= 20 //boss damage per bullet
+  let score =   document.getElementById("score")
+  let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
+
+  score.innerHTML = "SCORE: " + (prevScore + 500) // +500 score for every hit
+
+  bossHealth -= 10 //boss damage per bullet
   document.getElementById("health-level").style.width = bossHealth + "%"
 }
 

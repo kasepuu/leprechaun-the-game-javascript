@@ -1,19 +1,23 @@
 TODO:                        
 LEVEL 3 LÕPUNI                                
-OPTIMIZATIONS, funktsioone loope jms proovida vähendada? Koodipilt puhtamaks? :D                                
-proovida veel fps värkisärki -> vaatan homme, täna ei viitsi            
-mul ei lasknud koeri lömastada? sain surma, suuri mehikesi lasi? EDIT: panin mängu veebiserveris käima, seal chromega okidoki           
-Firefoxis ei saa suuri mehikesi lömastada! watefuk?     
-level 3's relv kaob käest ära, kui kuulid otsa saavaad? Komistasin vahest leveldowni ka, vb see tegi midagi?                      
-                    
-KINDLAD BUGFIXID!               
-kui main tegelane liigub vasakule/paremale kargab jms pildid ei vahetu õigesti, pidevalt liigub tavalise leprechaun.png pildiga!         
+OPTIMIZATIONS, funktsioone loope jms<   
+    
+asjad mis veel silma on jäänud:         
+space korral character tulistama animatsioon                    
+punane tegelane ümber teha                  
+draakon on atm liiga copyright                      
+draakonit tulistama animatsiooniga ei saanud, kuid pilt on olemas ufo_shoot.png vms. settimeout teeb selle muutmise umbe keeruliseks, vist                       
+
+
+mul ei lasknud koeri lömastada?  FIXED, PHYSICS.JS RIDA 231, +5 ASEMEL PANIN +10?            
+level 3's relv kaob käest ära, kui kuulid otsa saavaad? Komistasin vahest leveldowni ka, vb see tegi midagi? FIXED, vist shootInterval jäi true'ks                      
+kui main tegelane liigub vasakule/paremale kargab jms pildid ei vahetu õigesti, pidevalt liigub tavalise leprechaun.png pildiga! FIXED, VIST         
                 
 MUU:
 üle mõelda, kes meil siis see pahalane on? ufo laev ei ole just kõige õigem "K O L L" imo, pahalase ideed gpt poolt:         
 - dragons, griffins, harpies, wyverns, sirens                               
-                  
-eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms          
+
+eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms              
 
 IDEED:           
 add enemyjumping to enemymove // et koerad oleksid hirmsamad, kui ei viitsi siis kamakolm           

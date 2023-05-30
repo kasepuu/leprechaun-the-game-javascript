@@ -149,6 +149,7 @@ export function createEnemies() {
         enemy.style.left = flyingSaucerPositionsX[u] + "px"
         enemy.style.bottom = flyingSaucerPositionsY[u] + "px"
         enemy.className = "saucer"
+        enemy.style.backgroundImage = `url("images/characters/villains/ufo.gif")`
 
         ufoParent.appendChild(enemy)
     }
