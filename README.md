@@ -6,7 +6,7 @@ asjad mis veel silma on jäänud:
 space korral character tulistama animatsioon                    
 punane tegelane ümber teha                  
 draakon on atm liiga copyright                      
-draakonit tulistama animatsiooniga ei saanud, kuid pilt on olemas ufo_shoot.png vms. settimeout teeb selle muutmise umbe keeruliseks, vist                       
+draakonit animatsiooniga tulistama ei saanud, kuid pilt on olemas ufo_shoot.png vms. settimeout teeb selle muutmise umbe keeruliseks, vist                       
 PHYSICS.JS RIDA 231, +5 ASEMEL PANIN +10? -> see muudatus on kahtlane, üle vaadata. Virtuaalserveris sai punane mehike umbe imelikult surma         
 
 
