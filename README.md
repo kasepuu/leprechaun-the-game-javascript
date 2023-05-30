@@ -11,7 +11,7 @@ PHYSICS.JS RIDA 231, +5 ASEMEL PANIN +10? -> see muudatus on kahtlane, üle vaad
 
 
 mul ei lasknud koeri lömastada?  FIXED, PHYSICS.JS RIDA 231, +5 ASEMEL PANIN +10?            
-level 3's relv kaob käest ära, kui kuulid otsa saavaad? Komistasin vahest leveldowni ka, vb see tegi midagi? FIXED, vist shootInterval jäi true'ks                      
+level 3's relv kaob käest ära, kui kuulid otsa saavaad? Komistasin vahest leveldowni ka, vb see tegi midagi? FIXED, vist. shootInterval jäi true'ks                      
 kui main tegelane liigub vasakule/paremale kargab jms pildid ei vahetu õigesti, pidevalt liigub tavalise leprechaun.png pildiga! FIXED, VIST         
                 
 MUU:
