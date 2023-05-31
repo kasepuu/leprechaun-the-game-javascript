@@ -285,10 +285,11 @@ export function createProjectile(flyingEnemiesParent, enemy, characterBool = fal
   let projectile = document.createElement('div');
 
   if (!characterBool) {
+    let direction = parseInt(enemy.style.transform.match(/-?\d/)) || 1
     projectile.className = 'projectile';
     projectile.id = 'projectile'
-    projectile.style.left = flyingEnemyPosition.left + "px";
-    projectile.style.bottom = flyingEnemyPosition.bottom + "px";
+    projectile.style.left = flyingEnemyPosition.left - (55 * direction) + "px";
+    projectile.style.bottom = flyingEnemyPosition.bottom + 20 + "px";
   } else {
     projectile.className = 'userProjectile';
     projectile.id = 'userProjectile';
