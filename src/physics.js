@@ -36,11 +36,11 @@ let tiles = {
 
 let bossHealth = 100
 
-export function resetBossHealth(){
+export function resetBossHealth() {
   bossHealth = 100
 }
 
-import { removeElements, tileSize } from "../level/tileMap.js"
+import { tileSize, createElements } from "../level/tileMap.js"
 
 import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, levelCompletion, currentAmmo, addAmmo, pausedMenu } from "../src/game.js"
 
@@ -72,9 +72,9 @@ export function charJump(startY) {
     Character.style.bottom = currentJumpHeight + 'px';
     setTimeout(() => {
       requestAnimationFrame(jumpAnimation);
-    }, 1000/72); // 1000 / 72
+    }, 1000 / 72);
   }
-    requestAnimationFrame(jumpAnimation);
+  requestAnimationFrame(jumpAnimation);
 }
 
 // function for falling
@@ -100,12 +100,10 @@ export let movementSpeed = 5;
 
 export function moveLeft() {
   if (isMovingLeft || animationIdLeft) return;
-   isMovingLeft = true;
+  isMovingLeft = true;
   function moveAnimationLeft() {
     let currentLeft = parseInt(Character.style.left) || 40;
     let currentBottom = parseInt(Character.style.bottom) || 40;
-
-    Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
 
     let newX = currentLeft - movementSpeed;
 
@@ -121,7 +119,7 @@ export function moveLeft() {
       animationIdLeft = stopAnimationLeft();
     }
   }
-    animationIdLeft = requestAnimationFrame(moveAnimationLeft);
+  animationIdLeft = requestAnimationFrame(moveAnimationLeft);
 }
 
 export function stopAnimationLeft() {
@@ -140,8 +138,6 @@ export function moveRight() {
     let currentLeft = parseInt(Character.style.left) || 40;
     let currentBottom = parseInt(Character.style.bottom) || 40;
 
-    Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
-    
     let newX = currentLeft;
 
     newX += movementSpeed;
@@ -163,7 +159,6 @@ export function moveRight() {
 
 export function stopAnimationRight() {
   Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
-
   isMovingRight = false;
   cancelAnimationFrame(animationIdRight);
   animationIdRight = null;
@@ -174,54 +169,30 @@ export function checkCollision(x, y, direction, isCharacter = true) {
   // Calculate the character's tile position
   let characterTileX = Math.floor(x / 20);
   let characterTileY = Math.floor(y / 20);
+  if (direction === 'right') characterTileX = Math.floor((x + Character.offsetWidth) / 20)
 
-  // Calculate the adjacent tiles based on the movement direction
-  let adjacentTileX = characterTileX;
-  let adjacentTileY = characterTileY;
-  if (direction === "left") {
-    adjacentTileX = Math.floor((x) / 20);
-  } else if (direction === "right") {
-    adjacentTileX = Math.floor((x + Character.offsetWidth) / 20);
-  } else if (direction === "up") {
-    adjacentTileY = Math.floor((y) / 20);
-  } else if (direction === "down") {
-    adjacentTileY = Math.floor((y) / 20);
-  }
-
-  // Check if the adjacent tiles are collision tiles
+  // Check if the character's tile is a collision tile
   let currentTile = eval(`level${currentLevel}_map`)[35 - characterTileY][characterTileX];
-  let adjacentTile = eval(`level${currentLevel}_map`)[35 - adjacentTileY][adjacentTileX];
-
-  if ((currentTile === tiles.previousLevel || adjacentTile === tiles.previousLevel) && isCharacter) {
-    levelDown()
-    return true
+  
+  if ((currentTile === tiles.previousLevel) && isCharacter) {
+    levelDown();
+    return true;
+  }
+  if ((currentTile === tiles.nextLevel) && isCharacter) {
+    levelUp();
+    return true;
+  }
+  if ((currentTile === tiles.deathElement) && isCharacter) {
+    loseLife();
+    return true;
+  }
+  if (currentTile === tiles.levelDesign || currentTile === "e" || currentTile === "E" || currentTile === "u" || currentTile === tiles.checkPoint ||
+    ((currentTile === tiles.deathElement || currentTile === tiles.droppedElement) && !isCharacter)) {
+    return false;
   }
 
-  if ((currentTile === tiles.nextLevel || adjacentTile === tiles.nextLevel) && isCharacter) {
-    levelUp()
-    return true
-  }
-  if ((currentTile === tiles.deathElement || adjacentTile === tiles.deathElement) && isCharacter) {
-    loseLife()
-    return true
-  }
-  if (currentTile === tiles.deathElement || adjacentTile === tiles.deathElement && !isCharacter) {
-    return false
-  }
-  if (currentTile === tiles.droppedElement || adjacentTile === tiles.droppedElement && !isCharacter) {
-    return false
-  }
-
-  if (currentTile === tiles.levelDesign || adjacentTile === tiles.levelDesign
-    || currentTile === "e" || adjacentTile === "e"
-    || currentTile === "E" || adjacentTile === "E"
-    || currentTile === "u" || adjacentTile === "u"
-    || currentTile === tiles.checkPoint || adjacentTile === tiles.checkPoint) {
-    return false
-  }
-
-  if ((currentTile !== tiles.air || adjacentTile !== tiles.air) &&
-    (currentTile !== tiles.airBait || adjacentTile !== tiles.airBait)) {
+  if (currentTile !== tiles.air &&
+    currentTile !== tiles.airBait) {
     return true;
   } else {
     return false;
@@ -232,9 +203,9 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
   let enemyPos = enemy.getBoundingClientRect();
   let characterPos = Character.getBoundingClientRect();
   if (
-    characterPos.bottom >= enemyPos.top && 
-    characterPos.bottom <= enemyPos.top + 10 && // + 5 previously
-    enemyPos.left <= characterPos.right && 
+    characterPos.bottom >= enemyPos.top &&
+    characterPos.bottom <= enemyPos.top + 5 &&
+    enemyPos.left <= characterPos.right &&
     enemyPos.right >= characterPos.left && !isProjectile
   ) {
     isJumping = false;
@@ -259,16 +230,9 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
   ) {
     if (isProjectile) enemy.remove()
     isJumping = false
-    console.log(characterPos, enemyPos)
     loseLife();
     return;
   }
-}
-
-function getRandomInterval() {
-  // Generate a random interval between 1 and 3 seconds (2000 - 6000 milliseconds)
-
-  return Math.floor(Math.random() * 100) + 500;
 }
 
 export function moveEnemy(enemiesParent, isFlying = false, userProjectile = false) {
@@ -277,14 +241,10 @@ export function moveEnemy(enemiesParent, isFlying = false, userProjectile = fals
 
   Array.from(enemies).forEach(enemy => {
     if (isFlying && flyingEnemyIntervalId === null) {
-
       flyingEnemyIntervalId = setInterval(() => {
         if (gameIsPaused) return
         createProjectile(enemiesParent, enemy);
-   //    document.getElementById("flyingSaucer").style.backgroundImage = `url("images/characters/villains/ufo.gif")`
-
-      }, getRandomInterval())
-
+      }, Math.floor(Math.random() * 100) + 500)
     } else if (enemy.id === 'projectile' || enemy.id === 'userProjectile') {
       moveProjectile(enemy)
     } else {
@@ -304,14 +264,14 @@ function enemyMovement(enemy, isFlying) {
   let currentBottom = parseInt(enemy.style.bottom);
   let direction = parseInt(enemy.style.transform.match(/-?\d/)) || 1;
 
-  let newX = currentLeft + (enemyMovementSpeed * -direction) ;
+  let newX = currentLeft + (enemyMovementSpeed * -direction);
 
   if (isFlying && Math.random() < 0.005) {
     enemy.style.transform = 'scaleX(' + -direction + ')';
   }
 
   if (!checkCollision(newX, currentBottom, 'left', false) && (checkCollision(newX, currentBottom - enemyMovementSpeed, 'down', false) || isFlying) &&
-    !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && (checkCollision(newX + enemy.offsetWidth, currentBottom -  enemyMovementSpeed, 'down', false) || isFlying)) {
+    !checkCollision(newX + enemy.offsetWidth, currentBottom, 'left', false) && (checkCollision(newX + enemy.offsetWidth, currentBottom - enemyMovementSpeed, 'down', false) || isFlying)) {
     enemy.style.left = newX + "px";
   } else {
     enemy.style.transform = 'scaleX(' + -direction + ')';
@@ -320,13 +280,11 @@ function enemyMovement(enemy, isFlying) {
   if (!isFlying) characterEnemyCollision(enemy);
 }
 
-export function createProjectile(flyingEnemiesParent, enemy, charBool = false) {
+export function createProjectile(flyingEnemiesParent, enemy, characterBool = false) {
   if (!document.getElementById("flyingSaucer")) return
   let projectile = document.createElement('div');
- // document.getElementById("flyingSaucer").style.backgroundImage = `url("images/characters/villains/ufo_attack.png")`
 
-
-  if (!charBool) {
+  if (!characterBool) {
     projectile.className = 'projectile';
     projectile.id = 'projectile'
     projectile.style.left = flyingEnemyPosition.left + "px";
@@ -383,6 +341,7 @@ export function projectileEnemyCollision(projectile) {
   }
 }
 
+
 export function damageEnemy() {
   console.log("PIHTAS PÕHJAS!")
   if (bossHealth <= 0) {
@@ -395,20 +354,17 @@ export function damageEnemy() {
     document.getElementById("death-screen").removeAttribute("hidden")
   }
 
-  let score =   document.getElementById("score")
-  let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
-
-  score.innerHTML = "SCORE: " + (prevScore + 500) // +500 score for every hit
-
-  bossHealth -= 10 //boss damage per bullet
+  bossHealth -= 20 //boss damage per bullet
   document.getElementById("health-level").style.width = bossHealth + "%"
 }
 
+
+let mushRoomInterval = false
 export function characterMushroomCollision(mushRooms) {
   Array.from(mushRooms).forEach(mushRoom => {
     let mushRoomPos = mushRoom.getBoundingClientRect();
     let characterPos = Character.getBoundingClientRect();
-  
+
     if (
       characterPos.left <= mushRoomPos.right &&
       characterPos.right >= mushRoomPos.left &&
@@ -416,10 +372,21 @@ export function characterMushroomCollision(mushRooms) {
       mushRoomPos.bottom >= characterPos.top
     ) {
       mushRoom.remove()
-      removeElements()
       isJumping = false
       addAmmo(3)
-      return;
+      addMushRoomDelay()
     }
   });
+}
+
+function addMushRoomDelay() {
+  if (mushRoomInterval) {
+    return;
+  }
+  mushRoomInterval = true
+
+  setTimeout(() => {
+    mushRoomInterval = false
+    createElements()
+  }, 10000)
 }
