@@ -26,7 +26,8 @@ draakon on atm liiga copyright
 draakonit animatsiooniga tulistama ei saanud, kuid pilt on olemas ufo_shoot.png vms. settimeout teeb selle muutmise umbe keeruliseks    
 mul ei lasknud koeri lömastada? -> LEIDSIN PÕHJUSE MIKS, KUI ZOOM ON 90% SIIS ON MIDAGI LAPPES :D (ctrl+mwheel)         
 fps on imelik, ühes browseris on üks teises teine :?        
-eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms                       
+eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms                               
+disableda pause kui oled deathscreenil/endscreenil      
 
 ENNE AUDITIT ÜLE VAADATA!               
 pause menu, welcome screen -> choose language EST/FIN                           
