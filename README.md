@@ -15,18 +15,17 @@ The story of the game is ...
 #### Useful links
 ```
 
-https://sfxr.me/ - sound effects
-https://musiclab.chromeexperiments.com/Song-Maker - theme song
+https://sfxr.me/ - we made sound effects with it
+https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with it
 
 ```
 
-TODO:                        
-LEVEL 3 LÕPUNI                                
+TODO:                                           
 OPTIMIZATIONS, funktsioone loope jms<       
 draakon on atm liiga copyright                      
-draakonit animatsiooniga tulistama ei saanud, kuid pilt on olemas ufo_shoot.png vms. settimeout teeb selle muutmise umbe keeruliseks                           
-PHYSICS.JS RIDA 231, +5 ASEMEL PANIN +10? -> see muudatus on kahtlane, üle vaadata. Virtuaalserveris sai punane mehike umbe imelikult surma         
-mul ei lasknud koeri lömastada?  FIXED, PHYSICS.JS RIDA 231, +5 ASEMEL PANIN +10? -> veel testida!            
+draakonit animatsiooniga tulistama ei saanud, kuid pilt on olemas ufo_shoot.png vms. settimeout teeb selle muutmise umbe keeruliseks    
+mul ei lasknud koeri lömastada? -> LEIDSIN PÕHJUSE MIKS, KUI ZOOM ON 90% SIIS ON MIDAGI LAPPES :D (ctrl+mwheel)         
+fps on imelik, ühes browseris on üks teises teine :?        
 eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms                       
 
 ENNE AUDITIT ÜLE VAADATA!               
