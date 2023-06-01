@@ -2,10 +2,13 @@ const path = "../audio/"
 
 let audio = new Audio()
 
-export function playSoundOnce(sound, volume = 0.03) {
+export function playSoundOnce(sound, volume = 0.3, startTime = 0) {
     let player = new Audio(path + sound)
+    player.currentTime = startTime
+    player.preload = "auto"
     player.volume = volume
     player.play()
+
 }
 
 

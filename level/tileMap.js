@@ -1,26 +1,15 @@
 import { level1_map, level2_map, level3_map } from "./levels.js"
 import { currentLevel, levelCompletion } from "../src/game.js"
+import { Character } from "../src/main.js"
 export const tileSize = 20
 
 let screenHeigth = 720 - 20
-let enemyTile1 = "e"
-let enemyTile2 = "E"
-let enemyTile3 = "u"
-let ammoTile = "r"
+let enemyTile1 = "e" // small enemy
+let enemyTile2 = "E" // large enemy
+let enemyTile3 = "u" // flying object
+let ammoTile = "r" // ammo
 
-export let currentElements = 0
-
-// see mant hoopis äkki game.js tõsta, koos elements väärtustega?
-export function getElements(){
-    return currentElements
-}
-export function removeElements(){
-    currentElements = 0
-}
-export function setElements(amount = 1){
-    currentElements = amount
-}
-
+// coordinates for interactable objects
 let smallEnemyPositionsX = [];
 let smallEnemyPositionsY = [];
 let largeEnemyPositionsX = [];
@@ -39,6 +28,19 @@ export function resetPostitions() {
     flyingSaucerPositionsY = [];
     ammoPositionsX = [];
     ammoPositionsY = [];
+}
+
+// amount of visible elements
+export let currentElements = 0
+
+export function getElements() {
+    return currentElements
+}
+export function removeElements() {
+    currentElements = 0
+}
+export function setElements(amount = 1) {
+    currentElements = amount
 }
 
 // fetching the checkpoints, to enable going back to the previous level
@@ -65,14 +67,13 @@ export function fetchCheckpoints() {
     return checkPoints
 }
 
-
+// fetching the coordinates for elements & enemies
 function fetchEnemyLocations(currentLevel) {
-    console.log(currentLevel, "new enemieS!")
     resetPostitions()
     deleteEnemies()
     deleteElements()
     deleteFlyingEnemies()
-    //    createFlyingEnemies()
+
     let currentLevelMap = eval(`level${currentLevel}_map`)
     for (let y = 0; y < currentLevelMap.length; y++) {
         for (let x = 0; x < currentLevelMap[y].length; x++) {
@@ -96,48 +97,45 @@ function fetchEnemyLocations(currentLevel) {
     }
 }
 
-export function createEnemies() {
-    let enemiesParent = document.getElementById("enemies");
-    let amountOfEnemiesS = smallEnemyPositionsX.length;
-    let amountOfEnemiesL = largeEnemyPositionsX.length;
+function createEnemies() {
+    let enemiesParent = document.getElementById("enemies")
+    let amountOfSmallEnemies = smallEnemyPositionsX.length
+    let amountOfLargeEnemies = largeEnemyPositionsX.length
 
     // create small enemies (dogs)
-    for (let e = 0; e < amountOfEnemiesS; e++) {
-        if (eval(`levelCompletion.level${currentLevel}`).includes(`dog-${e + 1}`)) {
-            continue
-        }
+    for (let e = 0; e < amountOfSmallEnemies; e++) {
+        if (eval(`levelCompletion.level${currentLevel}`).includes(`dog-${e + 1}`)) continue
+
         const randomNumber = Math.floor(Math.random() * 3) + 1
 
-        let enemy = document.createElement("div");
-        enemy.id = "tinyAttacker";
-        enemy.style.left = smallEnemyPositionsX[e] + "px";
-        enemy.style.bottom = smallEnemyPositionsY[e] + "px";
+        let enemy = document.createElement("div")
+        enemy.id = "tinyAttacker"
+        enemy.style.left = smallEnemyPositionsX[e] + "px"
+        enemy.style.bottom = smallEnemyPositionsY[e] + "px"
         enemy.className = `dog-${e + 1}`
         if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
-        //if (e % 2 == 1) enemy.style.backgroundImage = `url("images/characters/villains/black_dog.gif")`
         else enemy.style.backgroundImage = `url("images/characters/villains/brown_dog.gif")`
 
         enemy.style.transform = 'scaleX(1)';
         enemiesParent.appendChild(enemy);
     }
 
-    // create larger enemies (stormtroopers)
-    for (let E = 0; E < amountOfEnemiesL; E++) {
-        if (eval(`levelCompletion.level${currentLevel}`).includes(`stormtrooper-${E + 1}`)) {
-            continue
-        }
+    // create larger enemies (werewolves)
+    for (let E = 0; E < amountOfLargeEnemies; E++) {
+        if (eval(`levelCompletion.level${currentLevel}`).includes(`stormtrooper-${E + 1}`)) continue
+
         const randomNumber = Math.floor(Math.random() * 3) + 1
 
-        let enemy = document.createElement("div");
-        enemy.id = "largeAttacker";
-        enemy.style.left = largeEnemyPositionsX[E] + "px";
-        enemy.style.bottom = largeEnemyPositionsY[E] + "px";
+        let enemy = document.createElement("div")
+        enemy.id = "largeAttacker"
+        enemy.style.left = largeEnemyPositionsX[E] + "px"
+        enemy.style.bottom = largeEnemyPositionsY[E] + "px"
         enemy.className = `stormtrooper-${E + 1}`
-        if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/villain.gif")`
-        else enemy.style.backgroundImage = `url("images/characters/villains/villain.gif")`
+        if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("images/characters/villains/werewolf.gif")`
+        else enemy.style.backgroundImage = `url("images/characters/villains/werewolf_dark.gif")`
 
-        enemy.style.transform = 'scaleX(1)';
-        enemiesParent.appendChild(enemy);
+        enemy.style.transform = 'scaleX(1)'
+        enemiesParent.appendChild(enemy)
     }
 
     // create flying saucers (ufos)
@@ -155,16 +153,15 @@ export function createEnemies() {
     }
 }
 
-export function createElements(){
+export function createElements() {
     let parent = document.getElementById("elements")
     let amountOfAmmo = ammoPositionsX.length
 
     let randomAmmo = Math.floor(Math.random() * (amountOfAmmo - 1));
 
-    console.log(randomAmmo)
-    for (let r = 0; r < amountOfAmmo; r++){
+    for (let r = 0; r < amountOfAmmo; r++) {
         if (r != randomAmmo) continue
-    
+
         currentElements += 1
         let ammo = document.createElement("div");
         ammo.id = "ammo";
@@ -178,8 +175,14 @@ export function createElements(){
     }
 }
 
+export function resetCharacter(xPosValue = 40, yPosValue = 50) {
+    Character.style.left = xPosValue + "px"
+    Character.style.bottom = yPosValue + "px"
+}
 
+// generating/creating tile map
 export function drawTiles(map, currentLevel) {
+    resetCharacter()
     deleteTiles()
     fetchEnemyLocations(currentLevel)
     createEnemies()
@@ -212,7 +215,7 @@ export function deleteEnemies() {
     let enemiesParent = document.getElementById("enemies")
     enemiesParent.innerHTML = ""
 }
-export function deleteElements(){
+export function deleteElements() {
     let elementsParen = document.getElementById("elements")
     elementsParen.innerHTML = ""
 }

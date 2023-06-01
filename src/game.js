@@ -2,27 +2,25 @@
 // simple variables, health, current level etc
 export let currentLevel = 3
 export let currentAmmo = 3 // current ammo count
-
+export let scoreCounter = 0
 let lives = 4
 let maxLevels = 3
-let hasWeapon = (currentLevel === maxLevels)
 
-//let 
 // list of variables
-let frameTimes = []
 export let gameIsPaused = true
+let frameTimes = []
 let timeElapsed = 0 // timer
-let startTime // game started at...
+let startTime // time game started at...
 let gameRunning = false
 // importing 
-import { mainMenu, playGround, backToMenu, healthBar, Character } from "./main.js"
+import { mainMenu, playGround, backToMenu, healthBar, Character, frameCapping } from "./main.js"
 import { resetBossHealth } from "./physics.js"
 //imports
 import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy, characterMushroomCollision } from "./physics.js"
 import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
-import { drawTiles, deleteTiles, createEnemies, deleteEnemies, fetchCheckpoints, deleteFlyingEnemies, currentElements, removeElements, getElements } from "../level/tileMap.js"
+import { drawTiles, deleteTiles, deleteEnemies, fetchCheckpoints, deleteFlyingEnemies, resetCharacter, removeElements, getElements } from "../level/tileMap.js"
 import { frameRate, timerCounter } from "./overlayItems.js"
 export let lastLeftMove = false
 
@@ -51,6 +49,11 @@ let shootInterval = false;
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
 let checkpoints
 
+export function addAndReturnScore(amount){
+    scoreCounter += amount
+    return scoreCounter
+}
+
 export function addAmmo(value) {
     currentAmmo = currentAmmo + value
     document.getElementById("gun").innerText = currentAmmo
@@ -63,25 +66,25 @@ export function getAmmo() {
     return currentAmmo
 }
 
-function resetCharacter(xPosValue = 40, yPosValue = 50) {
-    Character.style.left = xPosValue + "px"
-    Character.style.bottom = yPosValue + "px"
-}
 
 
 export function StartGame() {
     levelCompletion.level1 = []
     levelCompletion.level2 = []
     levelCompletion.level3 = []
+    scoreCounter = 0
     checkpoints = fetchCheckpoints() // getting checkpoints
     playground.classList.remove(`menu`)
     playground.classList.add(`level_${currentLevel}`)
     playground.style.backgroundImage = `url(level/sprites/level${currentLevel}/background.png)`
     document.getElementById("death-screen").setAttribute("hidden", "")
     document.getElementById("bossHealthBar").setAttribute("hidden", "")
-    document.getElementById("health-level").style.width = 100%
-    resetBossHealth()
-
+    document.getElementById("health-level").style.width = "100%"
+        resetBossHealth()
+    if (currentLevel === 3) {
+        document.getElementById("bossHealthBar").removeAttribute("hidden")
+        document.getElementById("gun").removeAttribute("hidden")
+    }
     mainMenu.setAttribute("hidden", "")
     playGround.removeAttribute("hidden")
     PauseButton.removeAttribute("hidden")
@@ -90,8 +93,6 @@ export function StartGame() {
     console.log("Game started!")
     healthBar.src = "images/hud/lives_4.png"
 
-    createEnemies(currentLevel)
-    resetCharacter()
     drawTiles(eval(`level${currentLevel}_map`), currentLevel) // setting up current level
     playground.classList.add("level_1") // type of theme song 
     playground.classList.remove("menu") // remove the previous class
@@ -111,7 +112,6 @@ function Continue() {
 function Restart() {
     console.log("restart!")
     ExitGame()
-    resetCharacter() // reset character to default position 
     StartGame()
     unPause()
 }
@@ -125,9 +125,9 @@ export function ExitGame() {
     Character.style.left = 40
     Character.style.bottom = 40
     healthBar.src = `images/hud/lives_4.png`
-
+    scoreCounter = 0
     playground.classList.add(`menu`)
-    score.innerHTML = "Score: 0" // resetting score
+    score.innerHTML = "Score: " + scoreCounter // resetting score
     timer.innerHTML = "00:00" // resetting timer
     gameRunning = false
     deleteTiles()
@@ -176,7 +176,7 @@ function main() {
     if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId);
     }
-    
+
     frameRate(frameTimes); // handles Framerate
     timerCounter(startTime, timeElapsed); // handles Timer
 
@@ -194,7 +194,8 @@ function main() {
         lives !== 0
     ) {
         fallAnimation();
-        Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)";
+        if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_shooting.gif)"
+        else Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)";
     }
 
     playGround.appendChild(enemiesParent);
@@ -202,8 +203,7 @@ function main() {
     playGround.appendChild(Character);
     setTimeout(() => {
         animationFrameId = requestAnimationFrame(main); // mul tiksub 46-56 fps vahepeal xd 
-    }, 1000/72); // 0 asemel oli 1000 / 72, 0'iga on fps normis? 240hz ekraanil (linuxis)
-    // level 3 oli 1000/72 kohutav, 30 fps lausa
+    }, frameCapping);
 }
 
 import { createElements } from "../level/tileMap.js"
@@ -229,31 +229,33 @@ document.addEventListener("keydown", (event) => {
     ) {
 
         charJump(jumpHeight + Character.offsetHeight * 2.5)
-        Character.style.backgroundImage = "url(/images/characters/main/leprechaun_jumping.png)"
+        if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_shooting.gif)"
+        else Character.style.backgroundImage = "url(/images/characters/main/leprechaun_jumping.png)"
         // if (physics.isMovingLeft) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
         // if (physics.isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
 
     }
     if (event.code === 'Space' && (currentLevel === maxLevels)) {
-     
+
         if (shootInterval) {
             return;
         }
-
-        // handling score, making each shot cost some score points :)
-        let score =   document.getElementById("score")
-        let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value    
-        score.innerHTML = "SCORE: " + (prevScore -50) // +500 score for every hit
-        ///
-
+        playSoundOnce("laserShoot.wav")
         shootInterval = true
-        console.log(currentElements, currentAmmo)
-        
-        if (currentAmmo == 1 && getElements() === 0){
+        // if currentammo is 1 and no mushrooms on the ground
+        if (currentAmmo == 1 && getElements() === 0) {
             removeElements()
             createElements()
         }
-        if (currentAmmo <= 0) {shootInterval = false; return}
+        if (currentAmmo <= 0) { shootInterval = false; Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif"; return }
+
+
+        Character.style.backgroundImage = "url(/images/characters/main/leprechaun_shooting.gif"
+
+        // handling score, making each shot cost some score points :)
+        score.innerHTML = "SCORE: " + (addAndReturnScore(-50)) // +500 score for every hit
+        ///
+
         removeAmmo(1)
         moveEnemy(flyingEnemiesParent, true, true)
         setTimeout(() => {
@@ -305,13 +307,14 @@ observer.observe(playground, { attributes: true }) // observing the current stat
 
 export function levelUp() {
     console.log("level up! yay!")
-    playSoundOnce("fall.ogg")
+    playSoundOnce("levelup.wav")
     stopAnimationLeft()
     stopAnimationRight()
     if (physics.getIsJumping()) physics.setIsJumping(false)
     document.getElementById("death-screen").setAttribute("hidden", "")
     document.getElementById("bossHealthBar").setAttribute("hidden", "")
-    document.getElementById("health-level").style.width = 100%
+    document.getElementById("health-level").style.width = "100%"
+
     resetBossHealth()
 
     currentLevel += 1
@@ -321,7 +324,6 @@ export function levelUp() {
         document.getElementById("gun").removeAttribute("hidden")
     }
     //changelevel!
-    resetCharacter() // default character setting
     if (currentLevel <= maxLevels) {
         drawTiles(eval(`level${currentLevel}_map`), currentLevel)
         playground.classList.remove(`level_${currentLevel - 1}`)
@@ -350,8 +352,8 @@ export function levelDown() {
 
     document.getElementById("death-screen").setAttribute("hidden", "")
     document.getElementById("bossHealthBar").setAttribute("hidden", "")
-    document.getElementById("health-level").style.width = 100%
-    resetBossHealth()
+    document.getElementById("health-level").style.width = 100 %
+        resetBossHealth()
 
     stopAnimationLeft()
     stopAnimationRight()
@@ -370,22 +372,19 @@ export function levelDown() {
 }
 
 export function loseLife() {
-    console.log("OUCH!")
-
-    playSoundOnce("jump.ogg")
+    playSoundOnce("damage.wav", 0.3, 0.1)
 
     stopAnimationLeft()
     stopAnimationRight()
     if (physics.getIsJumping()) physics.setIsJumping(false)
     lives -= 1
-    let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
-    score.innerHTML = "SCORE: " + (prevScore - 100)
+    score.innerHTML = "SCORE: " + (addAndReturnScore(-100))
 
     if (lives === 0) {
         console.log("HEY! YOU JUST COMPLETELY BLEW THE GAME, LEARN TO PLAY!")
         pause(true)
         document.getElementById("currentLevel").innerHTML = "Level reached: " + currentLevel
-        document.getElementById("finalScore").innerHTML = "Your final score: " + score.innerHTML
+        document.getElementById("finalScore").innerHTML = "Your final score: " + scoreCounter
         document.getElementById("finalTimer").innerHTML = "Time survived: " + timer.innerHTML
         DeathScreen.removeAttribute("hidden")
         return // restart button handle
@@ -421,7 +420,7 @@ PauseButton.addEventListener("click", (e) => {
 
 
 // basics
-let songPrePause = "paused"
+let songPrePause = `level${currentLevel}`
 export function pause(death = false) {
     if (!MuteButton.src.includes("off")) songPrePause = playground.classList.value
     if (!death) pausedMenu.removeAttribute("hidden")

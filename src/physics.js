@@ -8,8 +8,12 @@ let flyingEnemyPosition = { left: 0, bottom: 0 };
 
 
 import { level1_map, level2_map, level3_map } from "../level/levels.js"
-import { pause } from "../src/game.js"
-import { playGround, Character } from "./main.js"
+import { addAndReturnScore, pause, scoreCounter, levelCompletion } from "../src/game.js"
+import { playGround, Character, frameCapping } from "./main.js"
+import { tileSize, createElements } from "../level/tileMap.js"
+import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, currentAmmo, addAmmo } from "../src/game.js"
+import { playSoundOnce } from "./sound.js"
+
 //let enemiesParent = document.getElementById("enemies")
 //export let enemy = enemiesParent.getElementsByTagName('div')
 
@@ -20,42 +24,17 @@ export function getIsJumping() {
   return isJumping
 }
 
-let tiles = {
-  air: " ",
-  airBait: "-",
-  levelDesign: "r",
-  nextLevel: "7",
-  previousLevel: "<",
-  deathElement: "w", //water,lava...
-  droppedElement: "r",
-  checkPoint: "*",
-  // e => small enemy
-  // E => large enemy
-  // u => flying saucer
-}
-
 let bossHealth = 100
 
 export function resetBossHealth() {
   bossHealth = 100
 }
 
-import { tileSize, createElements } from "../level/tileMap.js"
-
-import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, levelCompletion, currentAmmo, addAmmo, pausedMenu } from "../src/game.js"
-
-export function updateMovementSpeeds(newAirSpeed, newMovementSpeed, newEnemyMovementSpeed, newProjectileSpeed) {
-  airSpeed = newAirSpeed;
-  movementSpeed = newMovementSpeed;
-  enemyMovementSpeed = newEnemyMovementSpeed;
-  projectileSpeed = newProjectileSpeed;
-}
-
-export let airSpeed = 10;
+let airSpeed = 10
 // function for jumping
 export function charJump(startY) {
   if (isJumping) return
-  //playSoundOnce("jump.ogg", 0.03)
+  playSoundOnce("jump.wav")
   isJumping = true
   let currentJumpHeight = parseInt(Character.style.bottom) || 40;
 
@@ -72,7 +51,7 @@ export function charJump(startY) {
     Character.style.bottom = currentJumpHeight + 'px';
     setTimeout(() => {
       requestAnimationFrame(jumpAnimation);
-    }, 1000 / 72);
+    }, frameCapping);
   }
   requestAnimationFrame(jumpAnimation);
 }
@@ -84,7 +63,8 @@ export function fallAnimation() {
 
   if (checkCollision(currentLeft, characterBottom, 'down') && checkCollision(currentLeft + 35, characterBottom, 'down')) {
     if (!isMovingLeft && !isMovingRight) {
-      Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
+      if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_shooting.gif)"
+      else Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
     } else if (isMovingLeft && !isMovingRight) {
       Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
     } else if (!isMovingLeft && isMovingRight) {
@@ -114,7 +94,7 @@ export function moveLeft() {
     if (isMovingLeft) {
       setTimeout(() => {
         animationIdLeft = requestAnimationFrame(moveAnimationLeft);
-      }, 1000 / 72);
+      }, frameCapping);
     } else {
       animationIdLeft = stopAnimationLeft();
     }
@@ -123,7 +103,8 @@ export function moveLeft() {
 }
 
 export function stopAnimationLeft() {
-  Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
+  if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_shooting.gif)"
+  else Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
 
   isMovingLeft = false;
   cancelAnimationFrame(animationIdLeft);
@@ -149,7 +130,7 @@ export function moveRight() {
     if (isMovingRight) {
       setTimeout(() => {
         animationIdRight = requestAnimationFrame(moveAnimationRight);
-      }, 1000 / 72);
+      }, frameCapping);
     } else {
       animationIdRight = stopAnimationRight();
     }
@@ -158,7 +139,8 @@ export function moveRight() {
 }
 
 export function stopAnimationRight() {
-  Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
+  if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_shooting.gif)"
+  else Character.style.backgroundImage = "url(/images/characters/main/leprechaun.gif)"
   isMovingRight = false;
   cancelAnimationFrame(animationIdRight);
   animationIdRight = null;
@@ -173,26 +155,26 @@ export function checkCollision(x, y, direction, isCharacter = true) {
 
   // Check if the character's tile is a collision tile
   let currentTile = eval(`level${currentLevel}_map`)[35 - characterTileY][characterTileX];
-  
-  if ((currentTile === tiles.previousLevel) && isCharacter) {
+
+  if ((currentTile === "6") && isCharacter) {
     levelDown();
     return true;
   }
-  if ((currentTile === tiles.nextLevel) && isCharacter) {
+  if ((currentTile === "7") && isCharacter) {
     levelUp();
     return true;
   }
-  if ((currentTile === tiles.deathElement) && isCharacter) {
+  if ((currentTile === "w") && isCharacter) {
     loseLife();
     return true;
   }
-  if (currentTile === tiles.levelDesign || currentTile === "e" || currentTile === "E" || currentTile === "u" || currentTile === tiles.checkPoint ||
-    ((currentTile === tiles.deathElement || currentTile === tiles.droppedElement) && !isCharacter)) {
+  if (currentTile === "r" || currentTile === "e" || currentTile === "E" || currentTile === "u" || currentTile === "*" ||
+    ((currentTile === "w") && !isCharacter)) {
     return false;
   }
 
-  if (currentTile !== tiles.air &&
-    currentTile !== tiles.airBait) {
+  if (currentTile !== " " &&
+    currentTile !== "-") {
     return true;
   } else {
     return false;
@@ -210,14 +192,11 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
   ) {
     isJumping = false;
     charJump(parseInt(Character.style.bottom) + Character.offsetHeight * 2);
-    let score = document.getElementById("score")
-    let prevScore = parseInt(score.innerHTML.replace(/[^-\d]/g, ""));// fetching the current score value
-
-    let newScore = enemy.id === "largeAttacker" ? prevScore + 200 : prevScore + 100; // largeattacker gives more score :)
 
     eval(`levelCompletion.level${currentLevel}`).push(enemy.className)
 
-    score.innerHTML = "SCORE: " + newScore
+    enemy.id === "largeAttacker" ? playSoundOnce("explosion.wav"): playSoundOnce("explosion2.wav")
+    score.innerHTML = "SCORE: " + (enemy.id === "largeAttacker" ? addAndReturnScore(200) : addAndReturnScore(100))
     enemy.remove();
     return;
   }
@@ -235,6 +214,7 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
   }
 }
 
+
 export function moveEnemy(enemiesParent, isFlying = false, userProjectile = false) {
   let enemies = enemiesParent.getElementsByTagName("div");
   if (userProjectile) createProjectile(enemiesParent, Character, true)
@@ -243,6 +223,7 @@ export function moveEnemy(enemiesParent, isFlying = false, userProjectile = fals
     if (isFlying && flyingEnemyIntervalId === null) {
       flyingEnemyIntervalId = setInterval(() => {
         if (gameIsPaused) return
+
         createProjectile(enemiesParent, enemy);
       }, Math.floor(Math.random() * 100) + 500)
     } else if (enemy.id === 'projectile' || enemy.id === 'userProjectile') {
@@ -299,13 +280,12 @@ export function createProjectile(flyingEnemiesParent, enemy, characterBool = fal
   flyingEnemiesParent.appendChild(projectile);
 }
 
-export let projectileSpeed = 8;
-
 function moveProjectile(enemy) {
   let currentLeft = parseInt(enemy.style.left);
   let currentBottom = parseInt(enemy.style.bottom); // Set the initial position below the enemy
 
   if (enemy.id === 'projectile') {
+    let projectileSpeed = (bossHealth <= 60 ? 16 : 8);
     currentBottom -= projectileSpeed;
     if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom, 'down', false))) {
       enemy.remove();
@@ -314,9 +294,9 @@ function moveProjectile(enemy) {
     characterEnemyCollision(enemy, true);
   }
   else {
-    currentBottom += projectileSpeed;
+    currentBottom += 8; // character projectile speed
     if ((checkCollision(currentLeft + enemy.offsetWidth, currentBottom + enemy.offsetHeight, 'up', false)) ||
-      currentBottom + enemy.offsetHeight + projectileSpeed >= playGround.offsetHeight) {
+      currentBottom + enemy.offsetHeight + 8 >= playGround.offsetHeight) {
       enemy.remove();
     }
     enemy.style.bottom = currentBottom + 'px';
@@ -345,17 +325,20 @@ export function projectileEnemyCollision(projectile) {
 
 export function damageEnemy() {
   console.log("PIHTAS PÕHJAS!")
-  if (bossHealth <= 0) {
+  const damage = 20 // damage each bullet makes
+  playSoundOnce("hitHurt.wav")
+  if (bossHealth <= damage) {
+    playSoundOnce("explosion_dragon.wav")
     console.log("game finished, you are a very good player!")
     pause(true)
     document.getElementById("deathMessage").innerHTML = "game finished, you are a very good player!"
     document.getElementById("currentLevel").innerHTML = "Level reached: " + currentLevel
-    document.getElementById("finalScore").innerHTML = "Your final score: " + score.innerHTML
+    document.getElementById("finalScore").innerHTML = "Your final score: " + scoreCounter
     document.getElementById("finalTimer").innerHTML = "Time survived: " + timer.innerHTML
     document.getElementById("death-screen").removeAttribute("hidden")
   }
 
-  bossHealth -= 20 //boss damage per bullet
+  bossHealth -= damage //boss damage per bullet
   document.getElementById("health-level").style.width = bossHealth + "%"
 }
 
@@ -374,6 +357,7 @@ export function characterMushroomCollision(mushRooms) {
     ) {
       mushRoom.remove()
       isJumping = false
+      playSoundOnce("pickupCoin.wav", 0.8)
       addAmmo(3)
       addMushRoomDelay()
     }
