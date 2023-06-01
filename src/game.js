@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 3
+export let currentLevel = 1
 export let currentAmmo = 3 // current ammo count
 export let scoreCounter = 0
 let lives = 4
@@ -253,7 +253,7 @@ document.addEventListener("keydown", (event) => {
         Character.style.backgroundImage = "url(/images/characters/main/leprechaun_shooting.gif"
 
         // handling score, making each shot cost some score points :)
-        score.innerHTML = "SCORE: " + (addAndReturnScore(-50)) // +500 score for every hit
+        score.innerHTML = "SCORE: " + (addAndReturnScore(-100)) // +500 score for every hit
         ///
 
         removeAmmo(1)

@@ -327,6 +327,8 @@ export function damageEnemy() {
   console.log("PIHTAS PÕHJAS!")
   const damage = 20 // damage each bullet makes
   playSoundOnce("hitHurt.wav")
+  
+  score.innerHTML = "SCORE: " + addAndReturnScore(1000)
   if (bossHealth <= damage) {
     playSoundOnce("explosion_dragon.wav")
     console.log("game finished, you are a very good player!")
