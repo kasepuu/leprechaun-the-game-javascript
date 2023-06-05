@@ -1,0 +1,96 @@
+<html>
+
+<head>
+    <title>PÄKAPIKK JA KURI KOLL</title>
+    <link rel="icon" href="/game/images/icon.gif" type="image/gif">
+    <link rel="stylesheet" type="text/css" href="/game/templates/style.css" />
+    <link rel="preload" href="/game/images/icon.png" as="image">
+
+    <script src="/game/templates/preload.js"></script>
+    <script type="module" src="/game/src/main.js"></script><!--main script-->
+</head>
+
+
+<body>
+    <div style="position:absolute; width:99vw; overflow: hidden;">
+        <div class="inner">
+
+            <div class="menu" id="start-menu">
+                <div class="scoreboard" id="welcome-screen">
+                    <h1>HIGHSCORES</h1>
+                    <table>
+                        <tr class="navbar" style="color:salmon">
+                            <th class="row__cell">Rank</th>
+                            <th class="row__cell">Name</th>
+                            <th class="row__cell">Score</th>
+                            <th class="row__cell">Time</th>
+                        </tr>
+                        <div id="board">
+                           
+                        </div>
+                    </table>
+
+                    <br>
+                    <button class="prev">Previous</button>
+                    <button class="next">Next</button>
+                </div>
+
+                <button id="startButton">START GAME</button>
+                <button id="creditsButton">CREDITS</button>
+
+
+            </div>
+
+
+            <img id="toggleMute" src="/game/images/hud/music_off.png">
+            <img id="togglePause" src="/game/images/hud/pause.png" hidden>
+            <img id="backToMenu" src="/game/images/hud/exit.png" hidden>
+
+            <div id="playground" class="menu" hidden>
+
+                <div id="timer">00:00</div>
+                <div id="score">SCORE: 0</div>
+                <div class="paused" id="paused-menu" hidden>
+                    <button id="continueButton">CONTINUE (p)</button>
+                    <button id="restartButtonPause">RESTART</button>
+                </div>
+                <div class="died" id="death-screen">
+                    <h1 id="deathMessage" style="color: yellow;">YOU DIED, WHAT A NOOB!</h1>
+                    <h2 style="color:burlywood" id="currentLevel">Level reached: </h2>
+                    <h2 style="color:red" id="finalScore">SCORE: </h2>
+                    <h2 style="color:white" id="finalTimer">TIME: </h2>
+
+                            <form method="POST">
+                                <input id="final_score" name="final_score" value="" hidden>
+                                <input id="final_timer" name="final_timer" value="" hidden>
+
+                                <input class="nameinput" name="name_input" type="text" placeholder="Your name here!"
+                                    maxlength="6" required>
+                                <input class="saveScore" type="submit" value="Submit">
+                            </form>
+                            <button id="restartButtonDeath">RESTART</button>
+                </div>
+                <div id="tileMap"></div>
+                <div id="elements"></div>
+                <div id="fps">FPS: 0</div>
+                <!--img id="inventory" src="images/hud/inventory.png"-->
+                <div id="bossHealthBar" hidden>BOSS HEALTH<br>
+                    <div id="health-bar">
+                        <div id="health-level"></div>
+                    </div>
+                </div>
+                <div id="gun" hidden>0</div>
+                <img id="lives">
+                <div id="character"></div>
+                <div id="enemies"></div>
+                <div id="flyingEnemies"></div>
+            </div>
+
+
+        </div>
+
+    </div>
+</body>
+
+
+</html>

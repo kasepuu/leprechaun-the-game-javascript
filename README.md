@@ -29,6 +29,8 @@ fps on imelik, ühes browseris on üks teises teine :?
 eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms                               
 disableda pause kui oled deathscreenil/endscreenil      
 
+
+
 ENNE AUDITIT ÜLE VAADATA!               
 pause menu, welcome screen -> choose language EST/FIN                           
 hud menu                     

@@ -1,7 +1,17 @@
 [
-    {
-        "player": "test",
-        "score": "1000",
-        "time": "01:45"
-    }
+   {
+      "player": "Joel",
+      "score": 4500,
+      "time": "01:17"
+   },
+   {
+      "player": "Joel35",
+      "score": 1700,
+      "time": "01:04"
+   },
+   {
+      "player": "test",
+      "score": 1000,
+      "time": "01:45"
+   }
 ]

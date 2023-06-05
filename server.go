@@ -1,14 +1,35 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
+	"log"
 	"net/http"
 	"os"
+	"sort"
+	"strconv"
 	"strings"
+
+	"github.com/gorilla/websocket"
 )
 
-var temp *template.Template //temp variable for editable webpage
+var temp *template.Template // html template
+
+type ScoreBoard struct {
+	Player string `json:"player"`
+	Score  int    `json:"score"`
+	Time   string `json:"time"`
+}
+
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
+
+type ScoreArray []ScoreBoard
+
+var Scores ScoreArray
 
 func main() {
 
@@ -20,19 +41,112 @@ func main() {
 		fmt.Scanln(&port)
 	}
 
-	http.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("")))) //for handling web folder
+	getHighScores()
+
+	http.Handle("/game/", http.StripPrefix("/game", http.FileServer(http.Dir("./game"))))
+	http.HandleFunc("/", serverHandle)
+	http.HandleFunc("/ws", wsHandler)
 
 	//serverlistener
-	if err := http.ListenAndServe(":"+port, nil); err != nil {
-		fmt.Println(err)
-		os.Exit(0)
-	}
+	log.Printf("Starting server at port " + port + "\n\n")
+	log.Printf("http://localhost:" + port + "/\n")
+	errorHandler(http.ListenAndServe(":"+port, nil))
 }
 
-func serverHandle(resp http.ResponseWriter, req *http.Request) {
-	if req.Method == "GET" {
-		temp.ExecuteTemplate(resp, "index.html", 0) //setting up the main page, and waiting for user input (POST)
+func getHighScores() error {
+	scores, err := os.ReadFile("highscores.json")
+	if err != nil {
+		return err
 	}
+
+	err = json.Unmarshal(scores, &Scores)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+func sortHighScores() {
+	sort.Slice(Scores, func(i, j int) bool {
+		return Scores[i].Score > Scores[j].Score
+	})
+}
+
+func addHighScore() error {
+	data, err := json.MarshalIndent(Scores, "", "   ")
+	errorHandler(err)
+	err = os.WriteFile("highscores.json", data, 0644)
+	errorHandler(err)
+
+	return nil
+}
+
+func serverHandle(resp http.ResponseWriter, r *http.Request) {
+	if r.URL.Path != "/" {
+		resp.WriteHeader(404)
+		return
+	}
+
+	if r.Method == "GET" {
+		createAndExecute(resp, "index.html")
+	} else if r.Method == "POST" {
+		fmt.Println("post!")
+
+		player := r.FormValue("name_input")
+		fmt.Println("fscore", r.FormValue("final_score"))
+		time := r.FormValue("final_timer")
+		score, err := strconv.Atoi(r.FormValue("final_score"))
+
+		fmt.Println(player, score, time)
+
+		if player != "" && time != "" && err == nil {
+
+			getHighScores()
+
+			Scores = append(Scores, ScoreBoard{player, score, time})
+
+			sortHighScores() // by score (default)
+
+			err = addHighScore()
+			errorHandler(err)
+
+		}
+
+		createAndExecute(resp, "index.html")
+	}
+
+}
+func wsHandler(w http.ResponseWriter, r *http.Request) {
+	upgrader.CheckOrigin = func(r *http.Request) bool {
+		return true
+	}
+
+	conn, err := upgrader.Upgrade(w, r, nil)
+	errorHandler(err)
+
+	defer conn.Close()
+
+	err = conn.WriteJSON(Scores) // Send the Scores variable to the client
+	errorHandler(err)
+}
+
+func createAndExecute(w http.ResponseWriter, fileName string) {
+	page, err := template.New("index.html").ParseFiles("game/templates/index.html", fmt.Sprint("game/templates/", fileName))
+	if err != nil {
+		fmt.Println(err.Error())
+		createAndExecuteError(w, "500 Internal Server Error")
+		return
+	}
+	err = page.Execute(w, "")
+	if err != nil {
+		createAndExecuteError(w, "500 Internal Server Error")
+		fmt.Println(err.Error())
+		return
+	}
+}
+func createAndExecuteError(w http.ResponseWriter, msg string) {
+	page, _ := template.New("index.html").ParseFiles("game/templates/index.html", fmt.Sprint("game/templates/", "error.html"))
+	page.Execute(w, "error")
 }
 
 // function that checks string for letters
@@ -46,4 +160,12 @@ func StringControl(str string) bool {
 		}
 	}
 	return success
+}
+
+// error check
+func errorHandler(err error) {
+	if err != nil {
+		log.Println(err)
+		return
+	}
 }
