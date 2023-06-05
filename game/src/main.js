@@ -16,19 +16,35 @@ export let language = ""
 
 let winamp = new PlayMusic()
 
-let ws = new WebSocket(`ws://localhost:8080/ws`)
-let sbData = null
 
-ws.addEventListener('open', function () {
-    console.log('WebSocket connected')
-})
+// websocket
+let port
+fetch("game/templates/port.txt")
+    .then(resp => {
+        if (!resp.ok) {
+            throw new Error("Failed to fetch the file");
+        }
+        return resp.text()
+    })
+    .then(fileData => {
+        port = fileData
 
-ws.addEventListener("message", async (e) => {
-    sbData = await JSON.parse(e.data)
-    if (sbData !== null) {
-        displayScoreBoard(sbData)
-    }
-})
+        let ws = new WebSocket(`ws://localhost:${port}/ws`)
+        let sbData = null
+
+        ws.addEventListener('open', function () {
+            console.log('WebSocket connected')
+        })
+
+        ws.addEventListener("message", async (e) => {
+            sbData = await JSON.parse(e.data)
+            if (sbData !== null) {
+                displayScoreBoard(sbData)
+            }
+        })
+    })
+
+//game
 
 document.getElementById("gun").innerText = currentAmmo // imo tekitab laggi
 

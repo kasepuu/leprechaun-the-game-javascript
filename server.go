@@ -33,7 +33,7 @@ var Scores ScoreArray
 
 func main() {
 
-	portFromFile, err := os.ReadFile("port.txt")
+	portFromFile, err := os.ReadFile("game/templates/port.txt")
 	firstlineCheck := StringControl(string(strings.Split(string(portFromFile), "\n")[0]))
 	port := string(strings.Split(string(portFromFile), "\n")[0]) //port value
 	if err != nil || firstlineCheck == false {
