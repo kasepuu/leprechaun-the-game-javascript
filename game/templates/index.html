@@ -26,13 +26,13 @@
                             <th class="row__cell">Time</th>
                         </tr>
                         <div id="board">
-                           
+
                         </div>
                     </table>
 
                     <br>
-                    <button class="prev">Previous</button>
-                    <button class="next">Next</button>
+                    <button class="prev" id="prev">Previous</button>
+                    <button class="next" id="next">Next</button>
                 </div>
 
                 <button id="startButton">START GAME</button>
@@ -44,7 +44,6 @@
 
             <img id="toggleMute" src="/game/images/hud/music_off.png">
             <img id="togglePause" src="/game/images/hud/pause.png" hidden>
-            <img id="backToMenu" src="/game/images/hud/exit.png" hidden>
 
             <div id="playground" class="menu" hidden>
 
@@ -53,6 +52,8 @@
                 <div class="paused" id="paused-menu" hidden>
                     <button id="continueButton">CONTINUE (p)</button>
                     <button id="restartButtonPause">RESTART</button>
+                    <button id="backToMenuPause">EXIT</button>
+
                 </div>
                 <div class="died" id="death-screen">
                     <h1 id="deathMessage" style="color: yellow;">YOU DIED, WHAT A NOOB!</h1>
@@ -60,15 +61,16 @@
                     <h2 style="color:red" id="finalScore">SCORE: </h2>
                     <h2 style="color:white" id="finalTimer">TIME: </h2>
 
-                            <form method="POST">
-                                <input id="final_score" name="final_score" value="" hidden>
-                                <input id="final_timer" name="final_timer" value="" hidden>
+                    <form method="POST">
+                        <input id="final_score" name="final_score" value="" hidden>
+                        <input id="final_timer" name="final_timer" value="" hidden>
 
-                                <input class="nameinput" name="name_input" type="text" placeholder="Your name here!"
-                                    maxlength="6" required>
-                                <input class="saveScore" type="submit" value="Submit">
-                            </form>
-                            <button id="restartButtonDeath">RESTART</button>
+                        <input class="nameinput" name="name_input" type="text" placeholder="Your name here!"
+                            maxlength="6" required>
+                        <input class="saveScore" type="submit" value="Submit">
+                    </form>
+                    <button id="restartButtonDeath">RESTART</button>
+                    <button id="backToMenuDeath">EXIT</button>
                 </div>
                 <div id="tileMap"></div>
                 <div id="elements"></div>
@@ -80,6 +82,14 @@
                     </div>
                 </div>
                 <div id="gun" hidden>0</div>
+
+                <div id="storybox">
+                    <div id="sbTitle"></div>
+                    <div id="sbText"></div>
+                    <div id="sbText2"></div>
+                    <div id="sbContinue"></div>
+                </div>
+
                 <img id="lives">
                 <div id="character"></div>
                 <div id="enemies"></div>

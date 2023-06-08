@@ -1,6 +1,6 @@
 
 // simple variables, health, current level etc
-export let currentLevel = 1
+export let currentLevel = 3
 export let currentAmmo = 3 // current ammo count
 export let scoreCounter = 0
 let lives = 4
@@ -13,7 +13,7 @@ let timeElapsed = 0 // timer
 let startTime // time game started at...
 let gameRunning = false
 // importing 
-import { mainMenu, playGround, backToMenu, healthBar, Character, frameCapping } from "./main.js"
+import { mainMenu, playGround, healthBar, Character, frameCapping } from "./main.js"
 import { resetBossHealth } from "./physics.js"
 //imports
 import { fallAnimation, charJump, moveLeft, moveRight, checkCollision, stopAnimationRight, stopAnimationLeft, moveEnemy, characterMushroomCollision } from "./physics.js"
@@ -45,7 +45,6 @@ let elements = document.getElementById('elements')
 let mushRoom = elements.getElementsByTagName('div')
 let shootInterval = false;
 
-
 let winamp = new PlayMusic() // music player, with pause/stop/resume features
 let checkpoints
 
@@ -67,6 +66,54 @@ export function getAmmo() {
 }
 
 
+// story writing!
+let currentlyWritingStory = false
+function continueStory() {
+    currentlyWritingStory = false
+    document.getElementById("sbTitle").innerHTML = ""
+    document.getElementById("sbText").innerHTML = ""
+    document.getElementById("sbText2").innerHTML = ""
+    document.getElementById("sbContinue").innerHTML = ""
+    document.getElementById("storybox").setAttribute("hidden", "")
+}
+
+
+function writeStory(body, text, speed, showContinue = false, startDelay = 0) {
+    document.getElementById("storybox").removeAttribute("hidden")
+    setTimeout(() => {
+
+        for (let i = 0; i < text.length; i++) {
+
+            setTimeout(() => {
+                body.innerHTML += text.charAt(i);
+                currentlyWritingStory = true
+                //continue
+                if (body.innerHTML.includes(text) && showContinue) document.getElementById("sbContinue").innerHTML = "continue (c) ..."
+            }, speed * i);
+        }
+
+    }, startDelay)
+}
+
+function writeCurrentStory(currentLevel) {
+    continueStory()
+    if (currentLevel === 1) {
+        writeStory(document.getElementById("sbTitle"), "NARRATOR:", 10)
+        writeStory(document.getElementById("sbText"), "once there was an elf, who lived happily ever after.", 50, false)
+        writeStory(document.getElementById("sbText2"), "But then the evil werewolves and dogs started howling. And the little elf decided that is enough!", 50, true, 3300)
+    }
+    if (currentLevel === 2) {
+        writeStory(document.getElementById("sbTitle"), "NARRATOR:", 10)
+        writeStory(document.getElementById("sbText"), "The evil dogs lead the elf in to a cave.", 50, false)
+        writeStory(document.getElementById("sbText2"), "Now the little one must find a way out!", 50, true, 2500)
+    }
+    if (currentLevel === 3) {
+        writeStory(document.getElementById("sbTitle"), "ELF:", 10)
+        writeStory(document.getElementById("sbText"), "What is that?....", 50, false, 500)
+        writeStory(document.getElementById("sbText2"), "Thats a dragon! A live breating one! I must shoot him down!", 50, true, 4000)
+    }
+}
+
 
 export function StartGame() {
     levelCompletion.level1 = []
@@ -81,6 +128,10 @@ export function StartGame() {
     document.getElementById("bossHealthBar").setAttribute("hidden", "")
     document.getElementById("health-level").style.width = "100%"
     resetBossHealth()
+
+
+    writeCurrentStory(currentLevel) // writing story for current level
+
     if (currentLevel === 3) {
         document.getElementById("bossHealthBar").removeAttribute("hidden")
         document.getElementById("gun").removeAttribute("hidden")
@@ -88,7 +139,6 @@ export function StartGame() {
     mainMenu.setAttribute("hidden", "")
     playGround.removeAttribute("hidden")
     PauseButton.removeAttribute("hidden")
-    backToMenu.removeAttribute("hidden")
 
     console.log("Game started!")
     healthBar.src = "game/images/hud/lives_4.png"
@@ -111,12 +161,14 @@ function Continue() {
 }
 function Restart() {
     console.log("restart!")
+
     ExitGame()
     StartGame()
     unPause()
 }
 
 export function ExitGame() {
+    continueStory()
     playground.classList.remove(`level_${currentLevel}`)
     currentLevel = 1
     playground.classList.add(`level_${currentLevel}`)
@@ -138,7 +190,6 @@ export function ExitGame() {
     playGround.setAttribute("hidden", "")
     mainMenu.removeAttribute("hidden")
     PauseButton.setAttribute("hidden", "")
-    backToMenu.setAttribute("hidden", "")
 
     cancelAnimationFrame(animationFrameId)
     animationFrameId = null
@@ -152,19 +203,21 @@ restartButtonD.addEventListener("click", (e) => Restart())
 
 
 document.addEventListener("keydown", (e) => {
-    if (e.key === "m") toggleAudio()
+    if (e.key === "KeyM") toggleAudio()
     if (playGround.hasAttribute("hidden")) return
-    if (!DeathScreen.hasAttribute("hidden")) {
-        if (e.code === "KeyR") Restart()
-    }
+    if (!DeathScreen.hasAttribute("hidden")) if (e.code === "KeyR") Restart()
+    if (e.code === "KeyC" && document.getElementById("sbContinue").innerHTML !== "") continueStory()
+
     if (pausedMenu.hasAttribute("hidden")) {
-        if (e.key === "p" || e.key === "Escape") pause()
+        if (e.key === "KeyP" || e.key === "Escape") pause()
         return
     } else {
         if (e.code === "KeyR") Restart()
-        if (e.key === "p" || e.key === "Escape") unPause()
+        if (e.key === "KeyP" || e.key === "Escape") unPause()
         return
     }
+
+
 })
 
 function main() {
@@ -221,27 +274,33 @@ document.addEventListener("keydown", (event) => {
     let jumpHeight = parseInt(Character.style.bottom) || 40;
     let currentLeft = parseInt(Character.style.left) || 40;
     if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= playGround.offsetWidth + bodyPos.x - 30) {
-        lastLeftMove = false
-        moveRight()
-        Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_walking_RIGHT.gif)"
+        if (!currentlyWritingStory) {
+            lastLeftMove = false
+            moveRight()
+            Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_walking_RIGHT.gif)"
+        }
     }
     if ((event.code === 'ArrowLeft' || event.code === 'KeyA') && currentPos.x - 10 >= bodyPos.x) {
-        lastLeftMove = true
-        moveLeft()
-        Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_walking_LEFT.gif)"
+        if (!currentlyWritingStory) {
+            lastLeftMove = true
+            moveLeft()
+            Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_walking_LEFT.gif)"
+        }
     }
     if ((event.code === 'KeyW' || event.code === "ArrowUp")
         && (checkCollision(currentLeft, jumpHeight - 10, 'down') || checkCollision(currentLeft + Character.offsetWidth, jumpHeight - 10, 'down'))
     ) {
+        if (!currentlyWritingStory) {
 
-        charJump(jumpHeight + Character.offsetHeight * 2.5)
-        if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_shooting.gif)"
-        else Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_jumping.png)"
-        // if (physics.isMovingLeft) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
-        // if (physics.isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
-
+            charJump(jumpHeight + Character.offsetHeight * 2.5)
+            if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_shooting.gif)"
+            else Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_jumping.png)"
+            // if (physics.isMovingLeft) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
+            // if (physics.isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
+        }
     }
     if (event.code === 'Space' && (currentLevel === maxLevels)) {
+        if (currentlyWritingStory) return
 
         if (shootInterval) {
             return;
@@ -275,10 +334,14 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keyup", (event) => {
     if (gameIsPaused) return
     if (event.code === 'ArrowRight' || event.code === 'KeyD') {
-        stopAnimationRight()
+        if (!currentlyWritingStory) {
+            stopAnimationRight()
+        }
     }
     if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
-        stopAnimationLeft()
+        if (!currentlyWritingStory) {
+            stopAnimationLeft()
+        }
     }
 })
 
@@ -324,6 +387,7 @@ export function levelUp() {
     resetCharacter()
 
     currentLevel += 1
+    writeCurrentStory(currentLevel)
 
     if (currentLevel === maxLevels) {
         document.getElementById("bossHealthBar").removeAttribute("hidden")
@@ -416,11 +480,11 @@ function toggleAudio() {
     if (MuteButton.src.includes("off")) {
         winamp.resume()
         MuteButton.src = "game/images/hud/music_on.png"
-        localStorage.setItem("muteButtonSrc", "/images/hud/music_on.png")
+        localStorage.setItem("muteButtonSrc", "game/images/hud/music_on.png")
     } else {
         winamp.pause()
         MuteButton.src = "game/images/hud/music_off.png"
-        localStorage.setItem("muteButtonSrc", "/images/hud/music_off.png")
+        localStorage.setItem("muteButtonSrc", "game/images/hud/music_off.png")
     }
 }
 PauseButton.addEventListener("click", (e) => {

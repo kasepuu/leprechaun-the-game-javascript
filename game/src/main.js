@@ -2,7 +2,7 @@ import { StartGame, ExitGame, currentAmmo, scoreCounter } from "./game.js"
 import { buildMaps } from "../level/levels.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 
-export const frameCapping = 1000 / 72
+export const frameCapping = (window.screen && window.screen.refreshRate > 60) ? 0: 1000 / 72
 // element variable
 export const mainMenu = document.getElementById("start-menu") // LOBBY
 export const Character = document.getElementById("character")
@@ -10,8 +10,6 @@ export const playGround = document.getElementById("playground")
 const MuteButton = document.getElementById("toggleMute")
 const PauseButton = document.getElementById("togglePause")
 export const healthBar = document.getElementById("lives")
-export const backToMenu = document.getElementById("backToMenu") // RETURN TO LOBBY
-
 export let language = ""
 
 let winamp = new PlayMusic()
@@ -19,6 +17,7 @@ let winamp = new PlayMusic()
 
 // websocket
 let port
+let sbData = null
 fetch("game/templates/port.txt")
     .then(resp => {
         if (!resp.ok) {
@@ -30,8 +29,6 @@ fetch("game/templates/port.txt")
         port = fileData
 
         let ws = new WebSocket(`ws://localhost:${port}/ws`)
-        let sbData = null
-
         ws.addEventListener('open', function () {
             console.log('WebSocket connected')
         })
@@ -79,7 +76,8 @@ if (!mainMenu.hasAttribute("hidden")) {
     })
 }
 
-document.getElementById("backToMenu").addEventListener("click", (e) => ExitGame())
+document.getElementById("backToMenuDeath").addEventListener("click", (e) => ExitGame())
+document.getElementById("backToMenuPause").addEventListener("click", (e) => ExitGame())
 
 
 
@@ -93,47 +91,81 @@ document.getElementById("backToMenu").addEventListener("click", (e) => ExitGame(
 
 
 
+// highscores here
 
+let startingIndex = 0
+const pageInfo = 5 // lines of info each sb page has
+let currentPage = 0
+
+document.getElementById("next").addEventListener("click", () => {
+
+    if (currentPage < (sbData.length / pageInfo) - 1) {
+        currentPage += 1
+        startingIndex += pageInfo
+        displayScoreBoard(sbData)
+    }
+})
+
+document.getElementById("prev").addEventListener("click", () => {
+
+    if (currentPage > 0) {
+        currentPage -= 1
+        startingIndex -= pageInfo
+        displayScoreBoard(sbData)
+    }
+})
+
+
+function createCell(body, className, innerHTML, element = "th") {
+    let cell = document.createElement(element)
+    cell.className = className
+    cell.innerHTML = innerHTML
+    body.appendChild(cell)
+}
 
 function displayScoreBoard(sbData) {
-    for (let i = 0; i < sbData.length; i++) {
 
-        let ranking = i + 1
+    let showAmount = sbData.length < pageInfo || startingIndex + pageInfo > sbData.length ? sbData.length : pageInfo + startingIndex
+    let body = document.querySelector("table")
+    body.innerHTML = ""
+
+
+    let navbar = document.createElement("tr")
+    navbar.className = "navbar"
+    navbar.style.color = "salmon"
+
+    createCell(navbar, "row__cell", "Rank")
+    createCell(navbar, "row__cell", "Name")
+    createCell(navbar, "row__cell", "Score")
+    createCell(navbar, "row__cell", "Time")
+
+    body.appendChild(navbar)
+
+    for (let i = startingIndex; i < showAmount; i++) {
+
+        let ranking = numberEnding(i+1)
         let scorepoints = sbData[i].score
         let name = sbData[i].player
         let time = sbData[i].time
 
-        let body = document.querySelector("table")
+
         let row = document.createElement("tr")
         row.className = "list"
 
-
-        let rankingCell = document.createElement("td")
-        rankingCell.className = "row_cell"
-        rankingCell.id = "rank"
-        rankingCell.innerHTML = ranking
-        row.appendChild(rankingCell)
-
-        let nameCell = document.createElement("td")
-        nameCell.className = "row_cell"
-        nameCell.id = "name"
-        nameCell.innerHTML = name
-        row.appendChild(nameCell)
-
-        let scoreCell = document.createElement("td")
-        scoreCell.className = "row_cell"
-        scoreCell.id = "scorepoints"
-        scoreCell.innerHTML = scorepoints
-        row.appendChild(scoreCell)
-
-        let timeCell = document.createElement("td")
-        timeCell.className = "row_cell"
-        timeCell.id = "time"
-        timeCell.innerHTML = time
-        row.appendChild(timeCell)
+        createCell(row, "row_cell", ranking, "td")
+        createCell(row, "row_cell", name, "td")
+        createCell(row, "row_cell", scorepoints)
+        createCell(row, "row_cell", time, "td")
 
         body.appendChild(row)
     }
+}
+
+function numberEnding(nr){
+    if (nr === 1) return nr + "st"
+    else if (nr === 2) return nr + "nd"
+    else if (nr === 3) return nr + "rd"
+    else return nr + "th"
 }
 
 buildMaps()
