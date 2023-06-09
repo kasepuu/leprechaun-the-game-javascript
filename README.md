@@ -28,9 +28,3 @@ ENNE AUDITIT ÜLE VAADATA!
 OPTIMIZATIONS, koodipilt ilusamaks jms<       
 hud üle vaadata                     
 auto scale for screens smaller/equal than 1280x720p    
-
-
-ENNE AUDITIT ÜLE VAADATA!               
-pause menu, welcome screen -> choose language EST/FIN                           
-hud menu                     
-auto scale for screens smaller/equal than 1280x720p                     
