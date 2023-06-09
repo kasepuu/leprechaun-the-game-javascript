@@ -32,15 +32,14 @@ function measureRefreshRate() {
       const refreshRate = frameCount > 0 ? 1000 / (frameTimes.reduce((sum, t) => sum + t) / frameCount) : 0
       
       // Use the refreshRate value as needed
-      frameCapping = refreshRate > 60 ? 1000 / 72 : 0
-      
-      window.requestAnimationFrame(calculateRefreshRate)
+      frameCapping = refreshRate < 60 ? 1000 / 72 : 0
+      return
     }
     
     calculateRefreshRate()
   }
   
-  measureRefreshRate() // get current refresh rate
+measureRefreshRate() // get current refresh rate
 
 // websocket
 let port
