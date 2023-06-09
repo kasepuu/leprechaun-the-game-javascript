@@ -19,16 +19,15 @@ https://sfxr.me/ - we made sound effects with it
 https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with it
 
 ```
-
 TODO:                                           
-OPTIMIZATIONS, funktsioone loope jms<       
-draakon on atm liiga copyright                      
-draakonit animatsiooniga tulistama ei saanud, kuid pilt on olemas ufo_shoot.png vms. settimeout teeb selle muutmise umbe keeruliseks    
-mul ei lasknud koeri lömastada? -> LEIDSIN PÕHJUSE MIKS, KUI ZOOM ON 90% SIIS ON MIDAGI LAPPES :D (ctrl+mwheel)         
-fps on imelik, ühes browseris on üks teises teine :?        
-eemaldada uks ja liigutada see pause & deathscreen menusse (Back to lobby) vms                               
-disableda pause kui oled deathscreenil/endscreenil      
+mul ei lasknud koeri lömastada? -> BROWSERI ZOOM MÄNGIB ROLLI (90% chrome = X.X) (100% firefox = X.X)                    
+scoreboard paneb vigast?            
+disableda pause kui oled deathscreenil/endscreenil         
 
+ENNE AUDITIT ÜLE VAADATA!      
+OPTIMIZATIONS, koodipilt ilusamaks jms<       
+hud üle vaadata                     
+auto scale for screens smaller/equal than 1280x720p    
 
 
 ENNE AUDITIT ÜLE VAADATA!               
