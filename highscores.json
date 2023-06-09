@@ -1,5 +1,15 @@
 [
    {
+      "player": "Joel12",
+      "score": 5800,
+      "time": "01:54"
+   },
+   {
+      "player": "5000!",
+      "score": 5000,
+      "time": "02:30"
+   },
+   {
       "player": "Juss",
       "score": 4800,
       "time": "01:37"
@@ -35,6 +45,11 @@
       "time": "01:45"
    },
    {
+      "player": "777",
+      "score": 400,
+      "time": "16:39"
+   },
+   {
       "player": "Juss",
       "score": 200,
       "time": "01:55"
@@ -45,94 +60,14 @@
       "time": "00:41"
    },
    {
-      "player": "asasd",
+      "player": "ahs",
       "score": 100,
-      "time": "00:41"
+      "time": "00:37"
    },
    {
-      "player": "asasd",
+      "player": "Joel",
       "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
-      "player": "brling",
-      "score": 0,
-      "time": "00:54"
-   },
-   {
-      "player": "noob",
-      "score": 0,
-      "time": "00:23"
+      "time": "00:58"
    },
    {
       "player": "geime",
@@ -140,9 +75,29 @@
       "time": "00:18"
    },
    {
+      "player": "brling",
+      "score": 0,
+      "time": "00:54"
+   },
+   {
       "player": "uus",
       "score": 0,
       "time": "00:13"
+   },
+   {
+      "player": "kukkus",
+      "score": 0,
+      "time": "00:37"
+   },
+   {
+      "player": "noob",
+      "score": 0,
+      "time": "00:23"
+   },
+   {
+      "player": "ahnii",
+      "score": 0,
+      "time": "00:23"
    },
    {
       "player": "kallas",
@@ -153,5 +108,10 @@
       "player": "Joel",
       "score": -400,
       "time": "00:02"
+   },
+   {
+      "player": "dead",
+      "score": -400,
+      "time": "110:36"
    }
 ]

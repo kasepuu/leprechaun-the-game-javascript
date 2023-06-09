@@ -1,18 +1,36 @@
 body {
     background-color: black;
     overflow: hidden;
-    
-    -webkit-user-select: none; /* Safari */
-    -ms-user-select: none; /* IE 10 and IE 11 */
-    user-select: none; /* Standard syntax */
+    /* zoom: 140%; */
+
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+#page{
+    /* position:absolute; 
+    width:99vw; 
+    overflow: hidden; */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#gameInfo {
+    position: relative;
 }
 
 .inner {
+    
     position: relative;
     width: 1280px;
     height: 720px;
     margin: auto;
-    margin-top: 10vh;
 }
 
 /* .navbar {
@@ -97,7 +115,9 @@ body {
     background-color: darkblue;
     left: 60%;
 }
-.next:hover, .prev:hover{
+
+.next:hover,
+.prev:hover {
     background-color: red;
     color: black;
 }
@@ -114,25 +134,29 @@ body {
     background-color: rgba(0, 0, 0, 0.61);
 }
 
-#storybox #sbTitle{
-    color:white
+#storybox #sbTitle {
+    color: white
 }
 
-#storybox #sbText, #sbText2{
-    background-color: rgba(0,0,0,0);
+#storybox #sbText,
+#sbText2 {
+    background-color: rgba(0, 0, 0, 0);
     color: yellow;
 }
-#storybox #sbContinue{
+
+#storybox #sbContinue {
     position: absolute;
-    bottom:  1;
+    bottom: 1;
     right: 40;
-    background-color: rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
     color: yellow;
 }
 
-.tile-row {}
+#tileMap {}
+
 
 #start-menu {
+
     background-image: url("/game/images/main_menu_gamename.png");
     background-size: cover;
     width: 1280px;
@@ -143,12 +167,14 @@ body {
 }
 
 #paused-menu,
-#death-screen {
+#death-screen,
+#settingMenu {
     position: absolute;
 }
 
 #paused-menu:not([hidden]),
-#death-screen:not([hidden]) {
+#death-screen:not([hidden]),
+#settingMenu:not([hidden]) {
     top: 0;
     left: 0;
     width: 100%;
@@ -161,7 +187,7 @@ body {
     z-index: 999;
 }
 
-#startButton {
+#startButton1 {
     margin-left: 650;
     margin-top: 550px;
     border-radius: 5px;
@@ -176,7 +202,7 @@ body {
     background-size: cover;
 }
 
-#creditsButton {
+#startButton2 {
     color: black;
     font-weight: 900;
     font-style: italic;
@@ -204,7 +230,11 @@ body {
 }
 
 #restartButtonPause,
-#restartButtonDeath, #backToMenuDeath, #backToMenuPause {
+#restartButtonDeath,
+#backToMenuDeath,
+#backToMenuPause,
+#musicButton,
+#fullscreenButton {
 
     border-radius: 5px;
     width: auto + 5px;
@@ -338,6 +368,12 @@ body {
     background-image: url("/game/images/hud/gun.png");
     width: 40;
     height: 40;
+}
+
+#settings {
+    position: absolute;
+    top: 10;
+    right: 10;
 }
 
 #lives {

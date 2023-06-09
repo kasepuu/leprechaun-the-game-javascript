@@ -12,10 +12,12 @@
 
 
 <body>
-    <div style="position:absolute; width:99vw; overflow: hidden;">
+    <div id="page">
         <div class="inner">
 
+
             <div class="menu" id="start-menu">
+
                 <div class="scoreboard" id="welcome-screen">
                     <h1>HIGHSCORES</h1>
                     <table>
@@ -35,26 +37,38 @@
                     <button class="next" id="next">Next</button>
                 </div>
 
-                <button id="startButton">START GAME</button>
-                <button id="creditsButton">CREDITS</button>
+                <button id="startButton1">CASUAL PLAY</button>
+                <button id="startButton2">STORY MODE</button>
+                <!-- <button id="creditsButton">CREDITS</button> -->
 
 
             </div>
 
 
-            <img id="toggleMute" src="/game/images/hud/music_off.png">
-            <img id="togglePause" src="/game/images/hud/pause.png" hidden>
+
 
             <div id="playground" class="menu" hidden>
 
-                <div id="timer">00:00</div>
-                <div id="score">SCORE: 0</div>
-                <div class="paused" id="paused-menu" hidden>
+                <div id="settingMenu" hidden>
+                    <button id="continueButton">CONTINUE (p)</button>
+                    <button id="restartButtonPause">RESTART</button>
+                    <button id="musicButton">MUSIC ON</button>
+                    <button id="fullscreenButton">FULLSCREEN OFF</button>
+                    <button id="backToMenuPause">EXIT</button>
+                </div>
+
+                <div id="gameInfo">
+                    <div id="timer">00:00</div>
+                    <div id="score">SCORE: 0</div>
+                    <!-- <div><img id="toggleMute" src="/game/images/hud/music_off.png"></div>
+                    <div><img id="togglePause" src="/game/images/hud/pause.png" hidden></div> -->
+                </div>
+                <!-- <div class="paused" id="paused-menu" hidden>
                     <button id="continueButton">CONTINUE (p)</button>
                     <button id="restartButtonPause">RESTART</button>
                     <button id="backToMenuPause">EXIT</button>
+                </div> -->
 
-                </div>
                 <div class="died" id="death-screen">
                     <h1 id="deathMessage" style="color: yellow;">YOU DIED, WHAT A NOOB!</h1>
                     <h2 style="color:burlywood" id="currentLevel">Level reached: </h2>
@@ -62,8 +76,8 @@
                     <h2 style="color:white" id="finalTimer">TIME: </h2>
 
                     <form method="POST">
-                        <input id="final_score" name="final_score" value="" hidden>
-                        <input id="final_timer" name="final_timer" value="" hidden>
+                        <input id="final_score" name="final_score" hidden>
+                        <input id="final_timer" name="final_timer" hidden>
 
                         <input class="nameinput" name="name_input" type="text" placeholder="Your name here!"
                             maxlength="6" required>
@@ -90,6 +104,8 @@
                     <div id="sbContinue"></div>
                 </div>
 
+
+                <img id="settings" src="/game/images/hud/settings.png">
                 <img id="lives">
                 <div id="character"></div>
                 <div id="enemies"></div>

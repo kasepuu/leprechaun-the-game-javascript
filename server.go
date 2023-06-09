@@ -93,13 +93,10 @@ func serverHandle(resp http.ResponseWriter, r *http.Request) {
 		fmt.Println("post!")
 
 		player := r.FormValue("name_input")
-		fmt.Println("fscore", r.FormValue("final_score"))
 		time := r.FormValue("final_timer")
 		score, err := strconv.Atoi(r.FormValue("final_score"))
-
-		fmt.Println(player, score, time)
-
 		if player != "" && time != "" && err == nil {
+			fmt.Println(player, score, time)
 
 			getHighScores()
 
@@ -112,7 +109,7 @@ func serverHandle(resp http.ResponseWriter, r *http.Request) {
 
 		}
 
-		createAndExecute(resp, "index.html")
+		http.Redirect(resp, r, "/", http.StatusSeeOther)
 	}
 
 }

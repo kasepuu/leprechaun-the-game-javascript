@@ -27,6 +27,7 @@ export function getIsJumping() {
 let bossHealth = 100
 
 export function resetBossHealth() {
+  document.getElementById("health-level").style.width = "100%"
   bossHealth = 100
 }
 
@@ -145,12 +146,12 @@ export function checkCollision(x, y, direction, isCharacter = true) {
   if (direction === 'right') characterTileX = Math.floor((x + Character.offsetWidth) / 20)
 
   // Check if the character's tile is a collision tile
-  let currentTile = levelMaps[currentLevel-1][0][35 - characterTileY][characterTileX];
+  let currentTile = levelMaps[currentLevel - 1][0][35 - characterTileY][characterTileX];
 
   //let currentTile = eval(`level${currentLevel}_map`)[35 - characterTileY][characterTileX];
 
   if ((currentTile === "6") && isCharacter) {
-   // levelDown();
+    // levelDown();
     return false; // true;
   }
   if ((currentTile === "7") && isCharacter) {
@@ -175,6 +176,14 @@ export function checkCollision(x, y, direction, isCharacter = true) {
 }
 
 export function characterEnemyCollision(enemy, isProjectile = false) {
+  // let enemyPos = { 
+  //   top: enemy.offsetTop + enemy.offsetHeight, 
+  //   left: enemy.offsetLeft, 
+  //   bottom: enemy.offsetTop, 
+  //   right: enemy.offsetLeft + enemy.offsetWidth
+  // }
+
+  // console.log(enemy.offsetLeft, enemy.offsetTop, enemy.offsetHeight, enemy.offsetWidth)
   let enemyPos = enemy.getBoundingClientRect();
   let characterPos = Character.getBoundingClientRect();
   if (
@@ -189,7 +198,7 @@ export function characterEnemyCollision(enemy, isProjectile = false) {
 
     eval(`levelCompletion.level${currentLevel}`).push(enemy.className)
 
-    enemy.id === "largeAttacker" ? playSoundOnce("explosion.wav"): playSoundOnce("explosion2.wav")
+    enemy.id === "largeAttacker" ? playSoundOnce("explosion.wav") : playSoundOnce("explosion2.wav")
     score.innerHTML = "SCORE: " + (enemy.id === "largeAttacker" ? addAndReturnScore(200) : addAndReturnScore(100))
     enemy.remove();
     return;
@@ -322,8 +331,11 @@ export function damageEnemy() {
   console.log("PIHTAS PÕHJAS!")
   const damage = 20 // damage each bullet makes
   playSoundOnce("hitHurt.wav")
-  
+
   score.innerHTML = "SCORE: " + addAndReturnScore(1000)
+  if (bossHealth <= 80 && bossHealth > 40) document.getElementById("flyingSaucer").style.backgroundImage = `url("game/images/characters/villains/dragon_75.gif")` 
+  else if (bossHealth <= 40) document.getElementById("flyingSaucer").style.backgroundImage = `url("game/images/characters/villains/dragon_25.gif")`
+
   if (bossHealth <= damage) {
     playSoundOnce("explosion_dragon.wav")
     console.log("game finished, you are a very good player!")
@@ -333,6 +345,9 @@ export function damageEnemy() {
     document.getElementById("finalScore").innerHTML = "Your final score: " + scoreCounter
     document.getElementById("finalTimer").innerHTML = "Time survived: " + timer.innerHTML
     document.getElementById("death-screen").removeAttribute("hidden")
+
+    document.getElementById("final_score").value = addAndReturnScore(0)
+    document.getElementById("final_timer").value = timer.innerHTML
   }
 
   bossHealth -= damage //boss damage per bullet

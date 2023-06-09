@@ -117,7 +117,7 @@ function createEnemies() {
 
     // create larger enemies (werewolves)
     for (let E = 0; E < amountOfLargeEnemies; E++) {
-        if (eval(`levelCompletion.level${currentLevel}`).includes(`stormtrooper-${E + 1}`)) continue
+        if (eval(`levelCompletion.level${currentLevel}`).includes(`werewolf-${E + 1}`)) continue
 
         const randomNumber = Math.floor(Math.random() * 3) + 1
 
@@ -125,7 +125,7 @@ function createEnemies() {
         enemy.id = "largeAttacker"
         enemy.style.left = largeEnemyPositionsX[E] + "px"
         enemy.style.bottom = largeEnemyPositionsY[E] + "px"
-        enemy.className = `stormtrooper-${E + 1}`
+        enemy.className = `werewolf-${E + 1}`
         if (Math.random() <= 0.5) enemy.style.backgroundImage = `url("game/images/characters/villains/werewolf.gif")`
         else enemy.style.backgroundImage = `url("game/images/characters/villains/werewolf_dark.gif")`
 
@@ -133,7 +133,7 @@ function createEnemies() {
         enemiesParent.appendChild(enemy)
     }
 
-    // create flying saucers (ufos)
+    // create flying saucers (ufos -> dragons nowadays)
     let amountOfSaucers = flyingSaucerPositionsX.length
     let ufoParent = document.getElementById("flyingEnemies");
     for (let u = 0; u < amountOfSaucers; u++) {
@@ -141,8 +141,8 @@ function createEnemies() {
         enemy.id = "flyingSaucer"
         enemy.style.left = flyingSaucerPositionsX[u] + "px"
         enemy.style.bottom = flyingSaucerPositionsY[u] + "px"
-        enemy.className = "saucer"
-        enemy.style.backgroundImage = `url("game/images/characters/villains/ufo.gif")`
+        enemy.className = "dragon"
+        enemy.style.backgroundImage = `url("game/images/characters/villains/dragon.gif")`
 
         ufoParent.appendChild(enemy)
     }

@@ -1,22 +1,19 @@
-import { StartGame, ExitGame, currentAmmo, scoreCounter } from "./game.js"
+import { StartGame, ExitGame, currentAmmo, scoreCounter, pause, unPause } from "./game.js"
 import { buildMaps } from "../level/levels.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 
 export let frameCapping = 0
+export const setFrameCapping = (value) => { frameCapping = value }
 
-export const setFrameCapping = (value) => {frameCapping = value}
 // element variable
-export const mainMenu = document.getElementById("start-menu") // LOBBY
+export const mainMenu = document.getElementById("start-menu") 
 export const Character = document.getElementById("character")
 export const playGround = document.getElementById("playground")
-const MuteButton = document.getElementById("toggleMute")
-const PauseButton = document.getElementById("togglePause")
+const MuteButton = document.getElementById("musicButton")
 export const healthBar = document.getElementById("lives")
 export let language = ""
 
 let winamp = new PlayMusic()
-
-
 
 // websocket
 let port
@@ -44,22 +41,66 @@ fetch("game/templates/port.txt")
         })
     })
 
-//game
-
-document.getElementById("gun").innerText = currentAmmo // imo tekitab laggi
-
 // FETCHING THE PREVIOUS STATE OF MUTEBUTTON STATUS
 window.addEventListener("load", (e) => {
     const savedSrc = localStorage.getItem("muteButtonSrc")
-    if (savedSrc) MuteButton.src = savedSrc
+    if (savedSrc) MuteButton.innerHTML = "MUSIC " + savedSrc
 })
 
-// HANDLING THE THEME SONG WHEN FIRST VISIT, on click though :(
-window.addEventListener("click", (e) => {
-    if (!mainMenu.hasAttribute("hidden")) {
-        if (!MuteButton.src.includes("off")) winamp.setAudio("menu.ogg")
+
+//game
+let settingMenu = false
+let gameFullscreen = false
+document.getElementById("gun").innerText = currentAmmo
+document.getElementById("settings").addEventListener("click", (e) => {
+    settingMenu = !settingMenu
+    if (settingMenu) {
+        document.getElementById("settingMenu").removeAttribute("hidden")
+        pause(true)
+        document.getElementById("fullscreenButton").addEventListener("click", (e) => {
+            gameFullscreen = !gameFullscreen
+            if (gameFullscreen) {
+                document.body.style.transform = "scale(1.5)"
+                enterFullscreen()
+            }
+            else {
+                document.body.style.zoom = "scale(1.0)"
+                exitFullscreen()
+            }
+
+            document.getElementById("fullscreenButton").innerHTML = gameFullscreen ? "FULLSCREEN ON" : "FULLSCREEN OFF"
+        })
+
+    } else {
+        document.getElementById("settingMenu").setAttribute("hidden", "")
+        unPause()
     }
+
 })
+
+function enterFullscreen() {
+    if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+        document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+        document.documentElement.webkitRequestFullscreen();
+    } else if (document.documentElement.msRequestFullscreen) {
+        document.documentElement.msRequestFullscreen();
+    }
+}
+
+function exitFullscreen() {
+    if (document.exitFullscreen) {
+        document.exitFullscreen();
+    } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+    } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+    }
+}
 
 if (!mainMenu.hasAttribute("hidden")) {
     document.addEventListener("keypress", (e) => {
@@ -67,41 +108,21 @@ if (!mainMenu.hasAttribute("hidden")) {
         if (e.key === "s") StartGame()
     })
 
-    document.getElementById("startButton").addEventListener("click", () => {
-        //playSoundOnce("click.wav")
-        StartGame()
-    })
-
-    // äkki teha help buttoniks?
-    document.getElementById("creditsButton").addEventListener("click", (e) => {
-        // mainMenu.setAttribute("hidden", "")
-        // playGround.removeAttribute("hidden")  
-    })
+    document.getElementById("startButton1").addEventListener("click", () => StartGame())
+    document.getElementById("startButton2").addEventListener("click", (e) => StartGame(false))
 }
 
 document.getElementById("backToMenuDeath").addEventListener("click", (e) => ExitGame())
 document.getElementById("backToMenuPause").addEventListener("click", (e) => ExitGame())
 
 
-
-//<tr class="list" id="pink">
-//<td class="row_cell" id="rank">1</td>
-//<td class="row_cell" id="name">Joel</td>
-//<td class="row_cell" id="scorepoints">664</td>
-//<td class="row_cell" id="time">00:23</td>
-//</tr>
-
-
-
-
-// highscores here
+// highscores
 
 let startingIndex = 0
 const pageInfo = 5 // lines of info each sb page has
 let currentPage = 0
 
 document.getElementById("next").addEventListener("click", () => {
-
     if (currentPage < (sbData.length / pageInfo) - 1) {
         currentPage += 1
         startingIndex += pageInfo
@@ -110,14 +131,12 @@ document.getElementById("next").addEventListener("click", () => {
 })
 
 document.getElementById("prev").addEventListener("click", () => {
-
     if (currentPage > 0) {
         currentPage -= 1
         startingIndex -= pageInfo
         displayScoreBoard(sbData)
     }
 })
-
 
 function createCell(body, className, innerHTML, element = "th") {
     let cell = document.createElement(element)
@@ -146,7 +165,7 @@ function displayScoreBoard(sbData) {
 
     for (let i = startingIndex; i < showAmount; i++) {
 
-        let ranking = numberEnding(i+1)
+        let ranking = numberEnding(i + 1)
         let scorepoints = sbData[i].score
         let name = sbData[i].player
         let time = sbData[i].time
@@ -164,13 +183,16 @@ function displayScoreBoard(sbData) {
     }
 }
 
-function numberEnding(nr){
+function numberEnding(nr) {
     if (nr === 1) return nr + "st"
     else if (nr === 2) return nr + "nd"
     else if (nr === 3) return nr + "rd"
     else return nr + "th"
 }
 
-buildMaps()
+
+
+
+buildMaps() // building maps
 
 

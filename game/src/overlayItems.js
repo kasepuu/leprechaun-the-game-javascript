@@ -18,7 +18,6 @@ export function frameRate(frameTimes) {
     document.getElementById("fps").innerHTML = "FPS: " + fps
 }
 
-
 // this function handles the timer, displaying it in game
 export function timerCounter(startTime, timeElapsed) {
     if (!gameIsPaused) {
