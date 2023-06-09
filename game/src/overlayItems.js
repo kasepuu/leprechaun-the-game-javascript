@@ -1,4 +1,5 @@
 import { gameIsPaused } from "../src/game.js"
+import { setFrameCapping } from "./main.js"
 
 // this function handles the framerate, displaying it in game
 export function frameRate(frameTimes) {
@@ -9,6 +10,10 @@ export function frameRate(frameTimes) {
     }
     frameTimes.push(now)
     let fps = frameTimes.length > 30 ? frameTimes.length.toString() : frameTimes.length.toString()
+
+    if (fps > 61){
+        setFrameCapping(1000/72)
+    }
     document.getElementById("fps").innerHTML = "FPS: " + fps
 }
 

@@ -3,6 +3,8 @@ import { buildMaps } from "../level/levels.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 
 export let frameCapping = 0
+
+export const setFrameCapping = (value) => {frameCapping = value}
 // element variable
 export const mainMenu = document.getElementById("start-menu") // LOBBY
 export const Character = document.getElementById("character")
@@ -15,31 +17,6 @@ export let language = ""
 let winamp = new PlayMusic()
 
 
-function measureRefreshRate() {
-    let frameTimes = [];
-    let lastFrameTime = performance.now()
-    
-    function calculateRefreshRate() {
-      const now = performance.now()
-      const frameDuration = now - lastFrameTime
-      lastFrameTime = now
-      
-      while (frameTimes.length > 0 && frameTimes[0] <= now - 1000) {
-        frameTimes.shift()
-      }
-      frameTimes.push(frameDuration)
-      const frameCount = frameTimes.length
-      const refreshRate = frameCount > 0 ? 1000 / (frameTimes.reduce((sum, t) => sum + t) / frameCount) : 0
-      
-      // Use the refreshRate value as needed
-      frameCapping = refreshRate < 60 ? 1000 / 72 : 0
-      return
-    }
-    
-    calculateRefreshRate()
-  }
-  
-measureRefreshRate() // get current refresh rate
 
 // websocket
 let port

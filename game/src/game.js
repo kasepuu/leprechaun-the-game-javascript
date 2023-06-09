@@ -229,8 +229,7 @@ function main() {
     if (animationFrameId !== null) {
         cancelAnimationFrame(animationFrameId);
     }
-    console.log(frameCapping)
-
+ 
     frameRate(frameTimes); // handles Framerate
     timerCounter(startTime, timeElapsed); // handles Timer
 
