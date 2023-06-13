@@ -14,7 +14,10 @@ import (
 	"github.com/gorilla/websocket"
 )
 
-var temp *template.Template // html template
+var upgrader = websocket.Upgrader{
+	ReadBufferSize:  1024,
+	WriteBufferSize: 1024,
+}
 
 type ScoreBoard struct {
 	Player string `json:"player"`
@@ -22,26 +25,22 @@ type ScoreBoard struct {
 	Time   string `json:"time"`
 }
 
-var upgrader = websocket.Upgrader{
-	ReadBufferSize:  1024,
-	WriteBufferSize: 1024,
-}
+type ScoreBoardArray []ScoreBoard
 
-type ScoreArray []ScoreBoard
-
-var Scores ScoreArray
+var Scores ScoreBoardArray
 
 func main() {
 
 	portFromFile, err := os.ReadFile("game/templates/port.txt")
 	firstlineCheck := StringControl(string(strings.Split(string(portFromFile), "\n")[0]))
 	port := string(strings.Split(string(portFromFile), "\n")[0]) //port value
-	if err != nil || firstlineCheck == false {
+	if err != nil || !firstlineCheck {
+		fmt.Println("path: /game/templates/port.txt")
 		fmt.Println("<port.txt> file not found or corrupt, please enter port for webserver manually:")
 		fmt.Scanln(&port)
 	}
 
-	getHighScores()
+	getHighScores() // fetching all of the highscores found in .json
 
 	http.Handle("/game/", http.StripPrefix("/game", http.FileServer(http.Dir("./game"))))
 	http.HandleFunc("/", serverHandle)
@@ -90,23 +89,21 @@ func serverHandle(resp http.ResponseWriter, r *http.Request) {
 	if r.Method == "GET" {
 		createAndExecute(resp, "index.html")
 	} else if r.Method == "POST" {
-		fmt.Println("post!")
+		fmt.Println("Post request has been received!")
 
 		player := r.FormValue("name_input")
 		time := r.FormValue("final_timer")
 		score, err := strconv.Atoi(r.FormValue("final_score"))
 		if player != "" && time != "" && err == nil {
-			fmt.Println(player, score, time)
+			fmt.Println("data:", player, score, time)
 
-			getHighScores()
+			getHighScores() // getting updated data
 
 			Scores = append(Scores, ScoreBoard{player, score, time})
 
 			sortHighScores() // by score (default)
 
-			err = addHighScore()
-			errorHandler(err)
-
+			errorHandler(addHighScore())
 		}
 
 		http.Redirect(resp, r, "/", http.StatusSeeOther)

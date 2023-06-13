@@ -6,14 +6,12 @@ export let frameCapping = 0
 export const setFrameCapping = (value) => { frameCapping = value }
 
 // element variable
-export const mainMenu = document.getElementById("start-menu") 
+export const mainMenu = document.getElementById("start-menu")
 export const Character = document.getElementById("character")
 export const playGround = document.getElementById("playground")
 const MuteButton = document.getElementById("musicButton")
 export const healthBar = document.getElementById("lives")
 export let language = ""
-
-let winamp = new PlayMusic()
 
 // websocket
 let port
@@ -49,36 +47,34 @@ window.addEventListener("load", (e) => {
 
 
 //game
-let settingMenu = false
 let gameFullscreen = false
 document.getElementById("gun").innerText = currentAmmo
 document.getElementById("settings").addEventListener("click", (e) => {
-    settingMenu = !settingMenu
-    if (settingMenu) {
+    // settingMenu = !settingMenu
+    // if (settingMenu) {
         document.getElementById("settingMenu").removeAttribute("hidden")
         pause(true)
         document.getElementById("fullscreenButton").addEventListener("click", (e) => {
             gameFullscreen = !gameFullscreen
             if (gameFullscreen) {
-                document.body.style.transform = "scale(1.5)"
                 enterFullscreen()
             }
             else {
-                document.body.style.zoom = "scale(1.0)"
                 exitFullscreen()
             }
 
             document.getElementById("fullscreenButton").innerHTML = gameFullscreen ? "FULLSCREEN ON" : "FULLSCREEN OFF"
         })
 
-    } else {
-        document.getElementById("settingMenu").setAttribute("hidden", "")
-        unPause()
-    }
+    // } else {
+    //     document.getElementById("settingMenu").setAttribute("hidden", "")
+    //     unPause()
+    // }
 
 })
 
 function enterFullscreen() {
+    document.body.style.transform = "scale(1.5)"
     if (document.documentElement.requestFullscreen) {
         document.documentElement.requestFullscreen();
     } else if (document.documentElement.mozRequestFullScreen) {
@@ -91,6 +87,7 @@ function enterFullscreen() {
 }
 
 function exitFullscreen() {
+    document.body.style.zoom = "scale(1.0)"
     if (document.exitFullscreen) {
         document.exitFullscreen();
     } else if (document.mozCancelFullScreen) {
@@ -104,16 +101,15 @@ function exitFullscreen() {
 
 if (!mainMenu.hasAttribute("hidden")) {
     document.addEventListener("keypress", (e) => {
-        if (mainMenu.hasAttribute("hidden")) return
         if (e.key === "s") StartGame()
     })
 
     document.getElementById("startButton1").addEventListener("click", () => StartGame())
-    document.getElementById("startButton2").addEventListener("click", (e) => StartGame(false))
+    document.getElementById("startButton2").addEventListener("click", () => StartGame(true))
 }
 
-document.getElementById("backToMenuDeath").addEventListener("click", (e) => ExitGame())
-document.getElementById("backToMenuPause").addEventListener("click", (e) => ExitGame())
+document.getElementById("backToMenuDeath").addEventListener("click", () => ExitGame())
+document.getElementById("backToMenuPause").addEventListener("click", () => ExitGame())
 
 
 // highscores
@@ -165,7 +161,7 @@ function displayScoreBoard(sbData) {
 
     for (let i = startingIndex; i < showAmount; i++) {
 
-        let ranking = numberEnding(i + 1)
+        let ranking = getNumberEnding(i + 1)
         let scorepoints = sbData[i].score
         let name = sbData[i].player
         let time = sbData[i].time
@@ -183,7 +179,7 @@ function displayScoreBoard(sbData) {
     }
 }
 
-function numberEnding(nr) {
+function getNumberEnding(nr) {
     if (nr === 1) return nr + "st"
     else if (nr === 2) return nr + "nd"
     else if (nr === 3) return nr + "rd"

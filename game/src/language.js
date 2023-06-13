@@ -1,3 +1,5 @@
+/*game translation, in progress?*/
+
 const translations = {
     ENG: {
         startButton: "START GAME",
@@ -25,16 +27,15 @@ export function updateLanguage(lang){
     console.log(lang)
     const translation = translations[lang]
 
-
-    document.getElementById('startButton').textContent = translation.startButton;
-    document.getElementById('creditsButton').textContent = translation.creditsButton;
-    document.getElementById('continueButton').textContent = translation.continueButton;
-    document.getElementById('restartButtonPause').textContent = translation.restartButton;
-    document.getElementById('deathMessage').textContent = translation.deathMessage;
-    document.getElementById('deathLevel').textContent = translation.deathLevel;
-    document.getElementById('deathScore').textContent = translation.deathScore;
-    document.getElementById('deathTimer').textContent = translation.deathTimer;
-    document.getElementById('restartButtonDeath').textContent = translation.restartButton;
+    document.getElementById('startButton').textContent = translation.startButton
+    document.getElementById('creditsButton').textContent = translation.creditsButton
+    document.getElementById('continueButton').textContent = translation.continueButton
+    document.getElementById('restartButtonPause').textContent = translation.restartButton
+    document.getElementById('deathMessage').textContent = translation.deathMessage
+    document.getElementById('deathLevel').textContent = translation.deathLevel
+    document.getElementById('deathScore').textContent = translation.deathScore
+    document.getElementById('deathTimer').textContent = translation.deathTimer
+    document.getElementById('restartButtonDeath').textContent = translation.restartButton
     document.title = "jah"
 
 }

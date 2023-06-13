@@ -21,14 +21,8 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ```
 TODO:                                           
 mul ei lasknud koeri lömastada? -> BROWSERI ZOOM MÄNGIB ROLLI (90% chrome = X.X) (100% firefox = X.X) -> getBoundingClientRect() probleem @characterEnemyCollision()                      
-music korda teha, mingi selline error message             
-```
-Uncaught DOMException: Failed to execute 'add' on 'DOMTokenList': The token provided ('level_3 level_1') contains HTML space characters, which are not valid in tokens.
-    at unPause (http://localhost:1111/game/src/game.js:394:69)
-    at HTMLDocument.<anonymous> (http://localhost:1111/game/src/game.js:519:85)     
-```
-
+                
 ENNE AUDITIT ÜLE VAADATA!      
-OPTIMIZATIONS, koodipilt ilusamaks jms<       
+OPTIMIZATIONS, koodipilt ilusamaks jms < peaks okidoki olema :D       
 hud üle vaadata                     
 auto scale for screens smaller/equal than 1280x720p    

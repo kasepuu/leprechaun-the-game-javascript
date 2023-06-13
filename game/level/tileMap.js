@@ -201,6 +201,8 @@ export function drawTiles(map, currentLevel) {
     parent.appendChild(mapDiv)
 }
 
+// these can be made into one function
+
 export function deleteTiles() {
     let parent = document.getElementById("tileMap")
     parent.innerHTML = ""

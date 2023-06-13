@@ -71,7 +71,11 @@ export function getAmmo() {
 
 // story writing!
 let currentlyWritingStory = false
+let stopWriting = false
+let writingTimeouts = []
 function continueStory() {
+    writingTimeouts.forEach(timeoutId => clearTimeout(timeoutId))
+    writingTimeouts = []
     currentlyWritingStory = false
     document.getElementById("sbTitle").innerHTML = ""
     document.getElementById("sbText").innerHTML = ""
@@ -82,14 +86,21 @@ function continueStory() {
 
 function writeStory(body, text, speed, showContinue = false, startDelay = 0) {
     document.getElementById("storybox").removeAttribute("hidden")
+    // Clear existing timeouts
+
+
     setTimeout(() => {
         for (let i = 0; i < text.length; i++) {
-            setTimeout(() => {
+            const timeout = setTimeout(() => {
+                if (stopWriting) return
+
                 body.innerHTML += text.charAt(i);
                 currentlyWritingStory = true
                 //continue
                 if (body.innerHTML.includes(text) && showContinue) document.getElementById("sbContinue").innerHTML = "continue (c) ..."
             }, speed * i);
+
+            writingTimeouts.push(timeout)
         }
     }, startDelay)
 }
@@ -118,6 +129,7 @@ function writeCurrentStory(currentLevel) {
 export function StartGame(storyMode = false) {
     currentlyWritingStory = false
     playInStoryMode = storyMode
+    stopWriting = false
 
     levelCompletion.level1 = []
     levelCompletion.level2 = []
@@ -158,7 +170,7 @@ export function StartGame(storyMode = false) {
 
 export function ExitGame() {
     continueStory()
-
+    stopWriting = true
     scoreCounter = 0
     currentLevel = 1
     lives = 4
@@ -205,7 +217,7 @@ function main() {
     playGround.appendChild(Character);
 
     setTimeout(() => {
-        animationFrameId = requestAnimationFrame(main); 
+        animationFrameId = requestAnimationFrame(main);
     }, frameCapping);
 }
 
@@ -357,16 +369,16 @@ export function loseLife() {
 
 
 // pause etc.. simple functions
-
 function toggleAudio() {
     if (MuteButton.innerHTML.includes("OFF")) {
         winamp.resume()
         MuteButton.innerHTML = "MUSIC ON"
-        localStorage.setItem("muteButtonSrc", "OFF")
+        localStorage.setItem("muteButtonSrc", "ON")
+
     } else {
         winamp.pause()
         MuteButton.innerHTML = "MUSIC OFF"
-        localStorage.setItem("muteButtonSrc", "ON")
+        localStorage.setItem("muteButtonSrc", "OFF")
     }
 }
 
@@ -391,7 +403,7 @@ export function pause(death = false) {
 export function unPause() {
     playground.classList.remove("paused")
     playground.classList.add(`level_${currentLevel}`)
-    if (!MuteButton.innerHTML.includes("OFF")) playground.classList.add(songPrePause)
+   /// if (!MuteButton.innerHTML.includes("OFF")) playground.classList.add(songPrePause)
     SettingMenu.setAttribute("hidden", "")
     DeathScreen.setAttribute("hidden", "")
 
