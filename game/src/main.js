@@ -1,4 +1,4 @@
-import { StartGame, ExitGame, currentAmmo, scoreCounter, pause, unPause } from "./game.js"
+import { StartGame, ExitGame, currentAmmo, scoreCounter, pause, unPause, gameRunning } from "./game.js"
 import { buildMaps } from "../level/levels.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 
@@ -101,7 +101,7 @@ function exitFullscreen() {
 
 if (!mainMenu.hasAttribute("hidden")) {
     document.addEventListener("keypress", (e) => {
-        if (e.key === "s") StartGame()
+        if (e.key === "s" && !gameRunning) StartGame()
     })
 
     document.getElementById("startButton1").addEventListener("click", () => StartGame())

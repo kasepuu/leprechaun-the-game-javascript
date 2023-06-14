@@ -11,7 +11,7 @@ export let gameIsPaused = true
 let frameTimes = []
 let timeElapsed = 0 // timer
 let startTime // time game started at...
-let gameRunning = false
+export let gameRunning = false
 let playInStoryMode = true
 // importing 
 import { mainMenu, playGround, healthBar, Character, frameCapping } from "./main.js"
