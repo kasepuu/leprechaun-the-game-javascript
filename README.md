@@ -26,7 +26,7 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ### User Controls
 w / ↑ = Jump   
 a / ← = Move left  
-d / → = Move right 
+d / → = Move right  
 Spacebar = Shoot the enemy      
 
 ### HUD Instructions
