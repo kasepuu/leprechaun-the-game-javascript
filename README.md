@@ -62,11 +62,9 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 
 
 ### Good to know
-> if you are unable to squish some of the creatures, try another browser or zoom out/in a little and see if that fixes it. (100% chrome and/or 90% firefox - seems to be working for most)    
+> if you are unable to squish some of the creatures, zoom out/in a little and see if that fixes it. If that doesn't help, try another browser.
 
 > if you are encountering any performance issues, try playing the game in incognito. Sometimes the browser addons might cause issues    
-
-> if you are annoyed by the theme song of the game, you can disable it in the settings (or toggle the song on/off using M keybind). The settings are available in game. (Your setting will be remembered)   
 
 > in short if you are encountering any issues, feel free to let us know
 
