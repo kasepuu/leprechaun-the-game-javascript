@@ -48,8 +48,6 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ![werewolf2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/werewolf_dark.gif) - They are scary!           
 
 ![dragon](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/dragon.gif) - Flying creature, that shoots something...    
-![dragonfire](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/fireball.gif) <- this is something 
-
 
 ![ground1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level1/w.png)
 ![ground2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/w.png) - your character doesn't know how to swim! Fire is hot!
