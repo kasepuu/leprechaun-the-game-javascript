@@ -1,6 +1,7 @@
 # make-your-game
 # "Päkapikk ja kuri KOLL"
 
+### Gameplay video
 [![GAMEPLAY VIDEO](https://i9.ytimg.com/vi_webp/InFw7pjxv_E/mq3.webp?sqp=CPCw6KQG-oaymwEmCMACELQB8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGEsgZShLMA8=&rs=AOn4CLAOReGxHZMImxI7zmSYqE5MqrMX_A)](https://www.youtube.com/watch?v=InFw7pjxv_E "see how the game is being played through")
 
 ### Game is being hosted [HERE](http://joelsoft.eu:1111/) with a public scoreboard.
