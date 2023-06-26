@@ -23,8 +23,6 @@ https://sfxr.me/ - we made sound effects with it
 https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with it
 ```
 
-### Good to know
-
 ### User Controls
 (🡹) | (W) = Jump   
 (🡸) | (A) = Move left  
@@ -61,5 +59,12 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ![bait](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/-.png) - you might fall through this one!          
         
 </details> 
+
+
+### Good to know
+> if you are unable to squish some of the creatures, try another browser or zoom out/in a little and see if that fixes it. (100% chrome, 90% firefox - seems to be working for most)    
+> if you are encountering performance issues, try playing the game in incognito. Sometimes the browser addons might cause issues    
+> if you are annoyed by the theme song of the game, you can disable it in the settings. The settings are available in game. (Your setting will be saved in local storage)   
+> in short if you are encountering any issues, feel free to let us know
 
 ### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
