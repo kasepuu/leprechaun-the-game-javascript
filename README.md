@@ -31,7 +31,7 @@ Spacebar = Shoot the enemy
 
 ### HUD Instructions
 ![settings](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/settings.png) - Settings tab     
-            
+
 ![lives4](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_4.png)
 ![lives3](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_3.png)
 ![lives2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_2.png)
@@ -39,6 +39,13 @@ Spacebar = Shoot the enemy
     
 ![gun](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/gun.png) - Gun (ammo amount)  
 ![ammo](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/ammo.png) - Extra ammunition (for Gun) 
+
+### DANGERS
+![wolf1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/brown_dog.gif)
+![wolf2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/black_dog.gif) - Fast little buggers, watch out!           
+
+![werewolf1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/werewolf.gif)
+![werewolf2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/werewolf_dark.gif) - They are scary!           
 
 
 ### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
