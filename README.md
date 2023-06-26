@@ -9,7 +9,7 @@ The game has similarities with 2 well known games, Super Mario & Space Invaders
 
 *** SPOILERS !!! *** 
 <details>
-<summary>test</summary>
+<summary>About Story</summary>
 The Game itself has 3 levels. To get score you must jump on the enemies and pass the levels, without dying.
 The last map contains a boss fight where you have to collect ammo and shoot down the dragon.
 Be warned, dying or missing a shot will cost you 100 score!!!
@@ -43,8 +43,8 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ![ammo](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/ammo.png) - Extra ammunition (for Gun) 
 
 
-#### SPOILER
 <details> 
+<summary>About Dangers</summary>
 
 ### DANGERS
 ![wolf1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/brown_dog.gif)
