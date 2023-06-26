@@ -63,10 +63,13 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 
 #### Useful links
 ```
-https://www.youtube.com/watch?v=InFw7pjxv_E - see how the game is being played through
+[GAMEPLAY VIDEO](https://www.youtube.com/watch?v=InFw7pjxv_E) - see how the game is being played through
  
 https://sfxr.me/ - we made sound effects with it
 https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with it
 ```
+
+Audit page: [HERE](https://github.com/01-edu/public/tree/master/subjects/make-your-game/audit)
+
 
 ### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
