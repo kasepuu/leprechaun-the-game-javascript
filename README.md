@@ -27,7 +27,7 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 w / ↑ = Jump   
 a / ← = Move left  
 d / → = Move right  
-Spacebar = Shoot the enemy      
+Spacebar = Shoot the gun      
 
 ### HUD Instructions
 ![settings](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/settings.png) - Settings tab     
