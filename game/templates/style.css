@@ -11,7 +11,7 @@ body {
     /* Standard syntax */
 }
 
-#page{
+#page {
     /* position:absolute; 
     width:99vw; 
     overflow: hidden; */
@@ -21,22 +21,36 @@ body {
     justify-content: center;
 }
 
-#gameInfo {
-    position: relative;
+#creditsInfo {
+    font-style: oblique;
+    font-size: x-large;
+    text-shadow: 2px 2px #000000;
+    color: red;
 }
 
+#aboutGame1 {
+    position: absolute;
+    text-align: right;
+    left: auto;
+    top: 525px;
+    right: 150;
+}
+
+#aboutGame2 {
+    position: absolute;
+    text-align: left;
+    top: 525px;
+    right: 50;
+}
+
+
 .inner {
-    
+
     position: relative;
     width: 1280px;
     height: 720px;
     margin: auto;
 }
-
-/* .navbar {
-    user-select: none;
-     cursor: pointer; 
-} */
 
 .row__cell {
     padding: 8px 20px;
@@ -58,11 +72,6 @@ body {
     background-color: #ffffff;
 }
 
-.row__cell:hover {
-    /* background-color: #c1c4c7 !important; */
-}
-
-
 .scoreboard {
     padding-left: 25px;
     left: 0px;
@@ -72,7 +81,6 @@ body {
     border-radius: 5px;
     position: absolute;
     top: 0;
-    /* background-color: rgba(0, 0, 0, 0.61); */
 }
 
 .scoreboard h1 {

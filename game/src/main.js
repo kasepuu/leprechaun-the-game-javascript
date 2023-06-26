@@ -50,21 +50,20 @@ window.addEventListener("load", (e) => {
 let gameFullscreen = false
 document.getElementById("gun").innerText = currentAmmo
 document.getElementById("settings").addEventListener("click", (e) => {
-    // settingMenu = !settingMenu
-    // if (settingMenu) {
-        document.getElementById("settingMenu").removeAttribute("hidden")
-        pause(true)
-        document.getElementById("fullscreenButton").addEventListener("click", (e) => {
-            gameFullscreen = !gameFullscreen
-            if (gameFullscreen) {
-                enterFullscreen()
-            }
-            else {
-                exitFullscreen()
-            }
-
-            document.getElementById("fullscreenButton").innerHTML = gameFullscreen ? "FULLSCREEN ON" : "FULLSCREEN OFF"
-        })
+    document.getElementById("settingMenu").removeAttribute("hidden")
+    pause(true)
+    // mostly working fullscreen, disabled for now
+    /*        document.getElementById("fullscreenButton").addEventListener("click", (e) => {
+                gameFullscreen = !gameFullscreen
+                if (gameFullscreen) {
+                    enterFullscreen()
+                }
+                else {
+                    exitFullscreen()
+                }
+    
+                document.getElementById("fullscreenButton").innerHTML = gameFullscreen ? "FULLSCREEN ON" : "FULLSCREEN OFF"
+            })*/
 })
 
 function enterFullscreen() {
@@ -180,9 +179,6 @@ function getNumberEnding(nr) {
     else return nr + "th"
 }
 
-
-
-
-buildMaps() // building maps
+buildMaps() // building maps from text files
 
 
