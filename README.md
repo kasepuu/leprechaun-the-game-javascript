@@ -9,6 +9,7 @@ The game has similarities with 2 well known games, Super Mario & Space Invaders
 
 *** SPOILERS !!! *** 
 <details>
+<summary>test</summary>
 The Game itself has 3 levels. To get score you must jump on the enemies and pass the levels, without dying.
 The last map contains a boss fight where you have to collect ammo and shoot down the dragon.
 Be warned, dying or missing a shot will cost you 100 score!!!
