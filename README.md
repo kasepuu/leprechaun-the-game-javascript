@@ -47,5 +47,10 @@ Spacebar = Shoot the enemy
 ![werewolf1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/werewolf.gif)
 ![werewolf2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/werewolf_dark.gif) - They are scary!           
 
+![ground1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level1/w.png)
+![ground2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/w.png) - your character doesn't know how to swim! Fire hoT!
+
+![bait](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/-.png) - you might fall through this one!          
+        
 
 ### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
