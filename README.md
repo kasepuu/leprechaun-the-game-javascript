@@ -66,7 +66,7 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 
 > if you are encountering any performance issues, try playing the game in incognito. Sometimes the browser addons might cause issues    
 
-> in short if you are encountering any issues, feel free to let us know
+> in short if you are encountering any issues or have any ideas, feel free to let us know
 
 #### Useful links
 ``` 
