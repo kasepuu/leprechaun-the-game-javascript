@@ -11,7 +11,6 @@ The story of the game is ...
 
 ### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
 
-
 #### Useful links
 ```
 https://sfxr.me/ - we made sound effects with it
@@ -20,7 +19,15 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ```
 
 ### User Controls
+```
 ↑ || w = Jump
+```
+```
 ← || a = Move left
+```
+```
 → || d = Move right
+```
+```
 Spacebar = Shoot the enemy
+```
