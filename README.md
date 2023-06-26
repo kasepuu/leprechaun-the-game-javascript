@@ -15,14 +15,6 @@ The last map contains a boss fight where you have to collect ammo and shoot down
 Be warned, dying or missing a shot will cost you 100 score!!!
 </details>
 
-#### Useful links
-```
-https://www.youtube.com/watch?v=InFw7pjxv_E - walkthrough
- 
-https://sfxr.me/ - we made sound effects with it
-https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with it
-```
-
 ### User Controls
 (🡹) | (W) = Jump   
 (🡸) | (A) = Move left  
@@ -69,5 +61,13 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 > if you are annoyed by the theme song of the game, you can disable it in the settings. The settings are available in game. (Your setting will be remembered)   
 
 > in short if you are encountering any issues, feel free to let us know
+
+#### Useful links
+```
+https://www.youtube.com/watch?v=InFw7pjxv_E - see how the game is being played through
+ 
+https://sfxr.me/ - we made sound effects with it
+https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with it
+```
 
 ### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
