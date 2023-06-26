@@ -20,6 +20,11 @@
       "time": "01:17"
    },
    {
+      "player": "asad",
+      "score": 4300,
+      "time": "01:10"
+   },
+   {
       "player": "speed",
       "score": 4000,
       "time": "01:00"
@@ -55,11 +60,6 @@
       "time": "01:55"
    },
    {
-      "player": "asasd",
-      "score": 100,
-      "time": "00:41"
-   },
-   {
       "player": "ahs",
       "score": 100,
       "time": "00:37"
@@ -68,6 +68,11 @@
       "player": "Joel",
       "score": 100,
       "time": "00:58"
+   },
+   {
+      "player": "asasd",
+      "score": 100,
+      "time": "00:41"
    },
    {
       "player": "geime",

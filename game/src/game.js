@@ -518,17 +518,17 @@ restartButtonD.addEventListener("click", (e) => Restart())
 
 // eventlistener for keydown shortcuts
 document.addEventListener("keydown", (e) => {
-    if (e.key === "m" || e.key === "M") toggleAudio()
+    if (e.code === "KeyM") toggleAudio()
     if (playGround.hasAttribute("hidden")) return
     if (!DeathScreen.hasAttribute("hidden")) if (e.code === "keyR") Restart()
-    if ((e.key === "c" || e.key === "C") && document.getElementById("sbContinue").innerHTML !== "") continueStory()
+    if ((e.code === "KeyC") && document.getElementById("sbContinue").innerHTML !== "") continueStory()
 
     if (SettingMenu.hasAttribute("hidden")) {
-        if ((e.key === "p" || e.key === "P") && DeathScreen.hasAttribute("hidden")) pause()
+        if ((e.code === "KeyP" || e.key === "Escape") && DeathScreen.hasAttribute("hidden")) pause()
         return
     } else {
-        if (e.key === "r" || e.key === "R") Restart()
-        if ((e.key === "p" || e.key === "P") && DeathScreen.hasAttribute("hidden")) unPause()
+        if (e.code === "KeyR") Restart()
+        if ((e.code === "KeyP" || e.key === "Escape") && DeathScreen.hasAttribute("hidden")) unPause()
         return
     }
 })

@@ -22,7 +22,12 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 (⬆) | (W) = Jump   
 (⬅) | (A) = Move left  
 (➡) | (D) = Move right  
-(Spacebar) = Shoot the gun      
+(Spacebar) = Shoot the gun              
+             
+(R) = restart, only when paused         
+(P) = pause             
+(M) = music toggle              
+(S) = start game                      
 
 ### HUD Instructions
 ![settings](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/settings.png) - Settings tab     
@@ -61,7 +66,7 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 
 > if you are encountering any performance issues, try playing the game in incognito. Sometimes the browser addons might cause issues    
 
-> if you are annoyed by the theme song of the game, you can disable it in the settings. The settings are available in game. (Your setting will be remembered)   
+> if you are annoyed by the theme song of the game, you can disable it in the settings (or toggle the song on/off using M keybind). The settings are available in game. (Your setting will be remembered)   
 
 > in short if you are encountering any issues, feel free to let us know
 

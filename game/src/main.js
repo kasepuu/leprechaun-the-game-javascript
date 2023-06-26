@@ -94,7 +94,7 @@ function exitFullscreen() {
 
 if (!mainMenu.hasAttribute("hidden")) {
     document.addEventListener("keypress", (e) => {
-        if (e.key === "s" && !gameRunning) StartGame()
+        if (e.code === "KeyS" && !gameRunning) StartGame()
     })
 
     document.getElementById("startButton1").addEventListener("click", () => StartGame())

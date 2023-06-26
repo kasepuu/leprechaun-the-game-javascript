@@ -206,7 +206,7 @@ body {
     font-style: italic;
     font-size: large;
     background-color: red;
-    background-image: url("/game/images/characters/villains/villain.gif");
+    background-image: url("/game/images/characters/villains/werewolf_dark.gif");
     background-size: cover;
 }
 
@@ -224,7 +224,7 @@ body {
 }
 
 #continueButton {
-
+    text-shadow: 2px 2px #000;
     border-radius: 5px;
     width: auto;
     height: 50px;
@@ -233,7 +233,7 @@ body {
     font-style: italic;
     font-size: large;
     background-color: red;
-    background-image: url("/game/images/characters/villains/villain.gif");
+    background-image: url("/game/images/hud/gun.png");
     background-size: cover;
 }
 
@@ -248,11 +248,12 @@ body {
     width: auto + 5px;
     height: 50px;
     color: white;
+    text-shadow: 2px 2px #000;
     font-weight: 900;
     font-style: italic;
     font-size: large;
     background-color: red;
-    background-image: url("/game/images/characters/villains/villain.gif");
+    background-image: url("/game/images/ammo.png");
     background-size: cover;
 }
 
@@ -323,7 +324,7 @@ body {
     position: absolute;
     right: 0;
     bottom: 0;
-    background-image: url("/game/images/characters/villains/werewolf.gif");
+    background-image: url("/game/images/characters/villains/werewolf_dark.gif");
     background-size: cover;
     width: 40;
     height: 60;
