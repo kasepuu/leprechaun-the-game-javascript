@@ -8,7 +8,7 @@ To run the project on your own computer, you can do so with golang `go run .`
 The game has similarities with 2 well known games, Super Mario & Space Invaders 
 
 <details>
-<summary>Spoilable information about the Game</summary>
+<summary>Spoilers about the Game</summary>
 The Game itself has 3 levels. To get score you must jump on the enemies and pass the levels, without dying.
 The last map contains a boss fight where you have to collect ammo and shoot down the dragon.
 Be warned, dying or missing a shot will cost you 100 score!!!
@@ -33,7 +33,7 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 
 
 <details> 
-<summary>Spoilable information about the Dangers</summary>
+<summary>Spoilers about the Dangers</summary>
 
 ### DANGERS
 ![wolf1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/brown_dog.gif)
