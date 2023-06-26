@@ -24,9 +24,9 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ### Good to know
 
 ### User Controls
-(🡹) / (W) = Jump   
-(🡸) / (A) = Move left  
-(🡺) / (D) = Move right  
+(🡹) | (W) = Jump   
+(🡸) | (A) = Move left  
+(🡺) | (D) = Move right  
 (Spacebar) = Shoot the gun      
 
 ### HUD Instructions
