@@ -11,7 +11,7 @@ export function frameRate(frameTimes) {
     frameTimes.push(now)
     let fps = frameTimes.length > 30 ? frameTimes.length.toString() : frameTimes.length.toString()
 
-    if (fps > 61){
+    if (fps > 62){
         console.log(fps, "Your refresh rate is too high, your frame rate is capped for this session!")
         setFrameCapping(1000/72)
     }

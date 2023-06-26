@@ -14,15 +14,13 @@ The story of the game is ...
 
 #### Useful links
 ```
-
 https://sfxr.me/ - we made sound effects with it
 https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with it
 
 ```
-TODO:                                           
-mul ei lasknud koeri lömastada? -> BROWSERI ZOOM MÄNGIB ROLLI (90% chrome = X.X) (100% firefox = X.X) -> getBoundingClientRect() probleem @characterEnemyCollision()                      
-                
-ENNE AUDITIT ÜLE VAADATA!      
-OPTIMIZATIONS, koodipilt ilusamaks jms < peaks okidoki olema :D       
-hud üle vaadata                     
-auto scale for screens smaller/equal than 1280x720p    
+
+### User Controls
+↑ || w = Jump
+← || a = Move left
+→ || d = Move right
+Spacebar = Shoot the enemy

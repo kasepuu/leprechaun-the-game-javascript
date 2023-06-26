@@ -65,12 +65,6 @@ document.getElementById("settings").addEventListener("click", (e) => {
 
             document.getElementById("fullscreenButton").innerHTML = gameFullscreen ? "FULLSCREEN ON" : "FULLSCREEN OFF"
         })
-
-    // } else {
-    //     document.getElementById("settingMenu").setAttribute("hidden", "")
-    //     unPause()
-    // }
-
 })
 
 function enterFullscreen() {
