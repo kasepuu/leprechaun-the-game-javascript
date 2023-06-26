@@ -30,12 +30,12 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 Spacebar = Shoot the enemy
 
 ### HUD Instructions
-![settings](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/settings.png)
-![lives4](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_4.png)
-![lives3](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_3.png)
-![lives2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_2.png)
-![lives1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_1.png)
-![gun](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/gun.png)
+![settings](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/settings.png) - Settings tab     
+![lives4](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_4.png) - Health (4 lives)    
+![lives3](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_3.png) - Health (3 lives)    
+![lives2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_2.png) - Health (2 lives)    
+![lives1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_1.png) - Health (1 life), last chance    
+![gun](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/gun.png) - Gun ()
 
 
 
