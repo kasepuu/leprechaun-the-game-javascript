@@ -24,10 +24,10 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ### Good to know
 
 ### User Controls
-↑ || w = Jump
-← || a = Move left
-→ || d = Move right
-Spacebar = Shoot the enemy
+↑ w = Jump   
+← a = Move left  
+→ d = Move right 
+Spacebar = Shoot the enemy      
 
 ### HUD Instructions
 ![settings](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/settings.png) - Settings tab     
@@ -48,7 +48,7 @@ Spacebar = Shoot the enemy
 ![werewolf2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/werewolf_dark.gif) - They are scary!           
 
 ![ground1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level1/w.png)
-![ground2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/w.png) - your character doesn't know how to swim! Fire hoT!
+![ground2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/w.png) - your character doesn't know how to swim! Fire is hot!
 
 ![bait](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/-.png) - you might fall through this one!          
         
