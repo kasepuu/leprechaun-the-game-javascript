@@ -62,12 +62,12 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 > in short if you are encountering any issues, feel free to let us know
 
 #### Useful links
-```
 [GAMEPLAY VIDEO](https://www.youtube.com/watch?v=InFw7pjxv_E) - see how the game is being played through
- 
+``` 
 https://sfxr.me/ - we made sound effects with it
 https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with it
 ```
+
 
 Audit page: [HERE](https://github.com/01-edu/public/tree/master/subjects/make-your-game/audit)
 
