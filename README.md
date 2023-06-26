@@ -40,7 +40,7 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ![gun](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/gun.png) - Gun (ammo amount)  
 ![ammo](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/ammo.png) - Extra ammunition (for Gun) 
 
-<details> 
+<spoiler> 
 
 ### DANGERS
 ![wolf1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/brown_dog.gif)
@@ -56,6 +56,6 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 
 ![bait](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/-.png) - you might fall through this one!          
         
-</details> 
+</spoiler> 
 
 ### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
