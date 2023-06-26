@@ -1,5 +1,3 @@
-// preload töötab localhostis, veebis hostides viskab erroreid?
-
 function preloadImages(folder) {
     //    <link rel="preload" href="../images/icon.png" as="image">
 
