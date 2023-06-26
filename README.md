@@ -15,9 +15,9 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 </details>
 
 ### User Controls
-(🡹) | (W) = Jump   
-(🡸) | (A) = Move left  
-(🡺) | (D) = Move right  
+(⬆) | (W) = Jump   
+(⬅) | (A) = Move left  
+(➡) | (D) = Move right  
 (Spacebar) = Shoot the gun      
 
 ### HUD Instructions
