@@ -23,7 +23,7 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 * easily customizable tile maps
 
 ![tilemapF](https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_example.png)       
-![tilemapG](https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_result.png)             
+![tilemapG](https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_outcome.png)             
 
 
 
