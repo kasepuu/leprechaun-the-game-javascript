@@ -20,10 +20,10 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 
 ### Different maps
 * 3 different built in maps
-* easily customizable tile maps
+* easily customizable tilemaps
 * 20x20 tiles
 
-Map         
+Example of a tilemap         
 <p float="left">
   <img src="https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_example.png" width="500" />
   <img src="https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_outcome.png" width="500" /> 
