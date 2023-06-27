@@ -88,7 +88,7 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ```
 
 
-Audit page: [HERE](https://github.com/01-edu/public/tree/master/subjects/make-your-game-different-maps/audit.md)
+Audit page: [HERE](https://github.com/01-edu/public/blob/master/subjects/make-your-game/different-maps/audit.md)
 
 
 ### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
