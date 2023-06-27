@@ -1,0 +1,442 @@
+body {
+    background-color: black;
+    overflow: hidden;
+    /* zoom: 140%; */
+
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
+}
+
+#page {
+    /* position:absolute; 
+    width:99vw; 
+    overflow: hidden; */
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#creditsInfo {
+    font-style: oblique;
+    font-size: x-large;
+    text-shadow: 2px 2px #000000;
+    color: red;
+}
+
+#aboutGame1 {
+    position: absolute;
+    text-align: right;
+    left: auto;
+    top: 525px;
+    right: 150;
+}
+
+#aboutGame2 {
+    position: absolute;
+    text-align: left;
+    top: 525px;
+    right: 50;
+}
+
+
+.inner {
+
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    margin: auto;
+}
+
+.row__cell {
+    padding: 8px 20px;
+}
+
+.row__cell+.row__cell {
+    border-left: 1px solid #c1c4c7;
+}
+
+.row+.row {
+    border-top: 1px solid #c1c4c7;
+}
+
+.row:nth-child(even) .row__cell {
+    background-color: #f2f2f2;
+}
+
+.row:nth-child(odd) .row__cell {
+    background-color: #ffffff;
+}
+
+.scoreboard {
+    padding-left: 25px;
+    left: 0px;
+    color: yellow;
+    width: 500px;
+    height: 500px;
+    border-radius: 5px;
+    position: absolute;
+    top: 0;
+}
+
+.scoreboard h1 {
+    text-align: center;
+}
+
+.scoreboard table {
+    width: 100%;
+    border-collapse: collapse;
+    border-style: hidden;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    border: #c1c4c7 1px solid;
+    background-color: rgba(0, 0, 0, 0.61);
+}
+
+.scoreboard tr {
+    text-align: center;
+    padding: 5px;
+    color: red;
+}
+
+
+.prev {
+    scale: 1.4;
+    position: absolute;
+    top: 250px;
+    border-radius: 50px;
+    color: white;
+    background-color: darkblue;
+    left: 40%;
+}
+
+.next {
+    scale: 1.4;
+    position: absolute;
+    top: 250px;
+    border-radius: 50px;
+    color: white;
+    background-color: darkblue;
+    left: 60%;
+}
+
+.next:hover,
+.prev:hover {
+    background-color: red;
+    color: black;
+}
+
+#storybox {
+    position: absolute;
+    border-radius: 5px;
+    bottom: 5px;
+    width: 500px;
+    height: 80px;
+    left: 500px;
+    backdrop-filter: blur(5px);
+    padding: 10;
+    background-color: rgba(0, 0, 0, 0.61);
+}
+
+#storybox #sbTitle {
+    color: white
+}
+
+#storybox #sbText,
+#sbText2 {
+    background-color: rgba(0, 0, 0, 0);
+    color: yellow;
+}
+
+#storybox #sbContinue {
+    position: absolute;
+    bottom: 1;
+    right: 40;
+    background-color: rgba(0, 0, 0, 0);
+    color: yellow;
+}
+
+#tileMap {}
+
+
+#start-menu {
+
+    background-image: url("/game/images/main_menu_gamename.png");
+    background-size: cover;
+    width: 1280px;
+    height: 720px;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.61);
+    backdrop-filter: blur(5px);
+}
+
+#paused-menu,
+#death-screen,
+#settingMenu {
+    position: absolute;
+}
+
+#paused-menu:not([hidden]),
+#death-screen:not([hidden]),
+#settingMenu:not([hidden]) {
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(2px);
+    z-index: 999;
+}
+
+#startButton1 {
+    margin-left: 650;
+    margin-top: 550px;
+    border-radius: 5px;
+    width: auto;
+    height: 50px;
+    color: white;
+    font-weight: 900;
+    font-style: italic;
+    font-size: large;
+    background-color: red;
+    background-image: url("/game/images/characters/villains/werewolf_dark.gif");
+    background-size: cover;
+}
+
+#startButton2 {
+    color: black;
+    font-weight: 900;
+    font-style: italic;
+    font-size: large;
+    background-image: url("/game/images/characters/main/leprechaun_walking_RIGHT.gif");
+    background-size: cover;
+    width: auto;
+    height: 50px;
+    border-radius: 5px;
+    background-color: green;
+}
+
+#continueButton {
+    text-shadow: 2px 2px #000;
+    border-radius: 5px;
+    width: auto;
+    height: 50px;
+    color: white;
+    font-weight: 900;
+    font-style: italic;
+    font-size: large;
+    background-color: red;
+    background-image: url("/game/images/hud/gun.png");
+    background-size: cover;
+}
+
+#restartButtonPause,
+#restartButtonDeath,
+#backToMenuDeath,
+#backToMenuPause,
+#musicButton,
+#fullscreenButton {
+
+    border-radius: 5px;
+    width: auto + 5px;
+    height: 50px;
+    color: white;
+    text-shadow: 2px 2px #000;
+    font-weight: 900;
+    font-style: italic;
+    font-size: large;
+    background-color: red;
+    background-image: url("/game/images/ammo.png");
+    background-size: cover;
+}
+
+#leprecoin {
+    position: absolute;
+    top: 120;
+    left: 400;
+    width: 40;
+    height: 40;
+    background-image: url("/game/images/leprecoin.png");
+}
+
+#character {
+    position: absolute;
+    bottom: 40px;
+    left: 40px;
+    background-image: url("/game/images/characters/main/leprechaun.gif");
+    background-size: cover;
+    width: 40px;
+    height: 60px;
+}
+
+#enemies,
+#flyingEnemies {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+}
+
+#projectile {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 360px;
+    background-color: rgba(255, 0, 0, 0.25);
+    background-image: url("/game/images/characters/villains/fireball.gif");
+}
+
+#userProjectile {
+    position: absolute;
+    background-image: url("/game/images/characters/main/bullet.png");
+    width: 10px;
+    height: 10px;
+    border-radius: 360px;
+    /*    background-color: rgb(5, 255, 5);*/
+}
+
+#flyingSaucer {
+    position: absolute;
+    bottom: 0;
+    left: 40;
+    width: 100;
+    height: 60;
+    /* background-image: url("images/characters/villains/ufo.gif"); */
+}
+
+#tinyAttacker {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-image: url("/game/images/characters/villains/brown_dog.gif");
+    background-size: cover;
+    width: 40;
+    height: 25;
+}
+
+#largeAttacker {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-image: url("/game/images/characters/villains/werewolf_dark.gif");
+    background-size: cover;
+    width: 40;
+    height: 60;
+}
+
+#inventory {
+    position: absolute;
+    right: 10;
+    bottom: 60;
+}
+
+#bossHealthBar {
+    position: absolute;
+    text-align: center;
+    width: 1280;
+    top: 10;
+    color: aqua;
+}
+
+#health-bar {
+    margin: auto;
+    width: 300px;
+    height: 20px;
+    border: 2px solid #000;
+    background-color: red;
+}
+
+#health-level {
+    margin: left;
+    width: 100%;
+    height: 100%;
+    background-color: green;
+}
+
+#ammo {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background-image: url("/game/images/characters/villains/brown_dog.gif");
+    background-size: cover;
+    width: 20;
+    height: 20;
+}
+
+#gun {
+    position: absolute;
+    right: 80;
+    bottom: 0;
+    color: yellow;
+    background-image: url("/game/images/hud/gun.png");
+    width: 40;
+    height: 40;
+}
+
+#settings {
+    position: absolute;
+    top: 10;
+    right: 10;
+}
+
+#lives {
+    position: absolute;
+    right: 10;
+    bottom: 10;
+}
+
+#elements {
+    position: absolute;
+}
+
+#score,
+#fps,
+#timer {
+    top: 0;
+    position: absolute;
+    color: white;
+}
+
+#score {
+    left: 200;
+}
+
+#fps {
+    left: 0;
+}
+
+#timer {
+    left: 100;
+}
+
+#toggleMute,
+#togglePause {
+    position: absolute;
+    right: 0;
+}
+
+#toggleMute {
+    top: 0;
+    border-radius: 100%;
+
+}
+
+#togglePause {
+    top: 40;
+    border-radius: 100%;
+}
+
+/* #backToMenu {
+    top: 80;
+    border-radius: 100%;
+} */
+
+#playground {
+    background-size: cover;
+}
