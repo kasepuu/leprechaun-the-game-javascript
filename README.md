@@ -1,4 +1,4 @@
-# make-your-game-different-maps
+# make-your-game
 # "Päkapikk ja kuri KOLL"
 
 ### Game is being hosted [HERE](http://joelsoft.eu:1111/) with a public scoreboard.
@@ -17,6 +17,16 @@ The Game itself has 3 levels. To get score you must jump on the enemies and pass
 The last map contains a boss fight where you have to collect ammo and shoot down the dragon.
 Be warned, dying or missing a shot will cost you 100 score!!!
 </details>
+
+### Different maps
+* 3 different maps
+* easily customizable tile maps
+
+![tilemapF](https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_example.png)       
+![tilemapG](https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_result.png)             
+
+
+
 
 ### User Controls
 (⬆) | (W) = Jump   
