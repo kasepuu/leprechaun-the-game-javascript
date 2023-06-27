@@ -23,7 +23,7 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 * easily customizable tilemaps
 * 20x20 tiles
 
-Example of a tilemap from level 1         
+Example of a tilemap of level 1         
 <p float="left">
   <img src="https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_example.png" width="500" />
   <img src="https://01.kood.tech/git/juss/make-your-game-different-maps/raw/branch/master/github/tilemap_outcome.png" width="500" /> 
