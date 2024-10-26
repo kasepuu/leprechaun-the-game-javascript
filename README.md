@@ -1,22 +1,21 @@
-# make-our-game (leprechaun-the-game)
+# Make Our Game (Leprechaun The Game)
 # "Päkapikk ja kuri KOLL"
 
-#### 🔴 This Project is our solution to [Kood/Jõhvi](https://kood.tech/en/)'s first javascript task [make-your-game](https://github.com/01-edu/public/tree/master/subjects/make-your-game)
-#### 🔴 The Game is written with javascript, and launches with golang server
+#### 🔴 This Project is our solution to [Kood/Jõhvi](https://kood.tech/)'s first javascript task [make-your-game](https://github.com/01-edu/public/tree/master/subjects/make-your-game)
+#### 🔴 The Game is written in **JavaScript** and is intended to be launched with a Go server
 
-### [GAMEPLAY VIDEO](https://www.youtube.com/watch?v=InFw7pjxv_E)
+### [Watch Gameplay Video](https://www.youtube.com/watch?v=InFw7pjxv_E) - **See how the game is played!**
 [![GAMEPLAY VIDEO](https://i.ytimg.com/an_webp/InFw7pjxv_E/mqdefault_6s.webp?du=3000&sqp=CM3M9LgG&rs=AOn4CLBsVRQJArcsQvtaIHJa5vgkcusjEg)](https://www.youtube.com/watch?v=InFw7pjxv_E "see how the game is being played through")
 
 
-### About
-* The Game has 3 levels. To score you must jump on the enemies and pass the levels, without losing lives or dying.
-* The last map features a boss fight where you have to collect ammo and shoot down the dragon.
-> Be aware, losing a life or missing a shot will cost you 100 score!
-
+### About:
+* The Game features **three levels**. To score, you must jump on top of enemies and complete the levels without losing lives.
+* The final level includes a **boss fight** where you must collect ammo and beat the dragon.
+> Note: Losing a life or missing a shot will cost you 100 score points!
 
 
 <details> 
-<summary>Details</summary>
+<summary>Keybinds</summary>
 
 ### User Controls
 (⬆) | (W) = Jump   
@@ -28,43 +27,36 @@
 (P) = pause             
 (M) = music toggle              
 (S) = start game                      
-
-### HUD Instructions
-![settings](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/hud/settings.png) - Settings tab     
-
-![lives4](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/hud/lives_4.png)
-![lives3](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/hud/lives_3.png)
-![lives2](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/hud/lives_2.png)
-![lives1](https://github.com/kasepuu/leprechaun-the-game-javascript/blob/master/game/images/hud/lives_1.png) - Health (4,3,2,1 lives)  
-    
-![gun](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/hud/gun.png) - Gun (ammo amount)  
-![ammo](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/ammo.png) - Extra ammunition (for Gun) 
-
-
-
-
-### DANGERS
-![wolf1](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/characters/villains/brown_dog.gif)
-![wolf2](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/characters/villains/black_dog.gif) - Fast little buggers, watch out!           
-
-![werewolf1](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/characters/villains/werewolf.gif)
-![werewolf2](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/characters/villains/werewolf_dark.gif) - They are scary!           
-
-![dragon](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/images/characters/villains/dragon.gif) - Flying creature, that shoots something...    
-
-![ground1](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/level/sprites/level1/w.png)
-![ground2](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/level/sprites/level2/w.png) - your character doesn't know how to swim! Fire is hot!
-
-![bait](https://github.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/game/level/sprites/level2/-.png) - you might fall through this one!          
-        
 </details> 
 
 
-### Good to know
-> if you are unable to squish some of the creatures, zoom out/in a little and see if that fixes it. If that doesn't help, try another browser.
+### Good to know:
+> If you are unable to squash some of the creatures, try zooming out or in to see if that helps. If that doesn't work, consider trying different browser.
 
-> if you are encountering any performance issues, try playing the game in incognito. Sometimes the browser addons might cause issues    
+> if you encounter any performance issues, playing the game in incognito mode may help, as browser add-ons can sometimes cause conflicts.    
 
+### Images from the Game:
+
+#### Main Menu
+![Main Menu](https://raw.githubusercontent.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/examples/main-menu.png)
+
+#### First Level
+![First Level](https://raw.githubusercontent.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/examples/first-level.png)
+
+#### Second Level
+![Second Level](https://raw.githubusercontent.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/examples/second-level.png)
+
+#### Third Level
+![Third Level](https://raw.githubusercontent.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/examples/third-level.png)
+
+#### Boss Fight
+![Boss Fight](https://raw.githubusercontent.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/examples/boss-fight.png)
+
+#### Game Win
+![Game Win](https://raw.githubusercontent.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/examples/game-win.png)
+
+#### Death Screen
+![Death Screen](https://raw.githubusercontent.com/kasepuu/leprechaun-the-game-javascript/refs/heads/master/examples/death-screen.png)
 
 #### Useful links
 ``` 
