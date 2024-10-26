@@ -30,33 +30,33 @@ Be warned, dying or missing a shot will cost you 100 score!!!
 (S) = start game                      
 
 ### HUD Instructions
-![settings](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/settings.png) - Settings tab     
+![settings](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/hud/settings.png) - Settings tab     
 
-![lives4](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_4.png)
-![lives3](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_3.png)
-![lives2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_2.png)
-![lives1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/lives_1.png) - Health (4,3,2,1 lives)  
+![lives4](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/hud/lives_4.png)
+![lives3](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/hud/lives_3.png)
+![lives2](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/hud/lives_2.png)
+![lives1](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/hud/lives_1.png) - Health (4,3,2,1 lives)  
     
-![gun](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/hud/gun.png) - Gun (ammo amount)  
-![ammo](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/ammo.png) - Extra ammunition (for Gun) 
+![gun](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/hud/gun.png) - Gun (ammo amount)  
+![ammo](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/ammo.png) - Extra ammunition (for Gun) 
 
 
 <details> 
 <summary>Spoilers about the Dangers</summary>
 
 ### DANGERS
-![wolf1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/brown_dog.gif)
-![wolf2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/black_dog.gif) - Fast little buggers, watch out!           
+![wolf1](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/characters/villains/brown_dog.gif)
+![wolf2](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/characters/villains/black_dog.gif) - Fast little buggers, watch out!           
 
-![werewolf1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/werewolf.gif)
-![werewolf2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/werewolf_dark.gif) - They are scary!           
+![werewolf1](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/characters/villains/werewolf.gif)
+![werewolf2](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/characters/villains/werewolf_dark.gif) - They are scary!           
 
-![dragon](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/images/characters/villains/dragon.gif) - Flying creature, that shoots something...    
+![dragon](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/images/characters/villains/dragon.gif) - Flying creature, that shoots something...    
 
-![ground1](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level1/w.png)
-![ground2](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/w.png) - your character doesn't know how to swim! Fire is hot!
+![ground1](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/level/sprites/level1/w.png)
+![ground2](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/level/sprites/level2/w.png) - your character doesn't know how to swim! Fire is hot!
 
-![bait](https://01.kood.tech/git/juss/make-your-game/raw/branch/master/game/level/sprites/level2/-.png) - you might fall through this one!          
+![bait](https://github.com/kasepuu/leprechaun-the-game-javascript/raw/branch/master/game/level/sprites/level2/-.png) - you might fall through this one!          
         
 </details> 
 
@@ -75,7 +75,4 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 ```
 
 
-Audit page: [HERE](https://github.com/01-edu/public/tree/master/subjects/make-your-game/audit)
-
-
-### Authors [juss](https://01.kood.tech/git/juss) & [kasepuu](https://01.kood.tech/git/kasepuu) 
+### Authors [juss](https://github.com/juss21) & [kasepuu](https://github.com/kasepuu) 
