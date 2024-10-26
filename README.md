@@ -1,7 +1,5 @@
 # Leprechaun The Game "Päkapikk ja kuri KOLL"
 
-# Desktop version of the game is being developed [HERE](https://github.com/kasepuu/leprechaun-adventure)
-
 #### 🔴 This Project is our solution to [Kood/Jõhvi](https://kood.tech/)'s first javascript task [make-your-game](https://github.com/01-edu/public/tree/master/subjects/make-your-game)
 #### 🔴 The Game is written in **JavaScript** and is intended to be launched with a Go server
 
@@ -67,3 +65,5 @@ https://musiclab.chromeexperiments.com/Song-Maker - we made our theme song with 
 
 
 ### Authors [juss](https://github.com/juss21) & [kasepuu](https://github.com/kasepuu) 
+
+# Desktop version of the game is being developed [HERE](https://github.com/kasepuu/leprechaun-adventure)
