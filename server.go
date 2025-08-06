@@ -54,21 +54,16 @@ func main() {
 }
 
 func getHighScores() error {
-	execPath, err := os.Executable()
-	if err != nil {
-		return err
-	}
-	dir := filepath.Dir(execPath)
-	scorePath := filepath.Join(dir, "highscores.json")
+	scorePath := "highscores.json"
 
 	scores, err := os.ReadFile(scorePath)
 	if err != nil {
-		return err
+		return fmt.Errorf("could not read highscores.json: %w", err)
 	}
 
 	err = json.Unmarshal(scores, &Scores)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to unmarshal JSON: %w", err)
 	}
 	return nil
 }
@@ -82,12 +77,8 @@ func sortHighScores() {
 func addHighScore() error {
 	data, err := json.MarshalIndent(Scores, "", "   ")
 	errorHandler(err)
-	
-	execPath, err2 := os.Executable()
-	errorHandler(err2)
-	dir := filepath.Dir(execPath)
-	
-	scorePath := filepath.Join(dir, "highscores.json")
+
+	scorePath := "highscores.json"
 	err = os.WriteFile(scorePath, data, 0644)
 	errorHandler(err)
 
