@@ -55,9 +55,11 @@ func main() {
 
 func getHighScores() error {
 	scorePath := "highscores.json"
+	log.Println("Looking for:", scorePath)
 
 	scores, err := os.ReadFile(scorePath)
 	if err != nil {
+		log.Println("Current working directory:", must(os.Getwd()))
 		return fmt.Errorf("could not read highscores.json: %w", err)
 	}
 
@@ -67,6 +69,7 @@ func getHighScores() error {
 	}
 	return nil
 }
+
 
 func sortHighScores() {
 	sort.Slice(Scores, func(i, j int) bool {
