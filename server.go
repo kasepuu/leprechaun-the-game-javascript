@@ -53,7 +53,7 @@ func main() {
 }
 
 func getHighScores() error {
-	scores, err := os.ReadFile("highscores.json")
+	scores, err := os.ReadFile("./highscores.json")
 	if err != nil {
 		return err
 	}
@@ -74,7 +74,7 @@ func sortHighScores() {
 func addHighScore() error {
 	data, err := json.MarshalIndent(Scores, "", "   ")
 	errorHandler(err)
-	err = os.WriteFile("highscores.json", data, 0644)
+	err = os.WriteFile("./highscores.json", data, 0644)
 	errorHandler(err)
 
 	return nil
