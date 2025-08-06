@@ -135,40 +135,28 @@ function createCell(body, className, innerHTML, element = "th") {
 }
 
 function displayScoreBoard(sbData) {
+    const tbody = document.getElementById("board")
+    tbody.innerHTML = ""
 
-    let showAmount = sbData.length < pageInfo || startingIndex + pageInfo > sbData.length ? sbData.length : pageInfo + startingIndex
-    let body = document.querySelector("table")
-    body.innerHTML = ""
-
-
-    let navbar = document.createElement("tr")
-    navbar.className = "navbar"
-    navbar.style.color = "salmon"
-
-    createCell(navbar, "row__cell", "Rank")
-    createCell(navbar, "row__cell", "Name")
-    createCell(navbar, "row__cell", "Score")
-    createCell(navbar, "row__cell", "Time")
-
-    body.appendChild(navbar)
+    let showAmount = sbData.length < pageInfo || startingIndex + pageInfo > sbData.length
+        ? sbData.length
+        : pageInfo + startingIndex
 
     for (let i = startingIndex; i < showAmount; i++) {
-
         let ranking = getNumberEnding(i + 1)
         let scorepoints = sbData[i].score
         let name = sbData[i].player
         let time = sbData[i].time
-
 
         let row = document.createElement("tr")
         row.className = "list"
 
         createCell(row, "row_cell", ranking, "td")
         createCell(row, "row_cell", name, "td")
-        createCell(row, "row_cell", scorepoints)
+        createCell(row, "row_cell", scorepoints, "td")
         createCell(row, "row_cell", time, "td")
 
-        body.appendChild(row)
+        tbody.appendChild(row)
     }
 }
 
