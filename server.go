@@ -82,7 +82,11 @@ func sortHighScores() {
 func addHighScore() error {
 	data, err := json.MarshalIndent(Scores, "", "   ")
 	errorHandler(err)
+	
+	execPath, err2 := os.Executable()
+	errorHandler(err2)
 	dir := filepath.Dir(execPath)
+	
 	scorePath := filepath.Join(dir, "highscores.json")
 	err = os.WriteFile(scorePath, data, 0644)
 	errorHandler(err)
