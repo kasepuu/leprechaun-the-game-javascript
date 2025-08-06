@@ -59,7 +59,12 @@ func getHighScores() error {
 
 	scores, err := os.ReadFile(scorePath)
 	if err != nil {
-		log.Println("Current working directory:", must(os.Getwd()))
+		if cwd, cwdErr := os.Getwd(); cwdErr == nil {
+			log.Println("Current working directory:", cwd)
+		} else {
+			log.Println("Could not get working directory:", cwdErr)
+		}
+
 		return fmt.Errorf("could not read highscores.json: %w", err)
 	}
 
