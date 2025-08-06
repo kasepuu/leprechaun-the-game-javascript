@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -53,7 +54,14 @@ func main() {
 }
 
 func getHighScores() error {
-	scores, err := os.ReadFile("./highscores.json")
+	execPath, err := os.Executable()
+	if err != nil {
+		return err
+	}
+	dir := filepath.Dir(execPath)
+	scorePath := filepath.Join(dir, "highscores.json")
+
+	scores, err := os.ReadFile(scorePath)
 	if err != nil {
 		return err
 	}
@@ -74,7 +82,9 @@ func sortHighScores() {
 func addHighScore() error {
 	data, err := json.MarshalIndent(Scores, "", "   ")
 	errorHandler(err)
-	err = os.WriteFile("./highscores.json", data, 0644)
+	dir := filepath.Dir(execPath)
+	scorePath := filepath.Join(dir, "highscores.json")
+	err = os.WriteFile(scorePath, data, 0644)
 	errorHandler(err)
 
 	return nil
