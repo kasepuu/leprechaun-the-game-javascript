@@ -427,6 +427,7 @@ function Restart() {
 
 // eventlisteners for movement, character movement
 document.addEventListener("keydown", (event) => {
+    event.preventDefault();
     if (gameIsPaused) return
     let bodyPos = playGround.getBoundingClientRect()
     let currentPos = Character.getBoundingClientRect()
