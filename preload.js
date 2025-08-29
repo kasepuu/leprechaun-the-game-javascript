@@ -24,11 +24,11 @@ function preloadImages(folder) {
 }
 
 // preloading image elements
-preloadImages("/game/images")
-preloadImages("/game/images/characters/main")
-preloadImages("/game/images/characters/villains")
+preloadImages("game/images")
+preloadImages("game/images/characters/main")
+preloadImages("game/images/characters/villains")
 
 // preloading map elements
-preloadImages("/game/level/sprites/level1")
-preloadImages("/game/level/sprites/level2")
-preloadImages("/game/level/sprites/level3")
+preloadImages("game/level/sprites/level1")
+preloadImages("game/level/sprites/level2")
+preloadImages("game/level/sprites/level3")

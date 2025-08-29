@@ -166,7 +166,7 @@ body {
 
 #start-menu {
 
-    background-image: url("/game/images/main_menu_gamename.png");
+    background-image: url("game/images/main_menu_gamename.png");
     background-size: cover;
     width: 1280px;
     height: 720px;
@@ -212,7 +212,7 @@ body {
     font-style: italic;
     font-size: large;
     background-color: red;
-    background-image: url("/game/images/characters/villains/werewolf_dark.gif");
+    background-image: url("game/images/characters/villains/werewolf_dark.gif");
     background-size: cover;
 }
 
@@ -221,7 +221,7 @@ body {
     font-weight: 900;
     font-style: italic;
     font-size: large;
-    background-image: url("/game/images/characters/main/leprechaun_walking_RIGHT.gif");
+    background-image: url("game/images/characters/main/leprechaun_walking_RIGHT.gif");
     background-size: cover;
     width: auto;
     height: 50px;
@@ -239,7 +239,7 @@ body {
     font-style: italic;
     font-size: large;
     background-color: red;
-    background-image: url("/game/images/hud/gun.png");
+    background-image: url("game/images/hud/gun.png");
     background-size: cover;
 }
 
@@ -259,7 +259,7 @@ body {
     font-style: italic;
     font-size: large;
     background-color: red;
-    background-image: url("/game/images/ammo.png");
+    background-image: url("game/images/ammo.png");
     background-size: cover;
 }
 
@@ -269,14 +269,14 @@ body {
     left: 400;
     width: 40;
     height: 40;
-    background-image: url("/game/images/leprecoin.png");
+    background-image: url("game/images/leprecoin.png");
 }
 
 #character {
     position: absolute;
     bottom: 40px;
     left: 40px;
-    background-image: url("/game/images/characters/main/leprechaun.gif");
+    background-image: url("game/images/characters/main/leprechaun.gif");
     background-size: cover;
     width: 40px;
     height: 60px;
@@ -295,12 +295,12 @@ body {
     height: 10px;
     border-radius: 360px;
     background-color: rgba(255, 0, 0, 0.25);
-    background-image: url("/game/images/characters/villains/fireball.gif");
+    background-image: url("game/images/characters/villains/fireball.gif");
 }
 
 #userProjectile {
     position: absolute;
-    background-image: url("/game/images/characters/main/bullet.png");
+    background-image: url("game/images/characters/main/bullet.png");
     width: 10px;
     height: 10px;
     border-radius: 360px;
@@ -320,7 +320,7 @@ body {
     position: absolute;
     right: 0;
     bottom: 0;
-    background-image: url("/game/images/characters/villains/brown_dog.gif");
+    background-image: url("game/images/characters/villains/brown_dog.gif");
     background-size: cover;
     width: 40;
     height: 25;
@@ -330,7 +330,7 @@ body {
     position: absolute;
     right: 0;
     bottom: 0;
-    background-image: url("/game/images/characters/villains/werewolf_dark.gif");
+    background-image: url("game/images/characters/villains/werewolf_dark.gif");
     background-size: cover;
     width: 40;
     height: 60;
@@ -369,7 +369,7 @@ body {
     position: absolute;
     right: 0;
     bottom: 0;
-    background-image: url("/game/images/characters/villains/brown_dog.gif");
+    background-image: url("game/images/characters/villains/brown_dog.gif");
     background-size: cover;
     width: 20;
     height: 20;
@@ -380,7 +380,7 @@ body {
     right: 80;
     bottom: 0;
     color: yellow;
-    background-image: url("/game/images/hud/gun.png");
+    background-image: url("game/images/hud/gun.png");
     width: 40;
     height: 40;
 }
