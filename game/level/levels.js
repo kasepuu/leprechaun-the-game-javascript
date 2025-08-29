@@ -7,9 +7,9 @@ export let levelMaps = [[], [], []]
 
 export let buildMaps = () => {
   return Promise.all([
-    fetch('/game/level/level1_map.txt').then(response => response.text()),
-    fetch('/game/level/level2_map.txt').then(response => response.text()),
-    fetch('/game/level/level3_map.txt').then(response => response.text())
+    fetch('game/level/level1_map.txt').then(response => response.text()),
+    fetch('game/level/level2_map.txt').then(response => response.text()),
+    fetch('game/level/level3_map.txt').then(response => response.text())
   ])
     .then(([mapData1, mapData2, mapData3]) => {
       let x_lines1 = mapData1.split("\n");

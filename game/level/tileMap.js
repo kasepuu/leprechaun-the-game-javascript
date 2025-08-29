@@ -193,7 +193,7 @@ export function drawTiles(map, currentLevel) {
             let elem = map[0][i][j]
             let img = document.createElement("img")
             if (elem === "e" || elem === "E" || elem === "u" || elem === "*" || elem === "r") elem = " "
-            img.src = "/game/level/sprites/level" + currentLevel + "/" + elem + ".png"
+            img.src = "game/level/sprites/level" + currentLevel + "/" + elem + ".png"
             row.appendChild(img)
         }
         mapDiv.appendChild(row)
