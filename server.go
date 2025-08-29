@@ -7,6 +7,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	//"path/filepath"
 	"sort"
 	"strconv"
 	"strings"
@@ -53,14 +54,23 @@ func main() {
 }
 
 func getHighScores() error {
-	scores, err := os.ReadFile("highscores.json")
+	scorePath := "highscores.json"
+	log.Println("Looking for:", scorePath)
+
+	scores, err := os.ReadFile(scorePath)
 	if err != nil {
-		return err
+		if cwd, cwdErr := os.Getwd(); cwdErr == nil {
+			log.Println("Current working directory:", cwd)
+		} else {
+			log.Println("Could not get working directory:", cwdErr)
+		}
+
+		return fmt.Errorf("could not read highscores.json: %w", err)
 	}
 
 	err = json.Unmarshal(scores, &Scores)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to unmarshal JSON: %w", err)
 	}
 	return nil
 }
@@ -74,7 +84,9 @@ func sortHighScores() {
 func addHighScore() error {
 	data, err := json.MarshalIndent(Scores, "", "   ")
 	errorHandler(err)
-	err = os.WriteFile("highscores.json", data, 0644)
+
+	scorePath := "highscores.json"
+	err = os.WriteFile(scorePath, data, 0644)
 	errorHandler(err)
 
 	return nil

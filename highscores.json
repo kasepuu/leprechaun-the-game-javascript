@@ -75,9 +75,14 @@
       "time": "00:41"
    },
    {
-      "player": "geime",
+      "player": "100!",
+      "score": 100,
+      "time": "00:29"
+   },
+   {
+      "player": "kukkus",
       "score": 0,
-      "time": "00:18"
+      "time": "00:37"
    },
    {
       "player": "brling",
@@ -90,9 +95,9 @@
       "time": "00:13"
    },
    {
-      "player": "kukkus",
+      "player": "geime",
       "score": 0,
-      "time": "00:37"
+      "time": "00:18"
    },
    {
       "player": "noob",
@@ -103,6 +108,11 @@
       "player": "ahnii",
       "score": 0,
       "time": "00:23"
+   },
+   {
+      "player": "0 sklo",
+      "score": 0,
+      "time": "00:12"
    },
    {
       "player": "kallas",
