@@ -235,7 +235,6 @@ export function levelUp() {
     resetCharacter()
 
     currentLevel += 1
-    writeCurrentStory(currentLevel) // storytime :)
 
     if (currentLevel === maxLevels) {
         document.getElementById("bossHealthBar").removeAttribute("hidden")
@@ -381,39 +380,34 @@ function Restart() {
 
 // eventlisteners for movement, character movement
 document.addEventListener("keydown", (event) => {
-    event.preventDefault();
+    const isModifier = event.ctrlKey || event.metaKey || event.altKey
     if (gameIsPaused) return
     let bodyPos = playGround.getBoundingClientRect()
     let currentPos = Character.getBoundingClientRect()
     let jumpHeight = parseInt(Character.style.bottom) || 40;
     let currentLeft = parseInt(Character.style.left) || 40;
     if ((event.code === 'ArrowRight' || event.code === 'KeyD') && currentPos.x <= playGround.offsetWidth + bodyPos.x - 30) {
-        if (!currentlyWritingStory) {
-            lastLeftMove = false
-            moveRight()
-            Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_walking_RIGHT.gif)"
-        }
+        if (!isModifier) event.preventDefault()
+        lastLeftMove = false
+        moveRight()
+        Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_walking_RIGHT.gif)"
     }
     if ((event.code === 'ArrowLeft' || event.code === 'KeyA') && currentPos.x - 10 >= bodyPos.x) {
-        if (!currentlyWritingStory) {
-            lastLeftMove = true
-            moveLeft()
-            Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_walking_LEFT.gif)"
-        }
+        if (!isModifier) event.preventDefault()
+        lastLeftMove = true
+        moveLeft()
+        Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_walking_LEFT.gif)"
     }
     if ((event.code === 'KeyW' || event.code === "ArrowUp")
         && (checkCollision(currentLeft, jumpHeight - 10, 'down') || checkCollision(currentLeft + Character.offsetWidth, jumpHeight - 10, 'down'))
     ) {
-        if (!currentlyWritingStory) {
-
-            charJump(jumpHeight + Character.offsetHeight * 2.5)
-            if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_shooting.gif)"
-            else Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_jumping.png)"
-        }
+        if (!isModifier) event.preventDefault()
+        charJump(jumpHeight + Character.offsetHeight * 2.5)
+        if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_shooting.gif)"
+        else Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_jumping.png)"
     }
     if (event.code === 'Space' && (currentLevel === maxLevels)) {
-        if (currentlyWritingStory) return
-
+        if (!isModifier) event.preventDefault()
         if (shootInterval) {
             return;
         }
@@ -445,14 +439,10 @@ document.addEventListener("keydown", (event) => {
 document.addEventListener("keyup", (event) => {
     if (gameIsPaused) return
     if (event.code === 'ArrowRight' || event.code === 'KeyD') {
-        if (!currentlyWritingStory) {
-            stopAnimationRight()
-        }
+        stopAnimationRight()
     }
     if (event.code === 'ArrowLeft' || event.code === 'KeyA') {
-        if (!currentlyWritingStory) {
-            stopAnimationLeft()
-        }
+        stopAnimationLeft()
     }
 })
 
