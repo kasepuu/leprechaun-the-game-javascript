@@ -74,8 +74,53 @@ const imagesToPreload = [
   "game/images/src/walkingpngs/leprechaun_walking1.png",
   "game/images/src/walkingpngs/leprechaun_walking2.png",
   "game/images/src/walkingpngs/leprechaun_walking3.png",
+
+  // level1 sprites
+  "game/level/sprites/level1/ .png",
+  "game/level/sprites/level1/(.png",
+  "game/level/sprites/level1/).png",
+  "game/level/sprites/level1/-.png",
+  "game/level/sprites/level1/7.png",
+  "game/level/sprites/level1/A.png",
+  "game/level/sprites/level1/B.png",
+  "game/level/sprites/level1/F.png",
+  "game/level/sprites/level1/O.png",
+  "game/level/sprites/level1/p.png",
+  "game/level/sprites/level1/q.png",
+  "game/level/sprites/level1/T.png",
+  "game/level/sprites/level1/v.png",
+  "game/level/sprites/level1/w.png",
+  "game/level/sprites/level1/X.png",
+  "game/level/sprites/level1/¤.png",
+  "game/level/sprites/level1/background.png",
+
+  // level2 sprites
+  "game/level/sprites/level2/ .png",
+  "game/level/sprites/level2/-.png",
+  "game/level/sprites/level2/6.png",
+  "game/level/sprites/level2/7.png",
+  "game/level/sprites/level2/B.png",
+  "game/level/sprites/level2/F.png",
+  "game/level/sprites/level2/f.png",
+  "game/level/sprites/level2/v.png",
+  "game/level/sprites/level2/w.png",
+  "game/level/sprites/level2/x.png",
+  "game/level/sprites/level2/X.png",
+  "game/level/sprites/level2/¤.png",
+  "game/level/sprites/level2/background.png",
+
+  // level3 sprites
+  "game/level/sprites/level3/ .png",
+  "game/level/sprites/level3/B.png",
+  "game/level/sprites/level3/F.png",
+  "game/level/sprites/level3/T.png",
+  "game/level/sprites/level3/w.png",
+  "game/level/sprites/level3/x.png",
+  "game/level/sprites/level3/¤.png",
+  "game/level/sprites/level3/background.png",
 ];
 
+// preload all images
 imagesToPreload.forEach((imageUrl) => {
   const link = document.createElement("link");
   link.rel = "preload";
