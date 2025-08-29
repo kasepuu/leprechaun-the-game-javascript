@@ -46,8 +46,8 @@ if (!mainMenu.hasAttribute("hidden")) {
         const bestTimeFmt = (mm < 10 ? '0' : '') + mm + ":" + (ss < 10 ? '0' : '') + ss
 
         const rows = [
-            { type: "TIME", value: bestTimeFmt },
-            { type: "GAME", value: String(bestTotal) },
+            { type: "TIME RECORD", value: bestTimeFmt },
+            { type: "BEST TOTAL SCORE", value: String(bestTotal) },
         ]
 
         rows.forEach(r => {
