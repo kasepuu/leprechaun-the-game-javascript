@@ -3,16 +3,15 @@
 export let currentLevel = 1
 export let currentAmmo = 3 // current ammo count
 export let scoreCounter = 0
+export let scoreTimeElapsed = 200
 let lives = 4
 let maxLevels = 3
 
 // list of variables
 export let gameIsPaused = true
 let frameTimes = []
-let timeElapsed = 0 // timer
-let startTime // time game started at...
 export let gameRunning = false
-let playInStoryMode = true
+let playInStoryMode = false
 // importing 
 import { mainMenu, playGround, healthBar, Character, frameCapping } from "./main.js"
 import { resetBossHealth } from "./physics.js"
@@ -22,7 +21,7 @@ import * as physics from "./physics.js"
 import { PlayMusic, playSoundOnce } from "./sound.js"
 import { levelMaps } from "../level/levels.js"
 import { drawTiles, deleteTiles, deleteEnemies, fetchCheckpoints, deleteFlyingEnemies, resetCharacter, removeElements, getElements, createElements } from "../level/tileMap.js"
-import { frameRate, timerCounter } from "./overlayItems.js"
+import { frameRate, timerCounter, resetTimer } from "./overlayItems.js"
 export let lastLeftMove = false
 
 // for pausemenu
@@ -36,6 +35,7 @@ export let levelCompletion = {
 }
 let timer = document.getElementById("timer")
 let score = document.getElementById("score")
+let bonus = document.getElementById("bonus")
 const DeathScreen = document.getElementById("death-screen")
 const MuteButton = document.getElementById("musicButton")
 const SettingButton = document.getElementById("settings")
@@ -52,7 +52,13 @@ let animationFrameId = null
 
 export function addAndReturnScore(amount) {
     scoreCounter += amount
+    score.innerHTML = `SCORE: ${scoreCounter}`
     return scoreCounter
+}
+
+export function reduceTimerScore(amount) {
+    scoreTimeElapsed += amount
+    if (bonus) bonus.innerHTML = `BONUS: ${scoreTimeElapsed}`
 }
 
 export function addAmmo(value) {
@@ -69,72 +75,16 @@ export function getAmmo() {
     return currentAmmo
 }
 
-// story writing!
-let currentlyWritingStory = false
-let stopWriting = false
-let writingTimeouts = []
-function continueStory() {
-    writingTimeouts.forEach(timeoutId => clearTimeout(timeoutId))
-    writingTimeouts = []
-    currentlyWritingStory = false
-    document.getElementById("sbTitle").innerHTML = ""
-    document.getElementById("sbText").innerHTML = ""
-    document.getElementById("sbText2").innerHTML = ""
-    document.getElementById("sbContinue").innerHTML = ""
-    document.getElementById("storybox").setAttribute("hidden", "")
-}
-
-function writeStory(body, text, speed, showContinue = false, startDelay = 0) {
-    document.getElementById("storybox").removeAttribute("hidden")
-    // Clear existing timeouts
-
-
-    setTimeout(() => {
-        for (let i = 0; i < text.length; i++) {
-            const timeout = setTimeout(() => {
-                if (stopWriting) return
-
-                body.innerHTML += text.charAt(i);
-                currentlyWritingStory = true
-                //continue
-                if (body.innerHTML.includes(text) && showContinue) document.getElementById("sbContinue").innerHTML = "continue (c) ..."
-            }, speed * i);
-
-            writingTimeouts.push(timeout)
-        }
-    }, startDelay)
-}
-
-function writeCurrentStory(currentLevel) {
-    continueStory()
-    if (!playInStoryMode) return
-
-    if (currentLevel === 1) {
-        writeStory(document.getElementById("sbTitle"), "NARRATOR:", 10)
-        writeStory(document.getElementById("sbText"), "once there was an elf, who lived happily ever after.", 50, false)
-        writeStory(document.getElementById("sbText2"), "But then the evil werewolves and dogs started howling. And the little elf had enough!", 50, true, 3300)
-    }
-    if (currentLevel === 2) {
-        writeStory(document.getElementById("sbTitle"), "NARRATOR:", 10)
-        writeStory(document.getElementById("sbText"), "The evil dogs lead the elf in to a cave.", 50, false)
-        writeStory(document.getElementById("sbText2"), "Now the little one must find a way out!", 50, true, 2500)
-    }
-    if (currentLevel === 3) {
-        writeStory(document.getElementById("sbTitle"), "ELF:", 10)
-        writeStory(document.getElementById("sbText"), "What is that?....", 50, false, 500)
-        writeStory(document.getElementById("sbText2"), "A dragon! A live breating one! I must shoot him down!", 50, true, 4000)
-    }
-}
+// story mode removed
 
 export function StartGame(storyMode = false) {
-    currentlyWritingStory = false
-    playInStoryMode = storyMode
-    stopWriting = false
 
     levelCompletion.level1 = []
     levelCompletion.level2 = []
     levelCompletion.level3 = []
     scoreCounter = 0
+    scoreTimeElapsed = 120
+    if (bonus) bonus.innerHTML = `BONUS: ${scoreTimeElapsed}`
     currentAmmo = 3
     checkpoints = fetchCheckpoints() // getting checkpoints
     playground.classList.remove(`menu`)
@@ -147,7 +97,7 @@ export function StartGame(storyMode = false) {
     document.getElementById("gun").setAttribute("hidden", "")
     resetBossHealth()
 
-    writeCurrentStory(currentLevel) // writing story for current level
+    // story disabled
 
     if (currentLevel === 3) {
         document.getElementById("bossHealthBar").removeAttribute("hidden")
@@ -164,14 +114,14 @@ export function StartGame(storyMode = false) {
     playground.classList.remove("menu") // remove the previous class
     gameIsPaused = false
     gameRunning = true; // sets the game status to "is running"
-    startTime = Date.now() // timer startpoint
+    resetTimer()
     requestAnimationFrame(main); // animation frame loop
 }
 
 export function ExitGame() {
-    continueStory()
-    stopWriting = true
+    
     scoreCounter = 0
+    scoreTimeElapsed = 200
     currentLevel = 1
     lives = 4
     healthBar.src = `game/images/hud/lives_4.png`
@@ -186,8 +136,9 @@ export function ExitGame() {
     deleteEnemies()
     deleteFlyingEnemies()
 
-    score.innerHTML = "Score: " + scoreCounter // resetting score
-    timer.innerHTML = "00:00" // resetting timer
+    score.innerHTML = `SCORE: ${scoreCounter}` // resetting score
+    timer.innerHTML = "00:00" // resetting timer (overlay updates bonus in timer)
+    if (bonus) bonus.innerHTML = `BONUS: ${scoreTimeElapsed}`
     gameRunning = false
 
     SettingMenu.setAttribute("hidden", "")
@@ -208,7 +159,7 @@ function main() {
 
     // updating framerate & timer
     frameRate(frameTimes);
-    timerCounter(startTime, timeElapsed);
+    timerCounter();
 
     updateEntityPositioning() // updating the positions of enemies & the main character
 
@@ -347,16 +298,28 @@ export function loseLife() {
     stopAnimationRight()
     if (physics.getIsJumping()) physics.setIsJumping(false)
     lives -= 1
-    score.innerHTML = "SCORE: " + (addAndReturnScore(-100))
+    addAndReturnScore(-100)
 
     if (lives === 0) {
         console.log("HEY! YOU JUST COMPLETELY BLEW THE GAME, LEARN TO PLAY!")
         pause(true)
         document.getElementById("currentLevel").innerHTML = "Level reached: " + currentLevel
-        document.getElementById("finalScore").innerHTML = "Your final score: " + scoreCounter
-        document.getElementById("finalTimer").innerHTML = "Time survived: " + timer.innerHTML
-        document.getElementById("final_score").value = scoreCounter
-        document.getElementById("final_timer").value = timer.innerHTML
+        document.getElementById("finalScore").innerHTML = `SCORE: ${scoreCounter} <br>TIME BONUS: +${scoreTimeElapsed}<br>TOTAL SCORE: ${scoreCounter + scoreTimeElapsed}`
+        const plainTime = document.getElementById("timer").innerHTML.split(" ")[0]
+        document.getElementById("finalTimer").innerHTML = plainTime
+        // update bests in localStorage
+        const totalScore = scoreCounter + scoreTimeElapsed
+        const bestTotal = parseInt(localStorage.getItem("bestTotalScore") || "0", 10)
+        const bestTimeSec = parseInt(localStorage.getItem("bestTimeSec") || "0", 10)
+        const timerText = document.getElementById("timer").innerHTML.split(" ")[0]
+        const [mm, ss] = timerText.split(":").map(n => parseInt(n, 10))
+        const elapsedSec = (isNaN(mm) || isNaN(ss)) ? 0 : (mm * 60 + ss)
+        if (totalScore > bestTotal) localStorage.setItem("bestTotalScore", String(totalScore))
+        if (elapsedSec > bestTimeSec) localStorage.setItem("bestTimeSec", String(elapsedSec))
+        const finalScoreInput = document.getElementById("final_score")
+        const finalTimerInput = document.getElementById("final_timer")
+        if (finalScoreInput) finalScoreInput.value = scoreCounter + scoreTimeElapsed
+        if (finalTimerInput) finalTimerInput.value = timer.innerHTML
 
         DeathScreen.removeAttribute("hidden")
         return // restart button handle
@@ -403,7 +366,7 @@ export function pause(death = false) {
 export function unPause() {
     playground.classList.remove("paused")
     playground.classList.add(`level_${currentLevel}`)
-   /// if (!MuteButton.innerHTML.includes("OFF")) playground.classList.add(songPrePause)
+    /// if (!MuteButton.innerHTML.includes("OFF")) playground.classList.add(songPrePause)
     SettingMenu.setAttribute("hidden", "")
     DeathScreen.setAttribute("hidden", "")
 
@@ -423,7 +386,6 @@ function Restart() {
     StartGame()
     unPause()
 }
-
 
 // eventlisteners for movement, character movement
 document.addEventListener("keydown", (event) => {
@@ -455,8 +417,6 @@ document.addEventListener("keydown", (event) => {
             charJump(jumpHeight + Character.offsetHeight * 2.5)
             if (currentLevel === 3 && currentAmmo > 0) Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_shooting.gif)"
             else Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_jumping.png)"
-            // if (physics.isMovingLeft) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_LEFT.gif)"
-            // if (physics.isMovingRight) Character.style.backgroundImage = "url(/images/characters/main/leprechaun_walking_RIGHT.gif)"
         }
     }
     if (event.code === 'Space' && (currentLevel === maxLevels)) {
@@ -478,8 +438,7 @@ document.addEventListener("keydown", (event) => {
         Character.style.backgroundImage = "url(game/images/characters/main/leprechaun_shooting.gif"
 
         // handling score, making each shot cost some score points :)
-        score.innerHTML = "SCORE: " + (addAndReturnScore(-100)) // +500 score for every hit
-        ///
+        score.innerHTML = `SCORE: ${addAndReturnScore(-100)} (+${scoreTimeElapsed})`// +500 score for every hit
 
         removeAmmo(1)
         moveEnemy(flyingEnemiesParent, true, true)
@@ -522,7 +481,7 @@ document.addEventListener("keydown", (e) => {
     if (e.code === "KeyM") toggleAudio()
     if (playGround.hasAttribute("hidden")) return
     if (!DeathScreen.hasAttribute("hidden")) if (e.code === "keyR") Restart()
-    if ((e.code === "KeyC") && document.getElementById("sbContinue").innerHTML !== "") continueStory()
+    
 
     if (SettingMenu.hasAttribute("hidden")) {
         if ((e.code === "KeyP" || e.key === "Escape") && DeathScreen.hasAttribute("hidden")) pause()

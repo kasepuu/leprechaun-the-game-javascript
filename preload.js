@@ -1,8 +1,6 @@
 function preloadImages(folder) {
-    //    <link rel="preload" href="../images/icon.png" as="image">
-
     const extentions = [".jpg", ".jpeg", ".png", ".gif"]
-
+    console.log(folder)
     fetch(folder)
         .then((response) => response.text())
         .then((html) => {
@@ -16,8 +14,9 @@ function preloadImages(folder) {
                 if (extentions.some((ext) => imageUrl.endsWith(ext))) {
                     const imageLink = document.createElement("link")
                     imageLink.rel = "preload"
-                    imageLink.href = folder + "/"+ imageUrl
+                    imageLink.href = imageUrl
                     imageLink.as = "image"
+
                     document.head.appendChild(imageLink)
                 }
             }
@@ -25,11 +24,11 @@ function preloadImages(folder) {
 }
 
 // preloading image elements
-preloadImages("game/images")
-preloadImages("game/images/characters/main")
-preloadImages("game/images/characters/villains")
+preloadImages("/game/images")
+preloadImages("/game/images/characters/main")
+preloadImages("/game/images/characters/villains")
 
 // preloading map elements
- preloadImages("game/level/sprites/level1")
- preloadImages("game/level/sprites/level2")
- preloadImages("game/level/sprites/level3")
+preloadImages("/game/level/sprites/level1")
+preloadImages("/game/level/sprites/level2")
+preloadImages("/game/level/sprites/level3")

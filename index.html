@@ -2,12 +2,12 @@
 
 <head>
     <title>PÄKAPIKK JA KURI KOLL</title>
-    <link rel="icon" href="/game/images/icon.gif" type="image/gif">
-    <link rel="stylesheet" type="text/css" href="/game/templates/style.css" />
-    <link rel="preload" href="/game/images/icon.png" as="image">
+    <link rel="icon" href="game/images/icon.gif" type="image/gif">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="preload" href="game/images/icon.png" as="image">
 
-    <script src="/game/templates/preload.js"></script>
-    <script type="module" src="/game/src/main.js"></script><!--main script-->
+    <script src="preload.js"></script>
+    <script type="module" src="game/src/main.js"></script><!--main script-->
 </head>
 
 
@@ -32,30 +32,15 @@
                     </div>
                 </div>
                 <div class="scoreboard" id="welcome-screen">
-                    <h1>HIGHSCORES</h1>
+                    <h1>MY HIGHSCORES</h1>
+                    <button id="resetHighscores">RESET</button>
                     <table>
-                        <tr class="navbar" style="color:salmon">
-                            <th class="row__cell">Rank</th>
-                            <th class="row__cell">Name</th>
-                            <th class="row__cell">Score</th>
-                            <th class="row__cell">Time</th>
-                        </tr>
                         <tbody id="board"></tbody>
                     </table>
-
-                    <br>
-                    <button class="prev" id="prev">Previous</button>
-                    <button class="next" id="next">Next</button> 
                 </div>
 
-                <button id="startButton1">CASUAL PLAY</button>
-                <button id="startButton2">STORY MODE</button>
-                <!-- <button id="creditsButton">CREDITS</button> -->
-
-
+                <button id="startButton1">PLAY NOW !</button>
             </div>
-
-
 
 
             <div id="playground" class="menu" hidden>
@@ -67,11 +52,10 @@
                     <button id="backToMenuPause">EXIT</button> 
                 </div>
 
-           
-
                 <div id="gameInfo">
                     <div id="timer">00:00</div>
                     <div id="score">SCORE: 0</div>
+                    <div id="bonus">BONUS: 10000</div>
                 </div>
               
                 <div class="died" id="death-screen">
@@ -80,21 +64,12 @@
                     <h2 style="color:red" id="finalScore">SCORE: </h2>
                     <h2 style="color:white" id="finalTimer">TIME: </h2>
 
-                    <form method="POST">
-                        <input id="final_score" name="final_score" hidden>
-                        <input id="final_timer" name="final_timer" hidden>
-
-                        <input class="nameinput" name="name_input" type="text" placeholder="Your name here!"
-                            maxlength="6" required>
-                        <input class="saveScore" type="submit" value="Submit">
-                    </form>
                     <button id="restartButtonDeath">RESTART</button>
                     <button id="backToMenuDeath">EXIT</button>
                 </div>
                 <div id="tileMap"></div>
                 <div id="elements"></div>
                 <div id="fps">FPS: 0</div>
-                <!--img id="inventory" src="images/hud/inventory.png"-->
                 <div id="bossHealthBar" hidden>BOSS HEALTH<br>
                     <div id="health-bar">
                         <div id="health-level"></div>
@@ -102,15 +77,10 @@
                 </div>
                 <div id="gun" hidden>0</div>
 
-                <div id="storybox">
-                    <div id="sbTitle"></div>
-                    <div id="sbText"></div>
-                    <div id="sbText2"></div>
-                    <div id="sbContinue"></div>
-                </div>
+                
 
 
-                <img id="settings" src="/game/images/hud/settings.png">
+                <img id="settings" src="game/images/hud/settings.png">
                 <img id="lives">
                 <div id="character"></div>
                 <div id="enemies"></div>

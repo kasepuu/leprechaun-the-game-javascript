@@ -8,14 +8,11 @@ let flyingEnemyPosition = { left: 0, bottom: 0 };
 
 
 import { levelMaps } from "../level/levels.js"
-import { addAndReturnScore, pause, scoreCounter, levelCompletion } from "../src/game.js"
+import { addAndReturnScore, pause, scoreCounter, levelCompletion, scoreTimeElapsed } from "../src/game.js"
 import { playGround, Character, frameCapping } from "./main.js"
 import { tileSize, createElements } from "../level/tileMap.js"
 import { currentLevel, levelUp, levelDown, loseLife, gameIsPaused, currentAmmo, addAmmo } from "../src/game.js"
 import { playSoundOnce } from "./sound.js"
-
-//let enemiesParent = document.getElementById("enemies")
-//export let enemy = enemiesParent.getElementsByTagName('div')
 
 export function setIsJumping(value) {
   isJumping = value
@@ -176,14 +173,6 @@ export function checkCollision(x, y, direction, isCharacter = true) {
 }
 
 export function characterEnemyCollision(enemy, isProjectile = false) {
-  // let enemyPos = { 
-  //   top: enemy.offsetTop + enemy.offsetHeight, 
-  //   left: enemy.offsetLeft, 
-  //   bottom: enemy.offsetTop, 
-  //   right: enemy.offsetLeft + enemy.offsetWidth
-  // }
-
-  // console.log(enemy.offsetLeft, enemy.offsetTop, enemy.offsetHeight, enemy.offsetWidth)
   let enemyPos = enemy.getBoundingClientRect();
   let characterPos = Character.getBoundingClientRect();
   if (
@@ -326,14 +315,13 @@ export function projectileEnemyCollision(projectile) {
   }
 }
 
-
 export function damageEnemy() {
   console.log("PIHTAS PÕHJAS!")
   const damage = 20 // damage each bullet makes
   playSoundOnce("hitHurt.wav")
 
-  score.innerHTML = "SCORE: " + addAndReturnScore(1000)
-  if (bossHealth <= 80 && bossHealth > 40) document.getElementById("flyingSaucer").style.backgroundImage = `url("game/images/characters/villains/dragon_75.gif")` 
+  addAndReturnScore(1000)
+  if (bossHealth <= 80 && bossHealth > 40) document.getElementById("flyingSaucer").style.backgroundImage = `url("game/images/characters/villains/dragon_75.gif")`
   else if (bossHealth <= 40) document.getElementById("flyingSaucer").style.backgroundImage = `url("game/images/characters/villains/dragon_25.gif")`
 
   if (bossHealth <= damage) {
@@ -342,18 +330,28 @@ export function damageEnemy() {
     pause(true)
     document.getElementById("deathMessage").innerHTML = "game finished, you are a very good player!"
     document.getElementById("currentLevel").innerHTML = "Level reached: " + currentLevel
-    document.getElementById("finalScore").innerHTML = "Your final score: " + scoreCounter
-    document.getElementById("finalTimer").innerHTML = "Time survived: " + timer.innerHTML
+    const plainTime = document.getElementById("timer").innerHTML
+    document.getElementById("finalScore").innerHTML = `SCORE: ${scoreCounter} <br>TIME BONUS: +${scoreTimeElapsed}<br>TOTAL SCORE: ${scoreCounter + scoreTimeElapsed}`
+    document.getElementById("finalTimer").innerHTML = plainTime
+    const totalScore = scoreCounter + scoreTimeElapsed
+    const bestTotal = parseInt(localStorage.getItem("bestTotalScore") || "0", 10)
+    const bestTimeSec = parseInt(localStorage.getItem("bestTimeSec") || "0", 10)
+    const timerText = document.getElementById("timer").innerHTML.split(" ")[0]
+    const [mm, ss] = timerText.split(":").map(n => parseInt(n, 10))
+    const elapsedSec = (isNaN(mm) || isNaN(ss)) ? 0 : (mm * 60 + ss)
+    if (totalScore > bestTotal) localStorage.setItem("bestTotalScore", String(totalScore))
+    if (elapsedSec > bestTimeSec) localStorage.setItem("bestTimeSec", String(elapsedSec))
     document.getElementById("death-screen").removeAttribute("hidden")
 
-    document.getElementById("final_score").value = addAndReturnScore(0)
-    document.getElementById("final_timer").value = timer.innerHTML
+    const finalScoreInput = document.getElementById("final_score")
+    const finalTimerInput = document.getElementById("final_timer")
+    if (finalScoreInput) finalScoreInput.value = addAndReturnScore(0)
+    if (finalTimerInput) finalTimerInput.value = timer.innerHTML
   }
 
   bossHealth -= damage //boss damage per bullet
   document.getElementById("health-level").style.width = bossHealth + "%"
 }
-
 
 let mushRoomInterval = false
 export function characterMushroomCollision(mushRooms) {
