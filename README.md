@@ -1,5 +1,7 @@
 # Leprechaun The Game "Päkapikk ja kuri KOLL"
 
+# PLAY [HERE](https:://joelsoft.eu/leprechaun-the-game-javascript)
+
 #### 🔴 This Project is our solution to [Kood/Jõhvi](https://kood.tech/)'s first javascript task [make-your-game](https://github.com/01-edu/public/tree/master/subjects/make-your-game)
 #### 🔴 The Game is written in **JavaScript** and is intended to be launched with a Go server
 
