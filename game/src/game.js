@@ -11,7 +11,6 @@ let maxLevels = 3
 export let gameIsPaused = true
 let frameTimes = []
 export let gameRunning = false
-let playInStoryMode = false
 // importing 
 import { mainMenu, playGround, healthBar, Character, frameCapping } from "./main.js"
 import { resetBossHealth } from "./physics.js"
@@ -75,8 +74,6 @@ export function getAmmo() {
     return currentAmmo
 }
 
-// story mode removed
-
 export function StartGame(storyMode = false) {
 
     levelCompletion.level1 = []
@@ -96,8 +93,6 @@ export function StartGame(storyMode = false) {
     document.getElementById("gun").innerText = currentAmmo
     document.getElementById("gun").setAttribute("hidden", "")
     resetBossHealth()
-
-    // story disabled
 
     if (currentLevel === 3) {
         document.getElementById("bossHealthBar").removeAttribute("hidden")
@@ -331,7 +326,6 @@ export function loseLife() {
 }
 
 
-// pause etc.. simple functions
 function toggleAudio() {
     if (MuteButton.innerHTML.includes("OFF")) {
         winamp.resume()
@@ -359,14 +353,12 @@ export function pause(death = false) {
     gameIsPaused = true
     stopAnimationLeft()
     stopAnimationRight()
-    //...pause stuff
     return true
 }
 
 export function unPause() {
     playground.classList.remove("paused")
     playground.classList.add(`level_${currentLevel}`)
-    /// if (!MuteButton.innerHTML.includes("OFF")) playground.classList.add(songPrePause)
     SettingMenu.setAttribute("hidden", "")
     DeathScreen.setAttribute("hidden", "")
 
